@@ -1,0 +1,11 @@
+{
+  "name": "statistics-confusion",
+  "private": true,
+  "description": "Confusion matrix",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-jade": "^1.0.1",
+    "gulp-plumber": "^1.0.1"
+  }
+}
