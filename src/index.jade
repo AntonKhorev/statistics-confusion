@@ -3,13 +3,12 @@ html(lang='en')
 	head
 		meta(charset='utf-8')
 		title Confusion matrix
-		link(
-			rel='stylesheet'
-			href='index.css'
-		)
+		link(rel='stylesheet',href='index.css')
+		script(src='https://code.jquery.com/jquery-1.11.3.min.js')
+		script(src='index.js')
 	body
-		h1 Confusion matrix
 		table.statistics-confusion
+			caption Confusion matrix
 			tr
 				th
 				th Condition positive
