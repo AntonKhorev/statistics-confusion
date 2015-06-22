@@ -27,6 +27,13 @@ table.statistics-confusion {
 		height: @buttonHeight;
 		font-size: 100%;
 		line-height: 100%;
+		padding: 0;
+		border: solid 1px #888;
+		color: #000;
+		background: #FFF;
+		&:hover, &:focus {
+			background: #DDF;
+		}
 		&.swap-rc {
 			top: @captionHeight + @cellHeight/2 - @buttonHeight/2;
 			left: @cellWidth/2 - @buttonWidth/2;
