@@ -2,6 +2,18 @@ mixin wikipedia(url)
 	block
 	sup
 		a(href=url) [W]
+mixin TP
+	span.true T
+	span.true P
+mixin TN
+	span.true T
+	span.false N
+mixin FP
+	span.false F
+	span.true P
+mixin FN
+	span.false F
+	span.false N
 doctype html
 html(lang='en')
 	head
@@ -29,38 +41,38 @@ html(lang='en')
 					.label Predicted true
 				td
 					.label True positive
-					.formula TP
+					.formula: +TP
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/False_positives_and_false_negatives#False_positive_error') False positive
-					.formula FP
+					.formula: +FP
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#Positive_predictive_value') Positive predictive value
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Precision_and_recall#Precision') Precision
-					.formula PPV=TP/(TP+FP)
+					.formula PPV=#[+TP]/(#[+TP]+#[+FP])
 			tr
 				th
 					.label Test outcome negative
 					.label Predicted false
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/False_positives_and_false_negatives#False_negative_error') False negative
-					.formula FN
+					.formula: +FN
 				td
 					.label True negative
-					.formula TN
+					.formula: +TN
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#Negative_predictive_value') Negative predictive value
-					.formula NPV=TN/(FN+TN)
+					.formula NPV=#[+TN]/(#[+FN]+#[+TN])
 			tr
 				th
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Sensitivity') Sensitivity
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Precision_and_recall#Recall') Recall
 					.label True positive rate
-					.formula TPR=TP/(TP+FN)
+					.formula TPR=#[+TP]/(#[+TP]+#[+FN])
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Specificity') Specificity
 					.label True negative rate
-					.formula SPC=TN/(FP+TN)
+					.formula SPC=#[+TN]/(#[+FP]+#[+TN])
 				td
 					.label Accuracy
-					.formula (TP+TN)/(TP+FP+FN+TN)
+					.formula (#[+TP]+#[+TN])/(#[+TP]+#[+FP]+#[+FN]+#[+TN])
