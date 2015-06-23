@@ -2,26 +2,45 @@ $(function(){
 	$('table.statistics-confusion').each(function(){
 		var tableNode=$(this);
 		var tbodyNode=tableNode.children('tbody');
-		var colOrder=0;
-		var rowOrder=0;
+		var rcDir=0; // outcome headers on top?
+		var rcOrd=[0,0]; // outcomes swapped?, conditions swapped?
 		var isExpanded=false;
+		var expandData=[
+			[ // new row
+				"<div class='label'>False negative rate</div><div class='formula'>FNR=FN/(TP+FN)</div>", // https://en.wikipedia.org/wiki/False_negative_rate
+				"<div class='label'>False positive rate</div><div class='formula'>FPR=FP/(FP+TN)</div>", // https://en.wikipedia.org/wiki/False_positive_rate
+				"",
+				""
+			],[ // new col
+				"<div class='label'>False discovery rate</div><div class='formula'>FDR=FP/(TP+FP)</div>", // https://en.wikipedia.org/wiki/False_discovery_rate
+				"<div class='label'>False omission rate</div><div class='formula'>FOR=FN/(FN+TN)</div>", // https://en.wikipedia.org/wiki/False_omission_rate
+				"<div class='label'>Overall error rate</div><div class='formula'>(FP+FN)/(TP+FP+FN+TN)</div>",
+				""
+			]
+		];
 		function expandTable(){
 			if (isExpanded) return;
 			tbodyNode.children().each(function(i){
-				if (i==2-rowOrder) {
-					$(this).children().eq(-1).before("<td>");
+				var s='';
+				if (i>0) s=expandData[rcDir^1][(i-1)^rcOrd[rcDir]];
+				var td=$("<td>").html(s);
+				if (i==2-rcOrd[rcDir]) {
+					$(this).children().eq(-1).before(td);
 				} else {
-					$(this).append("<td>");
+					$(this).append(td);
 				}
 			});
 			var newRowNode=$("<tr>");
 			tbodyNode.append(newRowNode);
 			tbodyNode.children().eq(-2).children().each(function(i){
-				if (i==2-colOrder) {
-					$(this).before("<td>");
+				var s='';
+				if (i>0) s=expandData[rcDir][(i-1)^rcOrd[rcDir^1]];
+				var td=$("<td>").html(s);
+				if (i==2-rcOrd[rcDir^1]) {
+					$(this).before(td);
 					newRowNode.append(this);
 				} else {
-					newRowNode.append("<td>");
+					newRowNode.append(td);
 				}
 			});
 			isExpanded=true;
@@ -33,9 +52,7 @@ $(function(){
 		}
 		tableNode.children('caption').append(
 			$("<button type='button' class='swap-rc'>↻</button>").click(function(){
-				var t=colOrder;
-				colOrder=rowOrder;
-				rowOrder=t;
+				rcDir^=1;
 				var n=tbodyNode.children().length;
 				for (var i=0;i<n;i++) {
 					for (var j=0;j<i;j++) {
@@ -49,7 +66,7 @@ $(function(){
 			})
 		).append(
 			$("<button type='button' class='swap-c'>↔</button>").click(function(){
-				colOrder^=1;
+				rcOrd[rcDir^1]^=1;
 				tbodyNode.children().each(function(){
 					swapChildren($(this),1);
 					if (!isExpanded) return;
@@ -58,7 +75,7 @@ $(function(){
 			})
 		).append(
 			$("<button type='button' class='swap-r'>↕</button>").click(function(){
-				rowOrder^=1;
+				rcOrd[rcDir]^=1;
 				swapChildren(tbodyNode,1);
 				if (!isExpanded) return;
 				swapChildren(tbodyNode,3);
