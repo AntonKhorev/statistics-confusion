@@ -26,8 +26,16 @@ $(function(){
 			});
 			isExpanded=true;
 		}
+		function swapChildren(node,i){
+			var c1=node.children().eq(i);
+			var c2=node.children().eq(i+1);
+			c1.before(c2);
+		}
 		tableNode.children('caption').append(
 			$("<button type='button' class='swap-rc'>↻</button>").click(function(){
+				var t=colOrder;
+				colOrder=rowOrder;
+				rowOrder=t;
 				var n=tbodyNode.children().length;
 				for (var i=0;i<n;i++) {
 					for (var j=0;j<i;j++) {
@@ -38,25 +46,22 @@ $(function(){
 						c2p.after(c1);
 					}
 				}
-				var t=colOrder;
-				colOrder=rowOrder;
-				rowOrder=t;
 			})
 		).append(
 			$("<button type='button' class='swap-c'>↔</button>").click(function(){
-				tbodyNode.children().each(function(){
-					var c1=$(this).children().eq(1);
-					var c2=$(this).children().eq(2);
-					c1.before(c2);
-				});
 				colOrder^=1;
+				tbodyNode.children().each(function(){
+					swapChildren($(this),1);
+					if (!isExpanded) return;
+					swapChildren($(this),3);
+				});
 			})
 		).append(
 			$("<button type='button' class='swap-r'>↕</button>").click(function(){
-				var r1=tbodyNode.children().eq(1);
-				var r2=tbodyNode.children().eq(2);
-				r1.before(r2);
 				rowOrder^=1;
+				swapChildren(tbodyNode,1);
+				if (!isExpanded) return;
+				swapChildren(tbodyNode,3);
 			})
 		).append(
 			$("<button type='button' class='add-c'>+</button>").click(expandTable)
