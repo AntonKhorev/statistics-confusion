@@ -45,7 +45,10 @@ html(lang='en')
 			tr
 				td
 				td
-					.label: +wikipedia('https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Sensitivity') Sensitivity/recall
+					.label
+						+wikipedia('https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Sensitivity') Sensitivity
+						| /
+						+wikipedia('https://en.wikipedia.org/wiki/Precision_and_recall#Recall') recall
 					.formula TP/(TP+FN)
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Specificity') Specificity
