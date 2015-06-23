@@ -27,17 +27,24 @@ html(lang='en')
 				+wikipedia('https://en.wikipedia.org/wiki/Confusion_matrix') Confusion matrix
 			tr
 				th
+					.label Total
+					.formula #[+TP]+#[+FP]+#[+FN]+#[+TN]
 				th
 					.label Condition positive
 					.label Actual true
+					.formula #[+TP]+#[+FN]
 				th
 					.label Condition negative
 					.label Actual false
-				th
+					.formula #[+FP]+#[+TN]
+				td
+					.label Prevalence
+					.formula (#[+TP]+#[+FN])/(#[+TP]+#[+FP]+#[+FN]+#[+TN])
 			tr
 				th
 					.label Test outcome positive
 					.label Predicted true
+					.formula #[+TP]+#[+FP]
 				td
 					.label True positive
 					.formula: +TP
@@ -52,6 +59,7 @@ html(lang='en')
 				th
 					.label Test outcome negative
 					.label Predicted false
+					.formula #[+FN]+#[+TN]
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/False_positives_and_false_negatives#False_negative_error') False negative
 					.formula: +FN
@@ -62,7 +70,8 @@ html(lang='en')
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#Negative_predictive_value') Negative predictive value
 					.formula NPV=#[+TN]/(#[+FN]+#[+TN])
 			tr
-				th
+				td
+					.formula (#[+TP]+#[+FP])/(#[+TP]+#[+FP]+#[+FN]+#[+TN])
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Sensitivity') Sensitivity
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Precision_and_recall#Recall') Recall

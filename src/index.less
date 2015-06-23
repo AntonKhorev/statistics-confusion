@@ -1,8 +1,8 @@
 @cellWidth: 12rem;
 @cellHeight: 7rem;
-@captionHeight: 3rem;
-@buttonWidth: 2.5rem;
-@buttonHeight: 2.5rem;
+@captionHeight: 4rem;
+@buttonWidth: 2rem;
+@buttonHeight: 2rem;
 
 table.statistics-confusion {
 	position: relative;
@@ -40,6 +40,9 @@ table.statistics-confusion {
 		text-align: center;
 		border: solid 1px #888;
 		padding: 0;
+		.formula {
+			font-weight: normal;
+		}
 	}
 	button {
 		position: absolute;
@@ -55,16 +58,24 @@ table.statistics-confusion {
 			background: #DDF;
 		}
 		&.swap-rc {
-			top: @captionHeight + @cellHeight/2 - @buttonHeight/2;
-			left: @cellWidth/2 - @buttonWidth/2;
+			top: @captionHeight - @buttonHeight/2;
+			left: -@buttonWidth/2;
 		}
 		&.swap-c {
-			top: @captionHeight + @cellHeight/2 - @buttonHeight/2;
+			top: @captionHeight - @buttonHeight/2;
 			left: calc(@cellWidth*2 - @buttonWidth/2 ~'+' 2px);
 		}
 		&.swap-r {
 			top: calc(@captionHeight + @cellHeight*2 - @buttonHeight/2 ~'+' 2px);
-			left: @cellWidth/2 - @buttonWidth/2;
+			left: -@buttonWidth/2;
+		}
+		&.add-c {
+			top: @captionHeight - @buttonHeight/2;
+			left: calc(@cellWidth*4 - @buttonWidth/2 ~'+' 4px);
+		}
+		&.add-r {
+			top: calc(@captionHeight + @cellHeight*4 - @buttonHeight/2 ~'+' 4px);
+			left: -@buttonWidth/2;
 		}
 	}
 }
