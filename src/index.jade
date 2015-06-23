@@ -36,7 +36,7 @@ html(lang='en')
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#Positive_predictive_value') Positive predictive value
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Precision_and_recall#Precision') Precision
-					.formula TP/(TP+FP)
+					.formula PPV=TP/(TP+FP)
 			tr
 				th
 					.label Test outcome negative
@@ -49,16 +49,18 @@ html(lang='en')
 					.formula TN
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#Negative_predictive_value') Negative predictive value
-					.formula TN/(FN+TN)
+					.formula NPV=TN/(FN+TN)
 			tr
 				th
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Sensitivity') Sensitivity
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Precision_and_recall#Recall') Recall
-					.formula TP/(TP+FN)
+					.label True positive rate
+					.formula TPR=TP/(TP+FN)
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Specificity') Specificity
-					.formula TN/(FP+TN)
+					.label True negative rate
+					.formula SPC=TN/(FP+TN)
 				td
 					.label Accuracy
 					.formula (TP+TN)/(TP+FP+FN+TN)
