@@ -19,11 +19,14 @@ $(function(){
 			]
 		];
 		function expandTable(){
+			function makeCell(i,dir) {
+				var s='';
+				if (i>0) s=expandData[rcDir^dir][(i-1)^rcOrd[rcDir^dir^1]];
+				return $("<td>").html(s);
+			}
 			if (isExpanded) return;
 			tbodyNode.children().each(function(i){
-				var s='';
-				if (i>0) s=expandData[rcDir^1][(i-1)^rcOrd[rcDir]];
-				var td=$("<td>").html(s);
+				var td=makeCell(i,1);
 				if (i==2-rcOrd[rcDir]) {
 					$(this).children().eq(-1).before(td);
 				} else {
@@ -33,9 +36,7 @@ $(function(){
 			var newRowNode=$("<tr>");
 			tbodyNode.append(newRowNode);
 			tbodyNode.children().eq(-2).children().each(function(i){
-				var s='';
-				if (i>0) s=expandData[rcDir][(i-1)^rcOrd[rcDir^1]];
-				var td=$("<td>").html(s);
+				var td=makeCell(i,0);
 				if (i==2-rcOrd[rcDir^1]) {
 					$(this).before(td);
 					newRowNode.append(this);
