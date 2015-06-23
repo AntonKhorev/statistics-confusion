@@ -16,13 +16,37 @@ html(lang='en')
 				+wikipedia('https://en.wikipedia.org/wiki/Confusion_matrix') Confusion matrix
 			tr
 				th
-				th Condition positive
-				th Condition negative
+				th
+					.label Condition positive
+					.label Actual true
+				th
+					.label Condition negative
+					.label Actual false
 			tr
-				th Test outcome positive
-				td True positive
-				td: +wikipedia('https://en.wikipedia.org/wiki/False_positives_and_false_negatives#False_positive_error') False positive
+				th
+					.label Test outcome positive
+					.label Predicted true
+				td
+					.label True positive
+					.formula TP
+				td
+					.label: +wikipedia('https://en.wikipedia.org/wiki/False_positives_and_false_negatives#False_positive_error') False positive
+					.formula FP
 			tr
-				th Test outcome negative
-				td: +wikipedia('https://en.wikipedia.org/wiki/False_positives_and_false_negatives#False_negative_error') False negative
-				td True negative
+				th
+					.label Test outcome negative
+					.label Predicted false
+				td
+					.label: +wikipedia('https://en.wikipedia.org/wiki/False_positives_and_false_negatives#False_negative_error') False negative
+					.formula FP
+				td
+					.label True negative
+					.formula TN
+			tr
+				td
+				td
+					.label: +wikipedia('https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Sensitivity') Sensitivity/recall
+					.formula TP/(TP+FN)
+				td
+					.label: +wikipedia('https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Specificity') Specificity
+					.formula TN/(FP+TN)
