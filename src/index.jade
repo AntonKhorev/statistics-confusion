@@ -1,3 +1,6 @@
+mixin wikipedia(url)
+	sup
+		a(href=url) [W]
 doctype html
 html(lang='en')
 	head
@@ -8,7 +11,7 @@ html(lang='en')
 		script(src='index.js')
 	body
 		table.statistics-confusion
-			caption Confusion matrix
+			caption Confusion matrix#[+wikipedia('https://en.wikipedia.org/wiki/Confusion_matrix')]
 			tr
 				th
 				th Condition positive
@@ -16,8 +19,8 @@ html(lang='en')
 			tr
 				th Test outcome positive
 				td True positive
-				td False positive
+				td False positive#[+wikipedia('https://en.wikipedia.org/wiki/False_positives_and_false_negatives#False_positive_error')]
 			tr
 				th Test outcome negative
-				td False negative
+				td False negative#[+wikipedia('https://en.wikipedia.org/wiki/False_positives_and_false_negatives#False_negative_error')]
 				td True negative
