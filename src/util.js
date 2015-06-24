@@ -1,5 +1,6 @@
 function parseFormula(e) {
 	return e
+		.replace(/=/g,' = ')
 		.replace(/(\(.*\)|\w+)\/(\(.*\)|\w+)/,function(match,p1,p2){
 			function e(p) {
 				if (p.charAt(0)=='(') {

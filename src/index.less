@@ -12,22 +12,6 @@
 	overflow: hidden;
 }
 
-// TODO move inside table (*)
-	.sfrac { // like in wikipedia: https://en.wikipedia.org/wiki/Template:Sfrac
-		display: inline-block;
-		vertical-align: middle;
-		.num, .den {
-			display: block;
-			text-align: center;
-		}
-		.den {
-			border-top: solid 1px;
-		}
-		.aux {
-			.visually-hidden();
-		}
-	}
-
 table.statistics-confusion {
 	position: relative;
 	margin: auto;
@@ -57,7 +41,22 @@ table.statistics-confusion {
 	.predicted-false {
 		color: #04C;
 	}
-	// TODO (*)
+	.sfrac { // like in wikipedia: https://en.wikipedia.org/wiki/Template:Sfrac
+		display: inline-block;
+		//vertical-align: middle; // lower than necessary
+		vertical-align: -0.6em;
+		white-space: nowrap;
+		.num, .den {
+			display: block;
+			text-align: center;
+		}
+		.den {
+			border-top: solid 1px;
+		}
+		.aux {
+			.visually-hidden();
+		}
+	}
 	caption {
 		height: @captionHeight;
 		line-height: @captionHeight;
