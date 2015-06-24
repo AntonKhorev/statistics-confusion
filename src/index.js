@@ -83,7 +83,7 @@ $(function(){
 			c1.before(c2);
 		}
 		tableNode.children('caption').append(
-			$("<button type='button' class='swap-rc'>↻</button>").click(function(){
+			$("<button type='button' class='swap-rc' title='swap rows and columns'>↻</button>").click(function(){
 				rcDir^=1;
 				var n=tbodyNode.children().length;
 				for (var i=0;i<n;i++) {
@@ -97,7 +97,7 @@ $(function(){
 				}
 			})
 		).append(
-			$("<button type='button' class='swap-c'>↔</button>").click(function(){
+			$("<button type='button' class='swap-c' title='swap columns'>↔</button>").click(function(){
 				rcOrd[rcDir^1]^=1;
 				tbodyNode.children().each(function(){
 					swapChildren($(this),1);
@@ -106,16 +106,16 @@ $(function(){
 				});
 			})
 		).append(
-			$("<button type='button' class='swap-r'>↕</button>").click(function(){
+			$("<button type='button' class='swap-r' title='swap rows'>↕</button>").click(function(){
 				rcOrd[rcDir]^=1;
 				swapChildren(tbodyNode,1);
 				if (!isExpanded) return;
 				swapChildren(tbodyNode,3);
 			})
 		).append(
-			$("<button type='button' class='add-c'>+</button>").click(expandTable)
+			$("<button type='button' class='add-c' title='expand table'>+</button>").click(expandTable)
 		).append(
-			$("<button type='button' class='add-r'>+</button>").click(expandTable)
+			$("<button type='button' class='add-r' title='expand table'>+</button>").click(expandTable)
 		)
 	});
 });
