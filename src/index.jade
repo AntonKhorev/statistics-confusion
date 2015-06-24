@@ -80,7 +80,7 @@ html(lang='en')
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Specificity') Specificity
 					.label True negative rate
-					.formula SPC=#[+TN]/(#[+FP]+#[+TN])
+					.formula TNR=#[+TN]/(#[+FP]+#[+TN])
 				td
 					.label Accuracy
 					.formula (#[+TP]+#[+TN])/(#[+TP]+#[+FP]+#[+FN]+#[+TN])

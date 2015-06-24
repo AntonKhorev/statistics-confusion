@@ -17,14 +17,14 @@ $(function(){
 				"<div class='formula'>("+FN+"+"+TN+")/("+TP+"+"+FP+"+"+FN+"+"+TN+")</div>",
 				"<div class='label'>"+wikipedia("False negative rate","https://en.wikipedia.org/wiki/False_negative_rate")+"</div><div class='formula'>FNR="+FN+"/("+TP+"+"+FN+")</div>",
 				"<div class='label'>"+wikipedia("False positive rate","https://en.wikipedia.org/wiki/False_positive_rate")+"</div><div class='formula'>FPR="+FP+"/("+FP+"+"+TN+")</div>",
-				"",
-				""
+				"<div class='label'>Overall error rate</div><div class='formula'>("+FP+"+"+FN+")/("+TP+"+"+FP+"+"+FN+"+"+TN+")</div>",
+				"<div class='label'>"+wikipedia("Negative likelihood ratio","https://en.wikipedia.org/wiki/Negative_likelihood_ratio")+"</div><div class='formula'>(LR-)=FNR/TNR</div>"
 			],[ // new col
 				"<div class='formula'>("+FP+"+"+TN+")/("+TP+"+"+FP+"+"+FN+"+"+TN+")</div>",
 				"<div class='label'>"+wikipedia("False discovery rate","https://en.wikipedia.org/wiki/False_discovery_rate")+"</div><div class='formula'>FDR="+FP+"/("+TP+"+"+FP+")</div>",
 				"<div class='label'>"+wikipedia("False omission rate","https://en.wikipedia.org/wiki/False_omission_rate")+"</div><div class='formula'>FOR="+FN+"/("+FN+"+"+TN+")</div>",
-				"<div class='label'>Overall error rate</div><div class='formula'>("+FP+"+"+FN+")/("+TP+"+"+FP+"+"+FN+"+"+TN+")</div>",
-				""
+				"<div class='label'>"+wikipedia("Positive likelihood ratio","https://en.wikipedia.org/wiki/Positive_likelihood_ratio")+"</div><div class='formula'>(LR+)=TPR/FPR</div>",
+				"" // not used
 			]
 		];
 		function expandTable() {
