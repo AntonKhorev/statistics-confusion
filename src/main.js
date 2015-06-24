@@ -10,23 +10,19 @@ $('table.statistics-confusion').each(function(){
 		url="https://en.wikipedia.org/wiki/"+block.replace(/ /g,'_');
 		return "<a href='"+url+"'>"+block+"</a>";
 	}
-	var TP="<span class='actual-true'>T</span><span class='predicted-true'>P</span>";
-	var FP="<span class='actual-false'>F</span><span class='predicted-true'>P</span>";
-	var FN="<span class='actual-true'>F</span><span class='predicted-false'>N</span>";
-	var TN="<span class='actual-false'>T</span><span class='predicted-false'>N</span>";
 	var expandData=[
 		[ // new row
-			"<div class='formula'>("+FN+"+"+TN+")/("+TP+"+"+FP+"+"+FN+"+"+TN+")</div>",
-			"<div class='label'>"+wikipedia("False negative rate")+"</div><div class='formula'>FNR="+FN+"/("+TP+"+"+FN+")</div>",
-			"<div class='label'>"+wikipedia("False positive rate")+"</div><div class='formula'>FPR="+FP+"/("+FP+"+"+TN+")</div>",
-			"<div class='label'>Overall error rate</div><div class='formula'>("+FP+"+"+FN+")/("+TP+"+"+FP+"+"+FN+"+"+TN+")</div>",
+			"<div class='formula'>"+parseFormula("(FN+TN)/(TP+FP+FN+TN)")+"</div>",
+			"<div class='label'>"+wikipedia("False negative rate")+"</div><div class='formula'>"+parseFormula("FNR=FN/(TP+FN)")+"</div>",
+			"<div class='label'>"+wikipedia("False positive rate")+"</div><div class='formula'>"+parseFormula("FPR=FP/(FP+TN)")+"</div>",
+			"<div class='label'>Overall error rate</div><div class='formula'>"+parseFormula("(FP+FN)/(TP+FP+FN+TN)")+"</div>",
 			"" // not used
 		],[ // new col
-			"<div class='formula'>("+FP+"+"+TN+")/("+TP+"+"+FP+"+"+FN+"+"+TN+")</div>",
-			"<div class='label'>"+wikipedia("False discovery rate")+"</div><div class='formula'>FDR="+FP+"/("+TP+"+"+FP+")</div>",
-			"<div class='label'>"+wikipedia("False omission rate")+"</div><div class='formula'>FOR="+FN+"/("+FN+"+"+TN+")</div>",
-			"<div class='label'>"+wikipedia("Positive likelihood ratio")+"</div><div class='formula'>(LR+)=TPR/FPR</div>",
-			"<div class='label'>"+wikipedia("Negative likelihood ratio")+"</div><div class='formula'>(LR-)=FNR/TNR</div>"
+			"<div class='formula'>"+parseFormula("(FP+TN)/(TP+FP+FN+TN)")+"</div>",
+			"<div class='label'>"+wikipedia("False discovery rate")+"</div><div class='formula'>"+parseFormula("FDR=FP/(TP+FP)")+"</div>",
+			"<div class='label'>"+wikipedia("False omission rate")+"</div><div class='formula'>"+parseFormula("FOR=FN/(FN+TN)")+"</div>",
+			"<div class='label'>"+wikipedia("Positive likelihood ratio")+"</div><div class='formula'>"+parseFormula("(LR+)=TPR/FPR")+"</div>",
+			"<div class='label'>"+wikipedia("Negative likelihood ratio")+"</div><div class='formula'>"+parseFormula("(LR-)=FNR/TNR")+"</div>"
 		]
 	];
 	function haveToSwap(dir,i) {
