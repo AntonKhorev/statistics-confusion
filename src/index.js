@@ -31,41 +31,47 @@ $(function(){
 			]
 		];
 		function expandTable() {
-			function makeCell(callOrd,i,dir) {
-				if ((i==1 || i==2) && rcOrd[rcDir^dir^1]) {
-					i^=1^2;
-				} else if (callOrd && (i==3 || i==4) && rcOrd[rcDir^dir^1]) {
-					i^=3^4;
+			function addCell(callOrd,dir,i,insertNormal,insertSwapped) {
+				function makeCell() {
+					var j=i;
+					if ((j==1 || j==2) && rcOrd[rcDir^dir^1]) {
+						j^=1^2;
+					} else if (callOrd && (j==3 || j==4) && rcOrd[rcDir^dir^1]) {
+						j^=3^4;
+					}
+					var cellHtml=expandData[rcDir^dir][j];
+					return $("<td>").html(cellHtml);
 				}
-				var s=expandData[rcDir^dir][i];
-				return $("<td>").html(s);
+				var cell=makeCell();
+				var swap=rcOrd[rcDir^dir]&1;
+				if (i==1 || i==2) swap=((i-1)^rcOrd[0]^rcOrd[1])&1;
+				if (swap) {
+					insertSwapped(cell);
+				} else {
+					insertNormal(cell);
+				}
 			}
-			if (isExpanded) return;
 			function addCol(callOrd) {
 				tbodyNode.children().each(function(i){
-					var td=makeCell(callOrd,i,1);
-					var swap=rcOrd[rcDir^1]&1;
-					if (i==1 || i==2) swap=((i-1)^rcOrd[0]^rcOrd[1])&1;
-					if (swap) {
-						$(this).children().eq(-1).before(td);
-					} else {
-						$(this).append(td);
-					}
+					var oldRow=$(this);
+					addCell(callOrd,1,i,function(newCell){
+						oldRow.append(newCell);
+					},function(newCell){
+						oldRow.children().eq(-1).before(newCell);
+					});
 				});
 			}
 			function addRow(callOrd) {
-				var newRowNode=$("<tr>");
-				tbodyNode.append(newRowNode);
+				var newRow=$("<tr>");
+				tbodyNode.append(newRow);
 				tbodyNode.children().eq(-2).children().each(function(i){
-					var td=makeCell(callOrd,i,0);
-					var swap=rcOrd[rcDir]&1;
-					if (i==1 || i==2) swap=((i-1)^rcOrd[0]^rcOrd[1])&1;
-					if (swap) {
-						$(this).before(td);
-						newRowNode.append(this);
-					} else {
-						newRowNode.append(td);
-					}
+					var oldCell=$(this);
+					addCell(callOrd,0,i,function(newCell){
+						newRow.append(newCell);
+					},function(newCell){
+						oldCell.before(newCell);
+						newRow.append(oldCell);
+					});
 				});
 			}
 			if (rcDir) {
@@ -76,6 +82,10 @@ $(function(){
 				addCol(1);
 			}
 			isExpanded=true;
+			tableNode.find('button.add-r, button.add-c').text('−').attr('title','contract table').off().click(contractTable);
+		}
+		function contractTable() {
+			// TODO
 		}
 		function swapChildren(node,i) {
 			var c1=node.children().eq(i);
