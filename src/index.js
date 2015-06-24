@@ -85,7 +85,24 @@ $(function(){
 			tableNode.find('button.add-r, button.add-c').text('−').attr('title','contract table').off().click(contractTable);
 		}
 		function contractTable() {
-			// TODO
+			function removeCol(callOrd) {
+				tbodyNode.children().each(function(i){
+					var oldRow=$(this);
+					oldRow.children().eq(-1).remove();
+				});
+			}
+			function removeRow(callOrd) {
+				tbodyNode.children().eq(-1).remove();
+			}
+			if (rcDir) {
+				removeRow(1);
+				removeCol(0);
+			} else {
+				removeCol(1);
+				removeRow(0);
+			}
+			isExpanded=false;
+			tableNode.find('button.add-r, button.add-c').text('−').attr('title','expand table').off().click(expandTable);
 		}
 		function swapChildren(node,i) {
 			var c1=node.children().eq(i);
