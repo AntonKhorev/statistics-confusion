@@ -22,7 +22,7 @@ $('table.statistics-confusion').each(function(){
 			"<div class='label'>"+wikipedia("False discovery rate")+"</div><div class='formula'>"+parseFormula("FDR=FP/(TP+FP)")+"</div>",
 			"<div class='label'>"+wikipedia("False omission rate")+"</div><div class='formula'>"+parseFormula("FOR=FN/(FN+TN)")+"</div>",
 			"<div class='label'>"+wikipedia("Positive likelihood ratio")+"</div><div class='formula'>"+parseFormula("(LR+)=TPR/FPR")+"</div>",
-			"<div class='label'>"+wikipedia("Negative likelihood ratio")+"</div><div class='formula'>"+parseFormula("(LR-)=FNR/TNR")+"</div>"
+			"<div class='label'>"+wikipedia("Negative likelihood ratio")+"</div><div class='formula'>"+parseFormula("(LR−)=FNR/TNR")+"</div>"
 		]
 	];
 	function haveToSwap(dir,i) {
