@@ -86,13 +86,28 @@ $(function(){
 		}
 		function contractTable() {
 			function removeCol(callOrd) {
+				var dir=1;
 				tbodyNode.children().each(function(i){
+					var swap=rcOrd[rcDir^dir]&1;
+					if (i==1 || i==2) swap=((i-1)^rcOrd[0]^rcOrd[1])&1;
 					var oldRow=$(this);
-					oldRow.children().eq(-1).remove();
+					oldRow.children().eq(swap?-2:-1).remove();
 				});
 			}
 			function removeRow(callOrd) {
-				tbodyNode.children().eq(-1).remove();
+				var dir=0;
+				var oldRow=tbodyNode.children().eq(-2);
+				var newRow=tbodyNode.children().eq(-1);
+				newRow.children().each(function(i){
+					var swap=rcOrd[rcDir^dir]&1;
+					if (i==1 || i==2) swap=((i-1)^rcOrd[0]^rcOrd[1])&1;
+					if (swap) {
+						var oldCell=$(this);
+						var newCell=oldRow.children().eq(i);
+						newCell.after(oldCell).remove();
+					}
+				});
+				newRow.remove();
 			}
 			if (rcDir) {
 				removeRow(1);
@@ -102,7 +117,7 @@ $(function(){
 				removeRow(0);
 			}
 			isExpanded=false;
-			tableNode.find('button.add-r, button.add-c').text('−').attr('title','expand table').off().click(expandTable);
+			tableNode.find('button.add-r, button.add-c').text('+').attr('title','expand table').off().click(expandTable);
 		}
 		function swapChildren(node,i) {
 			var c1=node.children().eq(i);
