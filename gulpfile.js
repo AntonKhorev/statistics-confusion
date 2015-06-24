@@ -6,15 +6,21 @@ var less=require('gulp-less');
 var autoprefixer=require('gulp-autoprefixer');
 var minifyCss=require('gulp-minify-css');
 var uglify=require('gulp-uglify');
+var fs=require('fs');
+var vm=require('vm');
 
 var htmlSrc='src/index.jade';
 var cssSrc='src/index.less';
 var jsSrc='src/index.js';
 
 gulp.task('html',function(){
+	var ctx={};
+	vm.runInNewContext(fs.readFileSync('./src/util.js'),ctx);
 	gulp.src(htmlSrc)
 		.pipe(plumber())
-		.pipe(jade())
+		.pipe(jade({
+			locals: ctx
+		}))
 		.pipe(gulp.dest('public_html'));
 });
 
@@ -39,7 +45,7 @@ gulp.task('js',function(){
 });
 
 gulp.task('watch',function(){
-	gulp.watch(htmlSrc,['html']);
+	gulp.watch([htmlSrc,'src/util.js'],['html']);
 	gulp.watch(cssSrc,['css']);
 	gulp.watch(jsSrc,['js']);
 });

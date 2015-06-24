@@ -1,18 +1,8 @@
 mixin wikipedia(url)
 	a(href=url)
 		block
-mixin TP
-	span.actual-true T
-	span.predicted-true P
-mixin FP
-	span.actual-false F
-	span.predicted-true P
-mixin FN
-	span.actual-true F
-	span.predicted-false N
-mixin TN
-	span.actual-false T
-	span.predicted-false N
+mixin formula(e)
+	.formula!= parseFormula(e)
 doctype html
 html(lang='en')
 	head
@@ -28,59 +18,59 @@ html(lang='en')
 			tr
 				th
 					.label Total
-					.formula #[+TP]+#[+FP]+#[+FN]+#[+TN]
+					+formula('TP+FP+FN+TN')
 				th
 					.label Condition positive
 					.label Actual true
-					.formula #[+TP]+#[+FN]
+					+formula('TP+FN')
 				th
 					.label Condition negative
 					.label Actual false
-					.formula #[+FP]+#[+TN]
+					+formula('FP+TN')
 				td
 					.label Prevalence
-					.formula (#[+TP]+#[+FN])/(#[+TP]+#[+FP]+#[+FN]+#[+TN])
+					+formula('(TP+FN)/(TP+FP+FN+TN)')
 			tr
 				th
 					.label Test outcome positive
 					.label Predicted true
-					.formula #[+TP]+#[+FP]
+					+formula('TP+FP')
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/True_positive') True positive
-					.formula: +TP
+					+formula('TP')
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/False_positive') False positive
-					.formula: +FP
+					+formula('FP')
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#Positive_predictive_value') Positive predictive value
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Precision_and_recall#Precision') Precision
-					.formula PPV=#[+TP]/(#[+TP]+#[+FP])
+					+formula('PPV=TP/(TP+FP)')
 			tr
 				th
 					.label Test outcome negative
 					.label Predicted false
-					.formula #[+FN]+#[+TN]
+					+formula('FN+TN')
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/False_negative') False negative
-					.formula: +FN
+					+formula('FN')
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/True_negative') True negative
-					.formula: +TN
+					+formula('TN')
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#Negative_predictive_value') Negative predictive value
-					.formula NPV=#[+TN]/(#[+FN]+#[+TN])
+					+formula('NPV=TN/(FN+TN)')
 			tr
 				td
-					.formula (#[+TP]+#[+FP])/(#[+TP]+#[+FP]+#[+FN]+#[+TN])
+					+formula('(TP+FP)/(TP+FP+FN+TN)')
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Sensitivity') Sensitivity
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Precision_and_recall#Recall') Recall
 					.label True positive rate
-					.formula TPR=#[+TP]/(#[+TP]+#[+FN])
+					+formula('TPR=TP/(TP+FN)')
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Specificity') Specificity
 					.label True negative rate
-					.formula TNR=#[+TN]/(#[+FP]+#[+TN])
+					+formula('TNR=TN/(FP+TN)')
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Accuracy_and_precision#In_binary_classification') Accuracy
-					.formula (#[+TP]+#[+TN])/(#[+TP]+#[+FP]+#[+FN]+#[+TN])
+					+formula('(TP+TN)/(TP+FP+FN+TN)')
