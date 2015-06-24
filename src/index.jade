@@ -46,10 +46,10 @@ html(lang='en')
 					.label Predicted true
 					.formula #[+TP]+#[+FP]
 				td
-					.label True positive
+					.label: +wikipedia('https://en.wikipedia.org/wiki/True_positive') True positive
 					.formula: +TP
 				td
-					.label: +wikipedia('https://en.wikipedia.org/wiki/False_positives_and_false_negatives#False_positive_error') False positive
+					.label: +wikipedia('https://en.wikipedia.org/wiki/False_positive') False positive
 					.formula: +FP
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#Positive_predictive_value') Positive predictive value
@@ -61,10 +61,10 @@ html(lang='en')
 					.label Predicted false
 					.formula #[+FN]+#[+TN]
 				td
-					.label: +wikipedia('https://en.wikipedia.org/wiki/False_positives_and_false_negatives#False_negative_error') False negative
+					.label: +wikipedia('https://en.wikipedia.org/wiki/False_negative') False negative
 					.formula: +FN
 				td
-					.label True negative
+					.label: +wikipedia('https://en.wikipedia.org/wiki/True_negative') True negative
 					.formula: +TN
 				td
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#Negative_predictive_value') Negative predictive value
