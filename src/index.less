@@ -4,6 +4,14 @@
 @buttonWidth: 2rem;
 @buttonHeight: 2rem;
 
+.visually-hidden() {
+	position: absolute;
+	left: -10000px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
 // TODO move inside table (*)
 	.sfrac { // like in wikipedia: https://en.wikipedia.org/wiki/Template:Sfrac
 		display: inline-block;
@@ -15,13 +23,8 @@
 		.den {
 			border-top: solid 1px;
 		}
-		.over {
-			// visually hide
-			position: absolute;
-			left: -10000px;
-			width: 1px;
-			height: 1px;
-			overflow: hidden;
+		.aux {
+			.visually-hidden();
 		}
 	}
 
