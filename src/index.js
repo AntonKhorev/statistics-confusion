@@ -7,46 +7,65 @@ $(function(){
 		var isExpanded=false;
 		var expandData=[
 			[ // new row
+				"TODO R",
 				"<div class='label'>False negative rate</div><div class='formula'>FNR=FN/(TP+FN)</div>", // https://en.wikipedia.org/wiki/False_negative_rate
 				"<div class='label'>False positive rate</div><div class='formula'>FPR=FP/(FP+TN)</div>", // https://en.wikipedia.org/wiki/False_positive_rate
 				"",
 				""
 			],[ // new col
+				"TODO C",
 				"<div class='label'>False discovery rate</div><div class='formula'>FDR=FP/(TP+FP)</div>", // https://en.wikipedia.org/wiki/False_discovery_rate
 				"<div class='label'>False omission rate</div><div class='formula'>FOR=FN/(FN+TN)</div>", // https://en.wikipedia.org/wiki/False_omission_rate
 				"<div class='label'>Overall error rate</div><div class='formula'>(FP+FN)/(TP+FP+FN+TN)</div>",
 				""
 			]
 		];
-		function expandTable(){
+		function expandTable() {
 			function makeCell(i,dir) {
-				var s='';
-				if (i>0) s=expandData[rcDir^dir][(i-1)^rcOrd[rcDir^dir^1]];
+				if ((i==1 || i==2) && rcOrd[rcDir^dir^1]) {
+					i=3-i;
+				}
+				var s=expandData[rcDir^dir][i];
 				return $("<td>").html(s);
 			}
 			if (isExpanded) return;
-			tbodyNode.children().each(function(i){
-				var td=makeCell(i,1);
-				if (i==2-rcOrd[rcDir]) {
-					$(this).children().eq(-1).before(td);
-				} else {
-					$(this).append(td);
-				}
-			});
-			var newRowNode=$("<tr>");
-			tbodyNode.append(newRowNode);
-			tbodyNode.children().eq(-2).children().each(function(i){
-				var td=makeCell(i,0);
-				if (i==2-rcOrd[rcDir^1]) {
-					$(this).before(td);
-					newRowNode.append(this);
-				} else {
-					newRowNode.append(td);
-				}
-			});
+			function addCol() {
+				tbodyNode.children().each(function(i){
+					var td=makeCell(i,1);
+					var swap=rcOrd[rcDir^1]&1;
+					if (i==1 || i==2) swap=((i-1)^rcOrd[0]^rcOrd[1])&1;
+					if (swap) {
+						$(this).children().eq(-1).before(td);
+					} else {
+						$(this).append(td);
+					}
+				});
+			}
+			function addRow() {
+				var newRowNode=$("<tr>");
+				tbodyNode.append(newRowNode);
+				tbodyNode.children().eq(-2).children().each(function(i){
+					var td=makeCell(i,0);
+					var swap=rcOrd[rcDir]&1;
+					if (i==1 || i==2) swap=((i-1)^rcOrd[0]^rcOrd[1])&1;
+					if (swap) {
+						$(this).before(td);
+						newRowNode.append(this);
+					} else {
+						newRowNode.append(td);
+					}
+				});
+			}
+			if (rcDir) {
+				addRow();
+				addCol();
+			} else {
+				addCol();
+				addRow();
+			}
 			isExpanded=true;
 		}
-		function swapChildren(node,i){
+		function swapChildren(node,i) {
 			var c1=node.children().eq(i);
 			var c2=node.children().eq(i+1);
 			c1.before(c2);
