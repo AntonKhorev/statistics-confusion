@@ -4,6 +4,27 @@
 @buttonWidth: 2rem;
 @buttonHeight: 2rem;
 
+// TODO move inside table (*)
+	.sfrac { // like in wikipedia: https://en.wikipedia.org/wiki/Template:Sfrac
+		display: inline-block;
+		vertical-align: middle;
+		.num, .den {
+			display: block;
+			text-align: center;
+		}
+		.den {
+			border-top: solid 1px;
+		}
+		.over {
+			// visually hide
+			position: absolute;
+			left: -10000px;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
+		}
+	}
+
 table.statistics-confusion {
 	position: relative;
 	margin: auto;
@@ -33,6 +54,7 @@ table.statistics-confusion {
 	.predicted-false {
 		color: #04C;
 	}
+	// TODO (*)
 	caption {
 		height: @captionHeight;
 		line-height: @captionHeight;

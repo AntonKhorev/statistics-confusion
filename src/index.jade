@@ -12,6 +12,8 @@ html(lang='en')
 		script(src='https://code.jquery.com/jquery-1.11.3.min.js')
 		script(src='index.js')
 	body
+		p Test fraction
+			!= " FRAC = <span class='sfrac'><span class='num'>(A+B)</span><span class='over'>/</span><span class='den'>(C+D+E+F)</span></span>"
 		table.statistics-confusion
 			caption
 				+wikipedia('https://en.wikipedia.org/wiki/Confusion_matrix') Confusion matrix
