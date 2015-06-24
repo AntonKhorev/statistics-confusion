@@ -30,6 +30,13 @@ $(function(){
 				"<div class='label'>"+wikipedia("Negative likelihood ratio")+"</div><div class='formula'>(LR-)=FNR/TNR</div>"
 			]
 		];
+		function haveToSwap(dir,i) {
+			if (i==1 || i==2) {
+				return ((i-1)^rcOrd[0]^rcOrd[1])&1;
+			} else {
+				rcOrd[rcDir^dir]&1;
+			}
+		}
 		function expandTable() {
 			function addCell(callOrd,dir,i,insertNormal,insertSwapped) {
 				function makeCell() {
@@ -43,9 +50,7 @@ $(function(){
 					return $("<td>").html(cellHtml);
 				}
 				var cell=makeCell();
-				var swap=rcOrd[rcDir^dir]&1;
-				if (i==1 || i==2) swap=((i-1)^rcOrd[0]^rcOrd[1])&1;
-				if (swap) {
+				if (haveToSwap(dir,i)) {
 					insertSwapped(cell);
 				} else {
 					insertNormal(cell);
@@ -88,10 +93,8 @@ $(function(){
 			function removeCol(callOrd) {
 				var dir=1;
 				tbodyNode.children().each(function(i){
-					var swap=rcOrd[rcDir^dir]&1;
-					if (i==1 || i==2) swap=((i-1)^rcOrd[0]^rcOrd[1])&1;
 					var oldRow=$(this);
-					oldRow.children().eq(swap?-2:-1).remove();
+					oldRow.children().eq(haveToSwap(dir,i)?-2:-1).remove();
 				});
 			}
 			function removeRow(callOrd) {
@@ -99,9 +102,7 @@ $(function(){
 				var oldRow=tbodyNode.children().eq(-2);
 				var newRow=tbodyNode.children().eq(-1);
 				newRow.children().each(function(i){
-					var swap=rcOrd[rcDir^dir]&1;
-					if (i==1 || i==2) swap=((i-1)^rcOrd[0]^rcOrd[1])&1;
-					if (swap) {
+					if (haveToSwap(dir,i)) {
 						var oldCell=$(this);
 						var newCell=oldRow.children().eq(i);
 						newCell.after(oldCell).remove();
