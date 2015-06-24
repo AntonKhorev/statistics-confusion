@@ -90,19 +90,17 @@ $(function(){
 			tableNode.find('button.add-r, button.add-c').text('−').attr('title','contract table').off().click(contractTable);
 		}
 		function contractTable() {
-			function removeCol(callOrd) {
-				var dir=1;
+			function removeCol() {
 				tbodyNode.children().each(function(i){
 					var oldRow=$(this);
-					oldRow.children().eq(haveToSwap(dir,i)?-2:-1).remove();
+					oldRow.children().eq(haveToSwap(1,i)?-2:-1).remove();
 				});
 			}
-			function removeRow(callOrd) {
-				var dir=0;
+			function removeRow() {
 				var oldRow=tbodyNode.children().eq(-2);
 				var newRow=tbodyNode.children().eq(-1);
 				newRow.children().each(function(i){
-					if (haveToSwap(dir,i)) {
+					if (haveToSwap(0,i)) {
 						var oldCell=$(this);
 						var newCell=oldRow.children().eq(i);
 						newCell.after(oldCell).remove();
@@ -111,11 +109,11 @@ $(function(){
 				newRow.remove();
 			}
 			if (rcDir) {
-				removeRow(1);
-				removeCol(0);
+				removeRow();
+				removeCol();
 			} else {
-				removeCol(1);
-				removeRow(0);
+				removeCol();
+				removeRow();
 			}
 			isExpanded=false;
 			tableNode.find('button.add-r, button.add-c').text('+').attr('title','expand table').off().click(expandTable);
