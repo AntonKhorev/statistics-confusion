@@ -5,13 +5,19 @@ var sourcemaps=require('gulp-sourcemaps');
 var less=require('gulp-less');
 var autoprefixer=require('gulp-autoprefixer');
 var minifyCss=require('gulp-minify-css');
+var concat=require('gulp-concat');
 var uglify=require('gulp-uglify');
 var fs=require('fs');
 var vm=require('vm');
 
 var htmlSrc='src/index.jade';
 var cssSrc='src/index.less';
-var jsSrc='src/index.js';
+var jsSrc=[
+	'src/intro.js',
+	'src/util.js',
+	'src/main.js',
+	'src/outro.js'
+];
 
 gulp.task('html',function(){
 	var ctx={};
@@ -39,6 +45,7 @@ gulp.task('js',function(){
 	gulp.src(jsSrc)
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
+		.pipe(concat('index.js'))
 		.pipe(uglify())
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('public_html'));
