@@ -5,18 +5,25 @@ $(function(){
 		var rcDir=0; // outcome headers on top?
 		var rcOrd=[0,0]; // outcomes swapped?, conditions swapped?
 		var isExpanded=false;
+		function wikipedia(block,url) {
+			return "<a href='"+url+"'>"+block+"</a>";
+		}
+		var TP="<span class='actual-true'>T</span><span class='predicted-true'>P</span>";
+		var FP="<span class='actual-false'>F</span><span class='predicted-true'>P</span>";
+		var FN="<span class='actual-true'>F</span><span class='predicted-false'>N</span>";
+		var TN="<span class='actual-false'>T</span><span class='predicted-false'>N</span>";
 		var expandData=[
 			[ // new row
 				"TODO R",
-				"<div class='label'>False negative rate</div><div class='formula'>FNR=FN/(TP+FN)</div>", // https://en.wikipedia.org/wiki/False_negative_rate
-				"<div class='label'>False positive rate</div><div class='formula'>FPR=FP/(FP+TN)</div>", // https://en.wikipedia.org/wiki/False_positive_rate
+				"<div class='label'>"+wikipedia("False negative rate","https://en.wikipedia.org/wiki/False_negative_rate")+"</div><div class='formula'>FNR="+FN+"/("+TP+"+"+FN+")</div>",
+				"<div class='label'>"+wikipedia("False positive rate","https://en.wikipedia.org/wiki/False_positive_rate")+"</div><div class='formula'>FPR="+FP+"/("+FP+"+"+TN+")</div>",
 				"",
 				""
 			],[ // new col
 				"TODO C",
-				"<div class='label'>False discovery rate</div><div class='formula'>FDR=FP/(TP+FP)</div>", // https://en.wikipedia.org/wiki/False_discovery_rate
-				"<div class='label'>False omission rate</div><div class='formula'>FOR=FN/(FN+TN)</div>", // https://en.wikipedia.org/wiki/False_omission_rate
-				"<div class='label'>Overall error rate</div><div class='formula'>(FP+FN)/(TP+FP+FN+TN)</div>",
+				"<div class='label'>"+wikipedia("False discovery rate","https://en.wikipedia.org/wiki/False_discovery_rate")+"</div><div class='formula'>FDR="+FP+"/("+TP+"+"+FP+")</div>",
+				"<div class='label'>"+wikipedia("False omission rate","https://en.wikipedia.org/wiki/False_omission_rate")+"</div><div class='formula'>FOR="+FN+"/("+FN+"+"+TN+")</div>",
+				"<div class='label'>Overall error rate</div><div class='formula'>("+FP+"+"+FN+")/("+TP+"+"+FP+"+"+FN+"+"+TN+")</div>",
 				""
 			]
 		];

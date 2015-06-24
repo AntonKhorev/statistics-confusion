@@ -2,17 +2,17 @@ mixin wikipedia(url)
 	a(href=url)
 		block
 mixin TP
-	span.true T
-	span.true P
-mixin TN
-	span.true T
-	span.false N
+	span.actual-true T
+	span.predicted-true P
 mixin FP
-	span.false F
-	span.true P
+	span.actual-false F
+	span.predicted-true P
 mixin FN
-	span.false F
-	span.false N
+	span.actual-true F
+	span.predicted-false N
+mixin TN
+	span.actual-false T
+	span.predicted-false N
 doctype html
 html(lang='en')
 	head
