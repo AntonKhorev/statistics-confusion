@@ -18,27 +18,29 @@ $(function(){
 				"<div class='label'>"+wikipedia("False negative rate","https://en.wikipedia.org/wiki/False_negative_rate")+"</div><div class='formula'>FNR="+FN+"/("+TP+"+"+FN+")</div>",
 				"<div class='label'>"+wikipedia("False positive rate","https://en.wikipedia.org/wiki/False_positive_rate")+"</div><div class='formula'>FPR="+FP+"/("+FP+"+"+TN+")</div>",
 				"<div class='label'>Overall error rate</div><div class='formula'>("+FP+"+"+FN+")/("+TP+"+"+FP+"+"+FN+"+"+TN+")</div>",
-				"<div class='label'>"+wikipedia("Negative likelihood ratio","https://en.wikipedia.org/wiki/Negative_likelihood_ratio")+"</div><div class='formula'>(LR-)=FNR/TNR</div>"
+				"" // not used
 			],[ // new col
 				"<div class='formula'>("+FP+"+"+TN+")/("+TP+"+"+FP+"+"+FN+"+"+TN+")</div>",
 				"<div class='label'>"+wikipedia("False discovery rate","https://en.wikipedia.org/wiki/False_discovery_rate")+"</div><div class='formula'>FDR="+FP+"/("+TP+"+"+FP+")</div>",
 				"<div class='label'>"+wikipedia("False omission rate","https://en.wikipedia.org/wiki/False_omission_rate")+"</div><div class='formula'>FOR="+FN+"/("+FN+"+"+TN+")</div>",
 				"<div class='label'>"+wikipedia("Positive likelihood ratio","https://en.wikipedia.org/wiki/Positive_likelihood_ratio")+"</div><div class='formula'>(LR+)=TPR/FPR</div>",
-				"" // not used
+				"<div class='label'>"+wikipedia("Negative likelihood ratio","https://en.wikipedia.org/wiki/Negative_likelihood_ratio")+"</div><div class='formula'>(LR-)=FNR/TNR</div>"
 			]
 		];
 		function expandTable() {
-			function makeCell(i,dir) {
+			function makeCell(callOrd,i,dir) {
 				if ((i==1 || i==2) && rcOrd[rcDir^dir^1]) {
-					i=3-i;
+					i^=1^2;
+				} else if (callOrd && (i==3 || i==4) && rcOrd[rcDir^dir^1]) {
+					i^=3^4;
 				}
 				var s=expandData[rcDir^dir][i];
 				return $("<td>").html(s);
 			}
 			if (isExpanded) return;
-			function addCol() {
+			function addCol(callOrd) {
 				tbodyNode.children().each(function(i){
-					var td=makeCell(i,1);
+					var td=makeCell(callOrd,i,1);
 					var swap=rcOrd[rcDir^1]&1;
 					if (i==1 || i==2) swap=((i-1)^rcOrd[0]^rcOrd[1])&1;
 					if (swap) {
@@ -48,11 +50,11 @@ $(function(){
 					}
 				});
 			}
-			function addRow() {
+			function addRow(callOrd) {
 				var newRowNode=$("<tr>");
 				tbodyNode.append(newRowNode);
 				tbodyNode.children().eq(-2).children().each(function(i){
-					var td=makeCell(i,0);
+					var td=makeCell(callOrd,i,0);
 					var swap=rcOrd[rcDir]&1;
 					if (i==1 || i==2) swap=((i-1)^rcOrd[0]^rcOrd[1])&1;
 					if (swap) {
@@ -64,11 +66,11 @@ $(function(){
 				});
 			}
 			if (rcDir) {
-				addRow();
-				addCol();
+				addCol(0);
+				addRow(1);
 			} else {
-				addCol();
-				addRow();
+				addRow(0);
+				addCol(1);
 			}
 			isExpanded=true;
 		}
