@@ -1,5 +1,5 @@
 function parseFormula(e) {
-	return e
+	return "<div class='formula'>"+e
 		.replace(/=/g,' = ')
 		.replace(/(\(.*\)|\w+)\/(\(.*\)|\w+)/,function(match,p1,p2){
 			function e(p) {
@@ -16,5 +16,5 @@ function parseFormula(e) {
 			"</span>";
 		})
 		.replace(/\b(TP|FP|FN|TN)\b/g,"<span class='term $&'>$&</span>")
-	;
+	+"</div>";
 }

@@ -12,17 +12,17 @@ $('table.statistics-confusion').each(function(){
 	}
 	var expandData=[
 		[ // new row
-			"<div class='formula'>"+parseFormula("(FN+TN)/(TP+FP+FN+TN)")+"</div>",
-			"<div class='label'>"+wikipedia("False negative rate")+"</div><div class='formula'>"+parseFormula("FNR=FN/(TP+FN)")+"</div>",
-			"<div class='label'>"+wikipedia("False positive rate")+"</div><div class='formula'>"+parseFormula("FPR=FP/(FP+TN)")+"</div>",
-			"<div class='label'>Overall error rate</div><div class='formula'>"+parseFormula("(FP+FN)/(TP+FP+FN+TN)")+"</div>",
+			parseFormula("(FN+TN)/(TP+FP+FN+TN)"),
+			"<div class='label'>"+wikipedia("False negative rate")+"</div>"+parseFormula("FNR=FN/(TP+FN)"),
+			"<div class='label'>"+wikipedia("False positive rate")+"</div>"+parseFormula("FPR=FP/(FP+TN)"),
+			"<div class='label'>Overall error rate</div>"+parseFormula("(FP+FN)/(TP+FP+FN+TN)"),
 			"" // not used
 		],[ // new col
-			"<div class='formula'>"+parseFormula("(FP+TN)/(TP+FP+FN+TN)")+"</div>",
-			"<div class='label'>"+wikipedia("False discovery rate")+"</div><div class='formula'>"+parseFormula("FDR=FP/(TP+FP)")+"</div>",
-			"<div class='label'>"+wikipedia("False omission rate")+"</div><div class='formula'>"+parseFormula("FOR=FN/(FN+TN)")+"</div>",
-			"<div class='label'>"+wikipedia("Positive likelihood ratio")+"</div><div class='formula'>"+parseFormula("(LR+)=TPR/FPR")+"</div>",
-			"<div class='label'>"+wikipedia("Negative likelihood ratio")+"</div><div class='formula'>"+parseFormula("(LR−)=FNR/TNR")+"</div>"
+			parseFormula("(FP+TN)/(TP+FP+FN+TN)"),
+			"<div class='label'>"+wikipedia("False discovery rate")+"</div>"+parseFormula("FDR=FP/(TP+FP)"),
+			"<div class='label'>"+wikipedia("False omission rate")+"</div>"+parseFormula("FOR=FN/(FN+TN)"),
+			"<div class='label'>"+wikipedia("Positive likelihood ratio")+"</div>"+parseFormula("(LR+)=TPR/FPR"),
+			"<div class='label'>"+wikipedia("Negative likelihood ratio")+"</div>"+parseFormula("(LR−)=FNR/TNR")
 		]
 	];
 	function haveToSwap(dir,i) {
