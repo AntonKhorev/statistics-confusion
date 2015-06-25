@@ -29,7 +29,7 @@ $('table.statistics-confusion').each(function(){
 		if (i==1 || i==2) {
 			return ((i-1)^rcOrd[0]^rcOrd[1])&1;
 		} else {
-			rcOrd[rcDir^dir]&1;
+			return rcOrd[rcDir^dir]&1;
 		}
 	}
 	function expandTable() {
