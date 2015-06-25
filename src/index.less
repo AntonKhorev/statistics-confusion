@@ -8,6 +8,7 @@
 @actual-false-color: #080;
 @predicted-true-color: #C40;
 @predicted-false-color: #04C;
+@highlight-color: #EF8;
 
 .visually-hidden() {
 	position: absolute;
@@ -37,8 +38,8 @@ table.statistics-confusion {
 	.term {
 		display: inline-block;
 		&.highlight {
-			background: rgba(255,255,0,0.5);
-			box-shadow: 0 0 0.2em 0.2em rgba(255,255,0,0.5);
+			background: fade(@highlight-color,50%);
+			box-shadow: 0 0 0.2em 0.2em fade(@highlight-color,50%);
 		}
 		&[data-term='TP']::first-letter, &[data-term='FN']::first-letter {
 			color: @actual-true-color;
@@ -83,7 +84,7 @@ table.statistics-confusion {
 		border: solid 1px #888;
 		padding: 0;
 		&.highlight {
-			background: rgba(255,255,0,0.2);
+			background: fade(@highlight-color,40%);
 		}
 		.formula {
 			font-weight: normal;
