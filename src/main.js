@@ -118,8 +118,17 @@ $('table.statistics-confusion').each(function(){
 		var c2=node.children().eq(i+1);
 		c1.before(c2);
 	}
+	function drawSwapIcon(angle) {
+		return "<svg width='100%' height='100%' viewBox='-2 -2 4 4'>"+
+			"<g transform='rotate("+angle+")'>"+
+			"<path d='M -1 1 V 0 A 1 1 0 0 1 1 0 V 1' fill='none' stroke='#000' stroke-width='0.25' />"+
+			"<path d='M -1.4 0.25 L -1 1 L -0.6 0.25 L -1 1.25 Z' stroke='#000' stroke-width='0.15' />"+
+			"<path d='M  1.4 0.25 L  1 1 L  0.6 0.25 L  1 1.25 Z' stroke='#000' stroke-width='0.15' />"+
+			"</g>"+
+		"</svg>";
+	}
 	tableNode.children('caption').append(
-		$("<button type='button' class='swap-rc' title='swap rows and columns'>↻</button>").click(function(){
+		$("<button type='button' class='swap-rc' title='swap rows and columns'>"+drawSwapIcon(-45)+"</button>").click(function(){
 			rcDir^=1;
 			var n=tbodyNode.children().length;
 			for (var i=0;i<n;i++) {
@@ -133,7 +142,7 @@ $('table.statistics-confusion').each(function(){
 			}
 		})
 	).append(
-		$("<button type='button' class='swap-c' title='swap columns'>↔</button>").click(function(){
+		$("<button type='button' class='swap-c' title='swap columns'>"+drawSwapIcon(0)+"</button>").click(function(){
 			rcOrd[rcDir^1]^=1;
 			tbodyNode.children().each(function(){
 				swapChildren($(this),1);
@@ -142,7 +151,7 @@ $('table.statistics-confusion').each(function(){
 			});
 		})
 	).append(
-		$("<button type='button' class='swap-r' title='swap rows'>↕</button>").click(function(){
+		$("<button type='button' class='swap-r' title='swap rows'>"+drawSwapIcon(-90)+"</button>").click(function(){
 			rcOrd[rcDir]^=1;
 			swapChildren(tbodyNode,1);
 			if (!isExpanded) return;
@@ -158,13 +167,4 @@ $('table.statistics-confusion').each(function(){
 	}).on('mouseleave','.term',function(){
 		tableNode.find("[class='"+this.className+"']").removeClass('highlight');
 	});
-
-	// svg test
-	tableNode.find('button.swap-c').html(
-		"<svg width='100%' height='100%' viewBox='-2 -2 4 4'>"+
-			"<path d='M -1 1 V 0 A 1 1 0 0 1 1 0 V 1' fill='none' stroke='#000' stroke-width='0.25' />"+
-			"<path d='M -1.4 0.25 L -1 1 L -0.6 0.25 L -1 1.25 Z' stroke='#000' stroke-width='0.15' />"+
-			"<path d='M  1.4 0.25 L  1 1 L  0.6 0.25 L  1 1.25 Z' stroke='#000' stroke-width='0.15' />"+
-		"</svg>"
-	);
 });
