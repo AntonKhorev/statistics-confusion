@@ -15,6 +15,6 @@ function parseFormula(e) {
 				"<span class='den'>"+e(p2)+"</span>"+
 			"</span>";
 		})
-		.replace(/\b(TP|FP|FN|TN)\b/g,"<span class='term $&'>$&</span>")
+		.replace(/\b[A-Z]+\b/g,"<span class='term $&'>$&</span>")
 	+"</div>";
 }
