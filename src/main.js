@@ -162,7 +162,7 @@ $('table.statistics-confusion').each(function(){
 	// svg test
 	tableNode.find('button.swap-c').html(
 		"<svg width='100%' height='100%' viewBox='-2 -2 4 4'>"+
-			"<path d='M -1 1 V 0 A 1 1 0 0 1 1 0 V 1' style='fill:none; stroke:#000; stroke-width: 0.3' />"+
+			"<path d='M -1.4 0.25 L -1 1 V 0 A 1 1 0 0 1 1 0 V 1 L 1.4 0.25' style='fill:none; stroke:#000; stroke-width:0.25; stroke-miterlimit:10' />"+
 		"</svg>"
 	);
 });
