@@ -12,17 +12,17 @@ $('table.statistics-confusion').each(function(){
 	}
 	var expandData=[
 		[ // new row
-			parseFormula("(FN+TN)/(TP+FP+FN+TN)"),
-			"<div class='label'>"+wikipedia("False negative rate")+"</div>"+parseFormula("FNR=FN/(TP+FN)"),
-			"<div class='label'>"+wikipedia("False positive rate")+"</div>"+parseFormula("FPR=FP/(FP+TN)"),
-			"<div class='label'>Overall error rate</div>"+parseFormula("(FP+FN)/(TP+FP+FN+TN)"),
-			"" // not used
+			[null,parseFormula("(FN+TN)/(TP+FP+FN+TN)")],
+			['FNR',"<div class='label'>"+wikipedia("False negative rate")+"</div>"+parseFormula("FNR=FN/(TP+FN)")],
+			['FPR',"<div class='label'>"+wikipedia("False positive rate")+"</div>"+parseFormula("FPR=FP/(FP+TN)")],
+			[null,"<div class='label'>Overall error rate</div>"+parseFormula("(FP+FN)/(TP+FP+FN+TN)")],
+			[null,""] // not used
 		],[ // new col
-			parseFormula("(FP+TN)/(TP+FP+FN+TN)"),
-			"<div class='label'>"+wikipedia("False discovery rate")+"</div>"+parseFormula("FDR=FP/(TP+FP)"),
-			"<div class='label'>"+wikipedia("False omission rate")+"</div>"+parseFormula("FOR=FN/(FN+TN)"),
-			"<div class='label'>"+wikipedia("Positive likelihood ratio")+"</div>"+parseFormula("PLR=TPR/FPR"),
-			"<div class='label'>"+wikipedia("Negative likelihood ratio")+"</div>"+parseFormula("NLR=FNR/TNR")
+			[null,parseFormula("(FP+TN)/(TP+FP+FN+TN)")],
+			['FDR',"<div class='label'>"+wikipedia("False discovery rate")+"</div>"+parseFormula("FDR=FP/(TP+FP)")],
+			['FOR',"<div class='label'>"+wikipedia("False omission rate")+"</div>"+parseFormula("FOR=FN/(FN+TN)")],
+			['PLR',"<div class='label'>"+wikipedia("Positive likelihood ratio")+"</div>"+parseFormula("PLR=TPR/FPR")],
+			['NLR',"<div class='label'>"+wikipedia("Negative likelihood ratio")+"</div>"+parseFormula("NLR=FNR/TNR")]
 		]
 	];
 	function haveToSwap(dir,i) {
@@ -41,8 +41,10 @@ $('table.statistics-confusion').each(function(){
 				} else if (callOrd && (j==3 || j==4) && rcOrd[rcDir^dir^1]) {
 					j^=3^4;
 				}
-				var cellHtml=expandData[rcDir^dir][j];
-				return $("<td>").html(cellHtml);
+				var cellData=expandData[rcDir^dir][j];
+				var cell=$("<td>").html(cellData[1]);
+				if (cellData[0]!==null) cell.attr('data-term',cellData[0]);
+				return cell;
 			}
 			var cell=makeCell();
 			if (haveToSwap(dir,i)) {
