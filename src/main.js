@@ -21,8 +21,8 @@ $('table.statistics-confusion').each(function(){
 			parseFormula("(FP+TN)/(TP+FP+FN+TN)"),
 			"<div class='label'>"+wikipedia("False discovery rate")+"</div>"+parseFormula("FDR=FP/(TP+FP)"),
 			"<div class='label'>"+wikipedia("False omission rate")+"</div>"+parseFormula("FOR=FN/(FN+TN)"),
-			"<div class='label'>"+wikipedia("Positive likelihood ratio")+"</div>"+parseFormula("(LR+)=TPR/FPR"),
-			"<div class='label'>"+wikipedia("Negative likelihood ratio")+"</div>"+parseFormula("(LR−)=FNR/TNR")
+			"<div class='label'>"+wikipedia("Positive likelihood ratio")+"</div>"+parseFormula("PLR=TPR/FPR"),
+			"<div class='label'>"+wikipedia("Negative likelihood ratio")+"</div>"+parseFormula("NLR=FNR/TNR")
 		]
 	];
 	function haveToSwap(dir,i) {

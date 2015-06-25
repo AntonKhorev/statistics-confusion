@@ -15,6 +15,14 @@ function parseFormula(e) {
 				"<span class='den'>"+e(p2)+"</span>"+
 			"</span>";
 		})
-		.replace(/\b[A-Z]+\b/g,"<span class='term $&'>$&</span>")
+		.replace(/\b[A-Z]+\b/g,function(match){
+			var vis=match;
+			if (match=='PLR') {
+				vis="LR<sub>+</sub>";
+			} else if (match=='NLR') {
+				vis="LR<sub>−</sub>";
+			}
+			return "<span class='term "+match+"'>"+vis+"</span>";
+		})
 	+"</div>";
 }
