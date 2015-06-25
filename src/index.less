@@ -36,6 +36,9 @@ table.statistics-confusion {
 	}
 	.term {
 		display: inline-block;
+		&.highlight {
+			background: #FF0;
+		}
 		&.TP::first-letter, &.FN::first-letter {
 			color: @actual-true-color;
 		}

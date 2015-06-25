@@ -152,5 +152,10 @@ $('table.statistics-confusion').each(function(){
 		$("<button type='button' class='add-c' title='expand table'>+</button>").click(expandTable)
 	).append(
 		$("<button type='button' class='add-r' title='expand table'>+</button>").click(expandTable)
-	)
+	);
+	tableNode.find('.term').hover(function(){
+		tableNode.find("[class='"+this.className+"']").addClass('highlight');
+	},function() {
+		tableNode.find("[class='"+this.className+"']").removeClass('highlight');
+	});
 });
