@@ -37,18 +37,19 @@ table.statistics-confusion {
 	.term {
 		display: inline-block;
 		&.highlight {
-			background: #FF0;
+			background: rgba(255,255,0,0.5);
+			box-shadow: 0 0 0.2em 0.2em rgba(255,255,0,0.5);
 		}
-		&.TP::first-letter, &.FN::first-letter {
+		&[data-term='TP']::first-letter, &[data-term='FN']::first-letter {
 			color: @actual-true-color;
 		}
-		&.FP::first-letter, &.TN::first-letter {
+		&[data-term='FP']::first-letter, &[data-term='TN']::first-letter {
 			color: @actual-false-color;
 		}
-		&.TP, &.FP {
+		&[data-term='TP'], &[data-term='FP'] {
 			color: @predicted-true-color;
 		}
-		&.FN, &.TN {
+		&[data-term='FN'], &[data-term='TN'] {
 			color: @predicted-false-color;
 		}
 	}
@@ -81,6 +82,9 @@ table.statistics-confusion {
 		text-align: center;
 		border: solid 1px #888;
 		padding: 0;
+		&.highlight {
+			background: rgba(255,255,0,0.2);
+		}
 		.formula {
 			font-weight: normal;
 			margin-top: .5em;

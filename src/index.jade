@@ -35,10 +35,10 @@ html(lang='en')
 					.label Test outcome positive
 					.label Predicted true
 					+formula('TP+FP')
-				td
+				td(data-term='TP')
 					.label: +wikipedia('https://en.wikipedia.org/wiki/True_positive') True positive
 					+formula('TP')
-				td
+				td(data-term='FP')
 					.label: +wikipedia('https://en.wikipedia.org/wiki/False_positive') False positive
 					+formula('FP')
 				td
@@ -50,10 +50,10 @@ html(lang='en')
 					.label Test outcome negative
 					.label Predicted false
 					+formula('FN+TN')
-				td
+				td(data-term='FN')
 					.label: +wikipedia('https://en.wikipedia.org/wiki/False_negative') False negative
 					+formula('FN')
-				td
+				td(data-term='TN')
 					.label: +wikipedia('https://en.wikipedia.org/wiki/True_negative') True negative
 					+formula('TN')
 				td
