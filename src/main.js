@@ -163,8 +163,10 @@ $('table.statistics-confusion').each(function(){
 		$("<button type='button' class='add-r' title='expand table'>+</button>").click(expandTable)
 	);
 	tableNode.on('mouseenter','.term',function(){
-		tableNode.find("[data-term='"+$(this).attr('data-term')+"']").addClass('highlight');
+		$(this).addClass('highlight');
+		tableNode.find("td[data-term='"+$(this).attr('data-term')+"']").addClass('highlight');
 	}).on('mouseleave','.term',function(){
-		tableNode.find("[data-term='"+$(this).attr('data-term')+"']").removeClass('highlight');
+		tableNode.find("td[data-term='"+$(this).attr('data-term')+"']").removeClass('highlight');
+		$(this).removeClass('highlight');
 	});
 });

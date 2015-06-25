@@ -41,7 +41,7 @@ html(lang='en')
 				td(data-term='FP')
 					.label: +wikipedia('https://en.wikipedia.org/wiki/False_positive') False positive
 					+formula('FP')
-				td
+				td(data-term='PPV')
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#Positive_predictive_value') Positive predictive value
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Precision_and_recall#Precision') Precision
 					+formula('PPV=TP/(TP+FP)')
@@ -56,18 +56,18 @@ html(lang='en')
 				td(data-term='TN')
 					.label: +wikipedia('https://en.wikipedia.org/wiki/True_negative') True negative
 					+formula('TN')
-				td
+				td(data-term='NPV')
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#Negative_predictive_value') Negative predictive value
 					+formula('NPV=TN/(FN+TN)')
 			tr
 				td
 					+formula('(TP+FP)/(TP+FP+FN+TN)')
-				td
+				td(data-term='TPR')
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Sensitivity') Sensitivity
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Precision_and_recall#Recall') Recall
 					.label True positive rate
 					+formula('TPR=TP/(TP+FN)')
-				td
+				td(data-term='TNR')
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Specificity') Specificity
 					.label True negative rate
 					+formula('TNR=TN/(FP+TN)')
