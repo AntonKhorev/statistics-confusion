@@ -4,6 +4,11 @@
 @buttonWidth: 2rem;
 @buttonHeight: 2rem;
 
+@actual-true-color: #800;
+@actual-false-color: #080;
+@predicted-true-color: #C40;
+@predicted-false-color: #04C;
+
 .visually-hidden() {
 	position: absolute;
 	left: -10000px;
@@ -29,17 +34,20 @@ table.statistics-confusion {
 			}
 		}
 	}
-	.actual-true {
-		color: #800;
-	}
-	.actual-false {
-		color: #080;
-	}
-	.predicted-true {
-		color: #C40;
-	}
-	.predicted-false {
-		color: #04C;
+	.term {
+		display: inline-block;
+		&.TP::first-letter, &.FN::first-letter {
+			color: @actual-true-color;
+		}
+		&.FP::first-letter, &.TN::first-letter {
+			color: @actual-false-color;
+		}
+		&.TP, &.FP {
+			color: @predicted-true-color;
+		}
+		&.FN, &.TN {
+			color: @predicted-false-color;
+		}
 	}
 	.sfrac { // like in wikipedia: https://en.wikipedia.org/wiki/Template:Sfrac
 		display: inline-block;
