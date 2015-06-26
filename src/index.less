@@ -86,18 +86,16 @@ table.statistics-confusion {
 		&.highlight {
 			background: fade(@highlight-color,40%);
 		}
-		&.actual-true .label {
-			color: @actual-true-color;
+		.label-color-code(@type) {
+			&.@{type} .label {
+				@color: "@{type}-color";
+				color: @@color;
+			}
 		}
-		&.actual-false .label {
-			color: @actual-false-color;
-		}
-		&.predicted-true .label {
-			color: @predicted-true-color;
-		}
-		&.predicted-false .label {
-			color: @predicted-false-color;
-		}
+		.label-color-code(actual-true);
+		.label-color-code(actual-false);
+		.label-color-code(predicted-true);
+		.label-color-code(predicted-false);
 		.formula {
 			font-weight: normal;
 			margin-top: .5em;
