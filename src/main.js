@@ -153,14 +153,14 @@ $('table.statistics-confusion').each(function(){
 			});
 		})
 	).append(
+		$("<button type='button' class='add-c' title='expand table'>+</button>").click(expandTable)
+	).append(
 		$("<button type='button' class='swap-r' title='swap rows'>"+drawSwapIcon(-90)+"</button>").click(function(){
 			rcOrd[rcDir]^=1;
 			swapChildren(tbodyNode,1);
 			if (!isExpanded) return;
 			swapChildren(tbodyNode,3);
 		})
-	).append(
-		$("<button type='button' class='add-c' title='expand table'>+</button>").click(expandTable)
 	).append(
 		$("<button type='button' class='add-r' title='expand table'>+</button>").click(expandTable)
 	);
