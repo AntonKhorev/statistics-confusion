@@ -1,5 +1,7 @@
 @cell-width: 12rem;
 @cell-height: 7rem;
+@cell-border-width: 1px;
+@central-cell-border-width: 3px;
 @caption-height: 4rem;
 @button-width: 2rem;
 @button-height: 2rem;
@@ -81,7 +83,7 @@ table.statistics-confusion {
 		height: @cell-height;
 		min-height: @cell-height;
 		text-align: center;
-		border: solid 1px #888;
+		border: solid @cell-border-width #888;
 		padding: 0;
 		&.highlight {
 			background: fade(@highlight-color,40%);
@@ -104,6 +106,22 @@ table.statistics-confusion {
 			margin: 0;
 		}
 	}
+	tr:nth-child(2) td:nth-child(2) {
+		border-top-width: @central-cell-border-width;
+		border-left-width: @central-cell-border-width;
+	}
+	tr:nth-child(2) td:nth-child(3) {
+		border-top-width: @central-cell-border-width;
+		border-right-width: @central-cell-border-width;
+	}
+	tr:nth-child(3) td:nth-child(2) {
+		border-bottom-width: @central-cell-border-width;
+		border-left-width: @central-cell-border-width;
+	}
+	tr:nth-child(3) td:nth-child(3) {
+		border-bottom-width: @central-cell-border-width;
+		border-right-width: @central-cell-border-width;
+	}
 	button {
 		position: absolute;
 		width: @button-width;
@@ -123,18 +141,18 @@ table.statistics-confusion {
 		}
 		&.swap-c {
 			top: @caption-height - @button-height/2;
-			left: calc(@cell-width*2 - @button-width/2 ~'+' 2px);
+			left: calc(@cell-width*2 - @button-width/2 ~'+' @cell-border-width + @central-cell-border-width);
 		}
 		&.swap-r {
-			top: calc(@caption-height + @cell-height*2 - @button-height/2 ~'+' 2px);
+			top: calc(@caption-height + @cell-height*2 - @button-height/2 ~'+' @cell-border-width + @central-cell-border-width);
 			left: -@button-width/2;
 		}
 		&.add-c {
 			top: @caption-height - @button-height/2;
-			left: calc(@cell-width*4 - @button-width/2 ~'+' 4px);
+			left: calc(@cell-width*4 - @button-width/2 ~'+' 2*(@cell-border-width + @central-cell-border-width));
 		}
 		&.add-r {
-			top: calc(@caption-height + @cell-height*4 - @button-height/2 ~'+' 4px);
+			top: calc(@caption-height + @cell-height*4 - @button-height/2 ~'+' 2*(@cell-border-width + @central-cell-border-width));
 			left: -@button-width/2;
 		}
 		svg {
