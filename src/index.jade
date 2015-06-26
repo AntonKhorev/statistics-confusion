@@ -19,11 +19,11 @@ html(lang='en')
 				th
 					.label Total
 					+formula('TP+FP+FN+TN')
-				th
+				th.actual-true
 					.label Condition positive
 					.label Actual true
 					+formula('TP+FN')
-				th
+				th.actual-false
 					.label Condition negative
 					.label Actual false
 					+formula('FP+TN')
@@ -31,7 +31,7 @@ html(lang='en')
 					.label Prevalence
 					+formula('(TP+FN)/(TP+FP+FN+TN)')
 			tr
-				th
+				th.predicted-true
 					.label Test outcome positive
 					.label Predicted true
 					+formula('TP+FP')
@@ -46,7 +46,7 @@ html(lang='en')
 					.label: +wikipedia('https://en.wikipedia.org/wiki/Precision_and_recall#Precision') Precision
 					+formula('PPV=TP/(TP+FP)')
 			tr
-				th
+				th.predicted-false
 					.label Test outcome negative
 					.label Predicted false
 					+formula('FN+TN')
