@@ -1,8 +1,8 @@
-@cellWidth: 12rem;
-@cellHeight: 7rem;
-@captionHeight: 4rem;
-@buttonWidth: 2rem;
-@buttonHeight: 2rem;
+@cell-width: 12rem;
+@cell-height: 7rem;
+@caption-height: 4rem;
+@button-width: 2rem;
+@button-height: 2rem;
 
 @actual-true-color: #800;
 @actual-false-color: #080;
@@ -71,15 +71,15 @@ table.statistics-confusion {
 		}
 	}
 	caption {
-		height: @captionHeight;
-		line-height: @captionHeight;
+		height: @caption-height;
+		line-height: @caption-height;
 		font-size: 150%;
 	}
 	td, th {
-		width: @cellWidth;
-		min-width: @cellWidth;
-		height: @cellHeight;
-		min-height: @cellHeight;
+		width: @cell-width;
+		min-width: @cell-width;
+		height: @cell-height;
+		min-height: @cell-height;
 		text-align: center;
 		border: solid 1px #888;
 		padding: 0;
@@ -106,8 +106,8 @@ table.statistics-confusion {
 	}
 	button {
 		position: absolute;
-		width: @buttonWidth;
-		height: @buttonHeight;
+		width: @button-width;
+		height: @button-height;
 		font-size: 100%;
 		line-height: 100%;
 		padding: 0;
@@ -118,24 +118,24 @@ table.statistics-confusion {
 			background: #DDF;
 		}
 		&.swap-rc {
-			top: @captionHeight - @buttonHeight/2;
-			left: -@buttonWidth/2;
+			top: @caption-height - @button-height/2;
+			left: -@button-width/2;
 		}
 		&.swap-c {
-			top: @captionHeight - @buttonHeight/2;
-			left: calc(@cellWidth*2 - @buttonWidth/2 ~'+' 2px);
+			top: @caption-height - @button-height/2;
+			left: calc(@cell-width*2 - @button-width/2 ~'+' 2px);
 		}
 		&.swap-r {
-			top: calc(@captionHeight + @cellHeight*2 - @buttonHeight/2 ~'+' 2px);
-			left: -@buttonWidth/2;
+			top: calc(@caption-height + @cell-height*2 - @button-height/2 ~'+' 2px);
+			left: -@button-width/2;
 		}
 		&.add-c {
-			top: @captionHeight - @buttonHeight/2;
-			left: calc(@cellWidth*4 - @buttonWidth/2 ~'+' 4px);
+			top: @caption-height - @button-height/2;
+			left: calc(@cell-width*4 - @button-width/2 ~'+' 4px);
 		}
 		&.add-r {
-			top: calc(@captionHeight + @cellHeight*4 - @buttonHeight/2 ~'+' 4px);
-			left: -@buttonWidth/2;
+			top: calc(@caption-height + @cell-height*4 - @button-height/2 ~'+' 4px);
+			left: -@button-width/2;
 		}
 		svg {
 			display: block;
