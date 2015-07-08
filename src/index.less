@@ -43,17 +43,19 @@ table.statistics-confusion {
 			background: fade(@highlight-color,50%);
 			box-shadow: 0 0 0.2em 0.2em fade(@highlight-color,50%);
 		}
-		&[data-term='TP']::first-letter, &[data-term='FN']::first-letter {
-			color: @actual-true-color;
-		}
-		&[data-term='FP']::first-letter, &[data-term='TN']::first-letter {
-			color: @actual-false-color;
-		}
-		&[data-term='TP'], &[data-term='FP'] {
-			color: @predicted-true-color;
-		}
-		&[data-term='FN'], &[data-term='TN'] {
-			color: @predicted-false-color;
+		&.symbol {
+			&[data-term='TP']::first-letter, &[data-term='FN']::first-letter {
+				color: @actual-true-color;
+			}
+			&[data-term='FP']::first-letter, &[data-term='TN']::first-letter {
+				color: @actual-false-color;
+			}
+			&[data-term='TP'], &[data-term='FP'] {
+				color: @predicted-true-color;
+			}
+			&[data-term='FN'], &[data-term='TN'] {
+				color: @predicted-false-color;
+			}
 		}
 	}
 	.sfrac { // like in wikipedia: https://en.wikipedia.org/wiki/Template:Sfrac

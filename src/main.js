@@ -182,32 +182,35 @@ $('table.statistics-confusion').each(function(){
 	function updateFormulas() {
 		tableNode.find('.formula').each(function(){
 			var formula=$(this);
-			$.each(terms,function(term){
-				formula.find(".term[data-term='"+term+"']").html(
-					terms[term]===null ? term : terms[term]
-				);
+			$.each(terms,function(termSymbol){
+				var term=formula.find(".term[data-term='"+termSymbol+"']");
+				if (terms[termSymbol]===null) {
+					term.removeClass('number').addClass('symbol').html(termSymbol);
+				} else {
+					term.removeClass('symbol').addClass('number').html(terms[termSymbol]);
+				}
 			});
 		});
 	}
-	$.each(terms,function(term){
-		var td=tableNode.find("td[data-term='"+term+"']");
+	$.each(terms,function(termSymbol){
+		var td=tableNode.find("td[data-term='"+termSymbol+"']");
 		td.append(
 			$("<div class='buttons' />").append(
 				$("<input type='button' value='Set number' />").click(function(){
-					if (terms[term]===null) {
-						terms[term]=0;
+					if (terms[termSymbol]===null) {
+						terms[termSymbol]=0;
 						td.children('.formula').empty().append(
 							$("<input type='number' min='0' value='0' required />").on('input',function(){
 								if (this.validity.valid) {
-									terms[term]=this.valueAsNumber;
+									terms[termSymbol]=this.valueAsNumber;
 									updateFormulas();
 								}
 							})
 						);
 						$(this).val('Remove number');
 					} else {
-						terms[term]=null;
-						td.children('.formula').html(parseFormula(term));
+						terms[termSymbol]=null;
+						td.children('.formula').html(parseFormula(termSymbol));
 						$(this).val('Set number');
 					}
 					updateFormulas();
