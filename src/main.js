@@ -173,12 +173,22 @@ $('table.statistics-confusion').each(function(){
 	});
 
 	// number inputs
-	terms={
+	var terms={
 		'TP':null,
 		'FP':null,
 		'FN':null,
 		'TN':null
 	};
+	function updateFormulas() {
+		tableNode.find('.formula').each(function(){
+			var formula=$(this);
+			$.each(terms,function(term){
+				formula.find(".term[data-term='"+term+"']").html(
+					terms[term]===null ? term : terms[term]
+				);
+			});
+		});
+	}
 	$.each(terms,function(term){
 		var td=tableNode.find("td[data-term='"+term+"']");
 		td.append(
@@ -186,13 +196,21 @@ $('table.statistics-confusion').each(function(){
 				$("<input type='button' value='Set number' />").click(function(){
 					if (terms[term]===null) {
 						terms[term]=0;
-						td.children('.formula').html("<input type='number' min='0' value='0' required />");
+						td.children('.formula').empty().append(
+							$("<input type='number' min='0' value='0' required />").on('input',function(){
+								if (this.validity.valid) {
+									terms[term]=this.valueAsNumber;
+									updateFormulas();
+								}
+							})
+						);
 						$(this).val('Remove number');
 					} else {
 						terms[term]=null;
 						td.children('.formula').html(parseFormula(term));
 						$(this).val('Set number');
 					}
+					updateFormulas();
 				})
 			)
 		);
