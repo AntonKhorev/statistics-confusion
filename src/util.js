@@ -46,13 +46,18 @@ function makeFormulaSubstitutions(formula,subs) {
 					return gcd(b,a%b);
 				}
 			};
-			n=parseInt(num);
-			d=parseInt(den);
-			g=gcd(n,d);
+			// http://stackoverflow.com/a/661757
+			function toFixed(value,precision) {
+				var power=Math.pow(10,precision||0);
+				return String(Math.round(value*power)/power);
+			}
+			var n=parseInt(num);
+			var d=parseInt(den);
+			var g=gcd(n,d);
 			if (parseInt(d/g)==1) {
 				return ''+parseInt(n/g);
 			} else {
-				return ''+parseInt(n/g)+'/'+parseInt(d/g)+'='+(n/d);
+				return ''+parseInt(n/g)+'/'+parseInt(d/g)+'='+toFixed(n/d,6);
 			}
 		}
 		if (node.type=='def') {
