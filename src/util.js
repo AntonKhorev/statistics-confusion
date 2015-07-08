@@ -132,3 +132,7 @@ function makeFormulaHtml(formula) {
 function makeWrappedFormulaHtml(formula) {
 	return "<div class='formula' data-formula='"+formula+"'>"+makeFormulaHtml(formula)+"</div>";
 }
+
+function makeEmptyFormulaHtml(formula) {
+	return "<div class='formula' data-formula='"+formula+"' />";
+}

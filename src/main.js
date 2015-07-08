@@ -12,17 +12,17 @@ $('table.statistics-confusion').each(function(){
 	}
 	var expandData=[
 		[ // new row
-			[null,makeWrappedFormulaHtml("(FN+TN)/(TP+FP+FN+TN)")],
-			['FNR',"<div class='label'>"+wikipedia("False negative rate")+"</div>"+makeWrappedFormulaHtml("FNR=FN/(TP+FN)")],
-			['FPR',"<div class='label'>"+wikipedia("False positive rate")+"</div>"+makeWrappedFormulaHtml("FPR=FP/(FP+TN)")],
-			[null,"<div class='label'>Overall error rate</div>"+makeWrappedFormulaHtml("(FP+FN)/(TP+FP+FN+TN)")],
+			[null,makeEmptyFormulaHtml("(FN+TN)/(TP+FP+FN+TN)")],
+			['FNR',"<div class='label'>"+wikipedia("False negative rate")+"</div>"+makeEmptyFormulaHtml("FNR=FN/(TP+FN)")],
+			['FPR',"<div class='label'>"+wikipedia("False positive rate")+"</div>"+makeEmptyFormulaHtml("FPR=FP/(FP+TN)")],
+			[null,"<div class='label'>Overall error rate</div>"+makeEmptyFormulaHtml("(FP+FN)/(TP+FP+FN+TN)")],
 			[null,""] // not used
 		],[ // new col
-			[null,makeWrappedFormulaHtml("(FP+TN)/(TP+FP+FN+TN)")],
-			['FDR',"<div class='label'>"+wikipedia("False discovery rate")+"</div>"+makeWrappedFormulaHtml("FDR=FP/(TP+FP)")],
-			['FOR',"<div class='label'>"+wikipedia("False omission rate")+"</div>"+makeWrappedFormulaHtml("FOR=FN/(FN+TN)")],
-			['PLR',"<div class='label'>"+wikipedia("Positive likelihood ratio")+"</div>"+makeWrappedFormulaHtml("PLR=TPR/FPR")],
-			['NLR',"<div class='label'>"+wikipedia("Negative likelihood ratio")+"</div>"+makeWrappedFormulaHtml("NLR=FNR/TNR")]
+			[null,makeEmptyFormulaHtml("(FP+TN)/(TP+FP+FN+TN)")],
+			['FDR',"<div class='label'>"+wikipedia("False discovery rate")+"</div>"+makeEmptyFormulaHtml("FDR=FP/(TP+FP)")],
+			['FOR',"<div class='label'>"+wikipedia("False omission rate")+"</div>"+makeEmptyFormulaHtml("FOR=FN/(FN+TN)")],
+			['PLR',"<div class='label'>"+wikipedia("Positive likelihood ratio")+"</div>"+makeEmptyFormulaHtml("PLR=TPR/FPR")],
+			['NLR',"<div class='label'>"+wikipedia("Negative likelihood ratio")+"</div>"+makeEmptyFormulaHtml("NLR=FNR/TNR")]
 		]
 	];
 	function haveToSwap(dir,i) {
@@ -85,6 +85,7 @@ $('table.statistics-confusion').each(function(){
 		}
 		isExpanded=true;
 		tableNode.find('button.add-r, button.add-c').text('−').attr('title','contract table').off().click(contractTable);
+		updateFormulas();
 	}
 	function contractTable() {
 		function removeCol() {
