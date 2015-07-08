@@ -171,13 +171,28 @@ $('table.statistics-confusion').each(function(){
 		tableNode.find("td[data-term='"+$(this).attr('data-term')+"']").removeClass('highlight');
 		$(this).removeClass('highlight');
 	});
-	tableNode.find("td[data-term='TP']").each(function(){
-		var td=$(this);
+
+	// number inputs
+	terms={
+		'TP':null,
+		'FP':null,
+		'FN':null,
+		'TN':null
+	};
+	$.each(terms,function(term){
+		var td=tableNode.find("td[data-term='"+term+"']");
 		td.append(
 			$("<div class='buttons' />").append(
 				$("<input type='button' value='Set number' />").click(function(){
-					td.children('.formula').html("<input type='number' min='0' value='0' required />");
-					$(this).val('Remove number');
+					if (terms[term]===null) {
+						terms[term]=0;
+						td.children('.formula').html("<input type='number' min='0' value='0' required />");
+						$(this).val('Remove number');
+					} else {
+						terms[term]=null;
+						td.children('.formula').html(parseFormula(term));
+						$(this).val('Set number');
+					}
 				})
 			)
 		);
