@@ -2,7 +2,7 @@ mixin wikipedia(url)
 	a(href=url)
 		block
 mixin formula(e)
-	!= parseFormula(e)
+	!= makeWrappedFormulaHtml(e)
 doctype html
 html(lang='en')
 	head

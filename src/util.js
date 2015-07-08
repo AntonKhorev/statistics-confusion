@@ -1,5 +1,9 @@
-function parseFormula(e) {
-	return "<div class='formula'>"+e
+function makeFormulaSubstitutions(e,subs) {
+	return e; // TODO
+}
+
+function makeFormulaHtml(e) {
+	return e
 		.replace(/=/g,' = ')
 		.replace(/(\(.*\)|\w+)\/(\(.*\)|\w+)/,function(match,p1,p2){
 			function e(p) {
@@ -24,5 +28,9 @@ function parseFormula(e) {
 			}
 			return "<span class='term symbol' data-term='"+match+"'>"+vis+"</span>";
 		})
-	+"</div>";
+	;
+}
+
+function makeWrappedFormulaHtml(e) {
+	return "<div class='formula' data-formula='"+e+"'>"+makeFormulaHtml(e)+"</div>";
 }

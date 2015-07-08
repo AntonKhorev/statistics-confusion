@@ -12,17 +12,17 @@ $('table.statistics-confusion').each(function(){
 	}
 	var expandData=[
 		[ // new row
-			[null,parseFormula("(FN+TN)/(TP+FP+FN+TN)")],
-			['FNR',"<div class='label'>"+wikipedia("False negative rate")+"</div>"+parseFormula("FNR=FN/(TP+FN)")],
-			['FPR',"<div class='label'>"+wikipedia("False positive rate")+"</div>"+parseFormula("FPR=FP/(FP+TN)")],
-			[null,"<div class='label'>Overall error rate</div>"+parseFormula("(FP+FN)/(TP+FP+FN+TN)")],
+			[null,makeWrappedFormulaHtml("(FN+TN)/(TP+FP+FN+TN)")],
+			['FNR',"<div class='label'>"+wikipedia("False negative rate")+"</div>"+makeWrappedFormulaHtml("FNR=FN/(TP+FN)")],
+			['FPR',"<div class='label'>"+wikipedia("False positive rate")+"</div>"+makeWrappedFormulaHtml("FPR=FP/(FP+TN)")],
+			[null,"<div class='label'>Overall error rate</div>"+makeWrappedFormulaHtml("(FP+FN)/(TP+FP+FN+TN)")],
 			[null,""] // not used
 		],[ // new col
-			[null,parseFormula("(FP+TN)/(TP+FP+FN+TN)")],
-			['FDR',"<div class='label'>"+wikipedia("False discovery rate")+"</div>"+parseFormula("FDR=FP/(TP+FP)")],
-			['FOR',"<div class='label'>"+wikipedia("False omission rate")+"</div>"+parseFormula("FOR=FN/(FN+TN)")],
-			['PLR',"<div class='label'>"+wikipedia("Positive likelihood ratio")+"</div>"+parseFormula("PLR=TPR/FPR")],
-			['NLR',"<div class='label'>"+wikipedia("Negative likelihood ratio")+"</div>"+parseFormula("NLR=FNR/TNR")]
+			[null,makeWrappedFormulaHtml("(FP+TN)/(TP+FP+FN+TN)")],
+			['FDR',"<div class='label'>"+wikipedia("False discovery rate")+"</div>"+makeWrappedFormulaHtml("FDR=FP/(TP+FP)")],
+			['FOR',"<div class='label'>"+wikipedia("False omission rate")+"</div>"+makeWrappedFormulaHtml("FOR=FN/(FN+TN)")],
+			['PLR',"<div class='label'>"+wikipedia("Positive likelihood ratio")+"</div>"+makeWrappedFormulaHtml("PLR=TPR/FPR")],
+			['NLR',"<div class='label'>"+wikipedia("Negative likelihood ratio")+"</div>"+makeWrappedFormulaHtml("NLR=FNR/TNR")]
 		]
 	];
 	function haveToSwap(dir,i) {
@@ -210,7 +210,7 @@ $('table.statistics-confusion').each(function(){
 						$(this).val('Remove number');
 					} else {
 						terms[termSymbol]=null;
-						td.children('.formula').html(parseFormula(termSymbol));
+						td.children('.formula').html(makeFormulaHtml(termSymbol));
 						$(this).val('Set number');
 					}
 					updateFormulas();
