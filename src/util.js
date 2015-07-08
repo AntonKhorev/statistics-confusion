@@ -112,7 +112,7 @@ function makeFormulaHtml(formula) {
 			} else if (match=='NLR') {
 				vis="LR<sub>−</sub>";
 			}
-			return "<span class='term symbol' data-term='"+match+"'>"+vis+"</span>";
+			return "<span class='term' data-term='"+match+"'>"+vis+"</span>";
 		})
 	;
 }

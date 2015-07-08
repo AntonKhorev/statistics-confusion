@@ -173,44 +173,49 @@ $('table.statistics-confusion').each(function(){
 	});
 
 	// number inputs
-	var terms={
-		'TP':null,
-		'FP':null,
-		'FN':null,
-		'TN':null
+	var termInputs={
+		'TP':false,
+		'FP':false,
+		'FN':false,
+		'TN':false
+	};
+	var termValues={
+		'TP':0,
+		'FP':0,
+		'FN':0,
+		'TN':0
 	};
 	function updateFormulas() {
-		tableNode.find('.formula').each(function(){
+		var subs={};
+		for (term in termInputs) {
+			if (termInputs[term]) {
+				subs[term]=termValues[term];
+			}
+		}
+		tableNode.find('.formula:not(.input)').each(function(){
 			var formula=$(this);
-			$.each(terms,function(termSymbol){
-				var term=formula.find(".term[data-term='"+termSymbol+"']");
-				if (terms[termSymbol]===null) {
-					term.removeClass('number').addClass('symbol').html(termSymbol);
-				} else {
-					term.removeClass('symbol').addClass('number').html(terms[termSymbol]);
-				}
-			});
+			formula.html(makeFormulaHtml(makeFormulaSubstitutions(formula.attr('data-formula'),subs)));
 		});
 	}
-	$.each(terms,function(termSymbol){
-		var td=tableNode.find("td[data-term='"+termSymbol+"']");
+	$.each(termInputs,function(term){
+		var td=tableNode.find("td[data-term='"+term+"']");
 		td.append(
 			$("<div class='buttons' />").append(
 				$("<input type='button' value='Set number' />").click(function(){
-					if (terms[termSymbol]===null) {
-						terms[termSymbol]=0;
-						td.children('.formula').empty().append(
-							$("<input type='number' min='0' value='0' required />").on('input',function(){
+					if (!termInputs[term]) {
+						termInputs[term]=true;
+						td.children('.formula').addClass('input').empty().append(
+							$("<input type='number' min='0' value='"+termValues[term]+"' required />").on('input',function(){
 								if (this.validity.valid) {
-									terms[termSymbol]=this.valueAsNumber;
+									termValues[term]=this.valueAsNumber;
 									updateFormulas();
 								}
 							})
 						);
 						$(this).val('Remove number');
 					} else {
-						terms[termSymbol]=null;
-						td.children('.formula').html(makeFormulaHtml(termSymbol));
+						termInputs[term]=false;
+						td.children('.formula').removeClass('input').html(makeFormulaHtml(term));
 						$(this).val('Set number');
 					}
 					updateFormulas();
