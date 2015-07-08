@@ -208,7 +208,8 @@ $('table.statistics-confusion').each(function(){
 						td.children('.formula').addClass('input').empty().append(
 							$("<input type='number' min='0' value='"+termValues[term]+"' required />").on('input',function(){
 								if (this.validity.valid) {
-									termValues[term]=this.valueAsNumber;
+									//termValues[term]=this.valueAsNumber; // doesn't work in IE
+									termValues[term]=parseInt(this.value);
 									updateFormulas();
 								}
 							})
