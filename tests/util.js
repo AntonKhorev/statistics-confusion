@@ -12,12 +12,6 @@ testSubstitutions(
 	'TERM'
 );
 
-//testSubstitutions(
-//	{TERM:null},
-//	'TERM',
-//	'TERM'
-//);
-
 testSubstitutions(
 	{TERM:23},
 	'TERM',
@@ -100,6 +94,12 @@ testSubstitutions(
 	{TPR:50,FN:5},
 	'TPR=TP/(TP+FN)',
 	'TPR=TP/(TP+5)'
+);
+
+testSubstitutions(
+	{A:3,B:1},
+	'A/B',
+	'3'
 );
 
 console.log('tests ok');

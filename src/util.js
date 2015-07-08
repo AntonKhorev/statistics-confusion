@@ -49,7 +49,11 @@ function makeFormulaSubstitutions(formula,subs) {
 			n=parseInt(num);
 			d=parseInt(den);
 			g=gcd(n,d);
-			return ''+parseInt(n/g)+'/'+parseInt(d/g)+'='+(n/d);
+			if (parseInt(d/g)==1) {
+				return ''+parseInt(n/g);
+			} else {
+				return ''+parseInt(n/g)+'/'+parseInt(d/g)+'='+(n/d);
+			}
 		}
 		if (node.type=='def') {
 			return node.lhs+'='+synth(node.rhs);
