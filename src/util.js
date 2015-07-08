@@ -53,6 +53,9 @@ function makeFormulaSubstitutions(formula,subs) {
 			}
 			var n=parseInt(num);
 			var d=parseInt(den);
+			if (d==0) {
+				return ''+n+'/0';
+			}
 			var g=gcd(n,d);
 			if (parseInt(d/g)==1) {
 				return ''+parseInt(n/g);

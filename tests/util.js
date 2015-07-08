@@ -108,4 +108,10 @@ testSubstitutions(
 	'1/3=0.333333'
 );
 
+testSubstitutions(
+	{A:0,B:0},
+	'A/B',
+	'0/0'
+);
+
 console.log('tests ok');
