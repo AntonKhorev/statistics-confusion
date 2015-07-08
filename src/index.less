@@ -106,18 +106,13 @@ table.statistics-confusion {
 			}
 			input {
 				text-align: center;
+				&:invalid {
+					background: #F8A;
+				}
 			}
-			input:not(:focus) {
-				opacity: 0;
-				width: 0;
-				height: 0;
-				border-left: none;
-				border-right: none;
-				//overflow: hidden; // doesn't work in FF
-			}
-			input:focus + label {
-				display: none;
-			}
+		}
+		.buttons {
+			margin-top: .5em;
 		}
 	}
 	tr:nth-child(2) td:nth-child(2) {

@@ -171,11 +171,15 @@ $('table.statistics-confusion').each(function(){
 		tableNode.find("td[data-term='"+$(this).attr('data-term')+"']").removeClass('highlight');
 		$(this).removeClass('highlight');
 	});
-	tableNode.find("td[data-term='TP'] .term[data-term='TP']").each(function(){
-		var term=$(this);
-		term.wrap("<label for='lsdkgldskgfl' />");
-		var formula=term.closest('.formula');
-		formula.prepend("<input type='number' min='0' placeholder='TP' id='lsdkgldskgfl' />");
-		//formula.prepend("<span class='input'>wat</span>");
+	tableNode.find("td[data-term='TP']").each(function(){
+		var td=$(this);
+		td.append(
+			$("<div class='buttons' />").append(
+				$("<input type='button' value='Set number' />").click(function(){
+					td.children('.formula').html("<input type='number' min='0' value='0' required />");
+					$(this).val('Remove number');
+				})
+			)
+		);
 	});
 });
