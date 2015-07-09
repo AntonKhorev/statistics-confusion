@@ -205,15 +205,20 @@ $('table.statistics-confusion').each(function(){
 				$("<input type='button' value='Set number' />").click(function(){
 					if (!termInputs[term]) {
 						termInputs[term]=true;
-						td.children('.formula').attr('class','input').empty().append(
-							$("<input type='number' min='0' value='"+termValues[term]+"' required />").on('input',function(){
-								if (this.validity.valid) {
-									//termValues[term]=this.valueAsNumber; // doesn't work in IE
-									termValues[term]=parseInt(this.value);
-									updateFormulas();
-								}
-							})
+						var fi=td.children('.formula');
+						fi.attr('class','input').html(
+							"<label>"+
+								"<span class='aux'>"+td.children('.label').eq(0).text()+" </span>"+
+								"<input type='number' min='0' value='"+termValues[term]+"' required />"+
+							"</label>"
 						);
+						fi.find('input').on('input',function(){
+							if (this.validity.valid) {
+								//termValues[term]=this.valueAsNumber; // doesn't work in IE
+								termValues[term]=parseInt(this.value);
+								updateFormulas();
+							}
+						});
 						$(this).val('Remove number');
 					} else {
 						termInputs[term]=false;
