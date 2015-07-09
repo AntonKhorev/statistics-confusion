@@ -1,3 +1,5 @@
+// TODO replace with newtest.js
+
 var fs=require('fs');
 eval(fs.readFileSync('../src/expr-symbolic.js')+'');
 var assert=require('assert');
@@ -147,6 +149,60 @@ testSubstitutions(
 	{A:0,B:0},
 	'A/B',
 	'0/0'
+);
+
+testSubstitutions(
+	{TPR:makeNumericFraction(1,1)},
+	'TPR/FPR',
+	'1/FPR'
+);
+
+testSubstitutions(
+	{TPR:makeNumericFraction(1,2)},
+	'TPR/FPR',
+	'1/(2*FPR)'
+);
+
+testSubstitutions(
+	{TPR:makeNumericFraction(2,1)},
+	'TPR/FPR',
+	'2/FPR'
+);
+
+testSubstitutions(
+	{FPR:makeNumericFraction(1,1)},
+	'TPR/FPR',
+	'TPR'
+);
+
+testSubstitutions(
+	{FPR:makeNumericFraction(2,1)},
+	'TPR/FPR',
+	'TPR/2'
+);
+
+testSubstitutions(
+	{FPR:makeNumericFraction(1,2)},
+	'TPR/FPR',
+	'2*TPR'
+);
+
+testSubstitutions(
+	{TPR:makeNumericFraction(5,7),FPR:makeNumericFraction(7,10)},
+	'TPR/FPR',
+	'1/2=0.5'
+);
+
+testSubstitutions(
+	{TPR:makeNumericFraction(1,0),FPR:makeNumericFraction(7,10)},
+	'TPR/FPR',
+	'1/0'
+);
+
+testSubstitutions(
+	{TPR:makeNumericFraction(1,0)},
+	'TPR/FPR',
+	'1/(0*FPR)'
 );
 
 console.log('tests ok');

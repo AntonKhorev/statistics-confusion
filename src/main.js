@@ -187,12 +187,18 @@ $('table.statistics-confusion').each(function(){
 		'TN':0
 	};
 	function updateFormulas() {
+		// entered numbers
 		var subs={};
 		for (term in termInputs) {
 			if (termInputs[term]) {
 				subs[term]=termValues[term];
 			}
 		}
+		// hack for DLR
+		if ('TP' in subs && 'FN' in subs) {
+			subs.TPR=makeNumericFraction(subs.TP,subs.TP+subs.FN);
+		}
+		// update html
 		tableNode.find('.formula').each(function(){
 			var formula=$(this);
 			formula.html(makeFormulaHtml(makeFormulaSubstitutions(formula.attr('data-formula'),subs)));
