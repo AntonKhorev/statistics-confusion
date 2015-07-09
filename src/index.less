@@ -129,12 +129,17 @@ table.statistics-confusion {
 		}
 		.buttons {
 			margin-top: .5em;
-			opacity: 0.1;
 			@media print {
 				display: none;
 			}
+			input {
+				opacity: 0.1;
+				&:focus {
+					opacity: 1;
+				}
+			}
 		}
-		&:hover .buttons {
+		&:hover .buttons input {
 			opacity: 1;
 		}
 	}
