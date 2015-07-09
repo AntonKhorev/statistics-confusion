@@ -22,33 +22,67 @@ function makeNumber(s) {
 }
 
 function makeSum(ss) {
-	var sumNumbers={
+	var acc={
 		type:'int',
 		val:0
 	};
-	var terms=[];
+	var subs=[];
 	ss.forEach(function(s){
 		if (s.type=='int') {
-			sumNumbers.val+=s.val;
+			acc.val+=s.val; // TODO check if safe int
 		} else if (s.type=='float') {
-			sumNumbers.val+=s.val;
-			sumNumbers.type='float';
+			acc.val+=s.val;
+			acc.type='float';
 		} else {
-			terms.push(s);
+			subs.push(s);
 		}
 	});
-	if (sumNumbers.val) {
-		terms.push(sumNumbers);
+	if (acc.val) {
+		subs.push(acc);
 	}
-	if (terms.length>1) {
+	if (subs.length>1) {
 		return {
 			type:'sum',
-			terms:terms
+			subs:subs
 		};
-	} else if (terms.length==1) {
-		return terms[0];
+	} else if (subs.length==1) {
+		return subs[0];
 	} else {
 		return makeNumber('0');
+	}
+}
+
+function makeProduct(ss) {
+	var acc={
+		type:'int',
+		val:1
+	};
+	var subs=[];
+	ss.forEach(function(s){
+		if (s.type=='int') {
+			acc.val*=s.val; // TODO check if safe int
+			if (s.val==0) acc.type='int';
+		} else if (s.type=='float') {
+			if (!(acc.type=='int' && acc.val==0)) {
+				acc.val*=s.val;
+				acc.type='float';
+			}
+		} else {
+			subs.push(s);
+		}
+	});
+	if (acc.val!=1) {
+		subs.unshift(acc);
+	}
+	if (subs.length>1) {
+		return {
+			type:'prod',
+			subs:subs
+		};
+	} else if (subs.length==1) {
+		return subs[0];
+	} else {
+		return makeNumber('1');
 	}
 }
 
