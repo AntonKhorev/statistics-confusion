@@ -29,6 +29,9 @@ table.statistics-confusion {
 	a {
 		color: #000;
 		text-decoration-style: dotted;
+		@media print {
+			text-decoration: none;
+		}
 		&:hover {
 			color: #008;
 			text-decoration: underline;
@@ -168,16 +171,11 @@ table.statistics-confusion {
 			top: calc(@caption-height + @cell-height*4 - @button-height/2 ~'+' 2*(@cell-border-width + @central-cell-border-width));
 			left: -@button-width/2;
 		}
+		@media print {
+			display: none;
+		}
 		svg {
 			display: block;
 		}
 	}
 }
-@media print { table.statistics-confusion {
-	a {
-		text-decoration: none;
-	}
-	button {
-		display: none;
-	}
-} }
