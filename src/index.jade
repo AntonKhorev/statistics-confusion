@@ -15,6 +15,11 @@ html(lang='en')
 			nav {
 				text-align: right;
 			}
+			@media print {
+				nav {
+					display: none;
+				}
+			}
 	body
 		nav
 			a(href='https://github.com/AntonKhorev/statistics-confusion') source code
