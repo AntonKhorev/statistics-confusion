@@ -193,7 +193,7 @@ $('table.statistics-confusion').each(function(){
 				subs[term]=termValues[term];
 			}
 		}
-		tableNode.find('.formula:not(.input)').each(function(){
+		tableNode.find('.formula').each(function(){
 			var formula=$(this);
 			formula.html(makeFormulaHtml(makeFormulaSubstitutions(formula.attr('data-formula'),subs)));
 		});
@@ -205,7 +205,7 @@ $('table.statistics-confusion').each(function(){
 				$("<input type='button' value='Set number' />").click(function(){
 					if (!termInputs[term]) {
 						termInputs[term]=true;
-						td.children('.formula').addClass('input').empty().append(
+						td.children('.formula').attr('class','input').empty().append(
 							$("<input type='number' min='0' value='"+termValues[term]+"' required />").on('input',function(){
 								if (this.validity.valid) {
 									//termValues[term]=this.valueAsNumber; // doesn't work in IE
@@ -217,7 +217,7 @@ $('table.statistics-confusion').each(function(){
 						$(this).val('Remove number');
 					} else {
 						termInputs[term]=false;
-						td.children('.formula').removeClass('input').html(makeFormulaHtml(term));
+						td.children('.input').attr('class','formula').html(makeFormulaHtml(term));
 						$(this).val('Set number');
 					}
 					updateFormulas();
