@@ -3,6 +3,11 @@ eval(fs.readFileSync('../src/expr-symbolic.js')+'');
 var assert=require('assert');
 
 (function(){
+	var o=makeSymbol('TP');
+	assert.deepEqual(o,{type:'sym',val:'TP'});
+})();
+
+(function(){
 	var o=makeNumber('555');
 	assert.deepEqual(o,{type:'int',val:555});
 })();

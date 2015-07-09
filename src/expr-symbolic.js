@@ -1,3 +1,10 @@
+function makeSymbol(s) {
+	return {
+		type:'sym',
+		val:s
+	};
+}
+
 function makeNumber(s) {
 	var v=parseInt(s);
 	var maxSafeInt=9007199254740991; // Number.MAX_SAFE_INTEGER, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER
