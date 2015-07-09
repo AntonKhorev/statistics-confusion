@@ -1,4 +1,4 @@
-// TODO replace with newtest.js
+// TODO replace with tests.js
 
 var fs=require('fs');
 eval(fs.readFileSync('../src/expr-symbolic.js')+'');
