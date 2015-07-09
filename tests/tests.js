@@ -1,29 +1,31 @@
-// atoms
+QUnit.module('make symbol');
 
-QUnit.test('make symbol',function(assert){
+QUnit.test('',function(assert){
 	var o=makeSymbol('TP');
 	assert.deepEqual(o,{type:'sym',val:'TP'});
 });
 
-QUnit.test('make number int',function(assert){
+QUnit.module('make number');
+
+QUnit.test('int',function(assert){
 	var o=makeNumber('555');
 	assert.deepEqual(o,{type:'int',val:555});
 });
 
-QUnit.test('make number float',function(assert){
+QUnit.test('float',function(assert){
 	var o=makeNumber('55555555555555555555');
 	assert.equal(o.type,'float');
 	assert.equal(o.val,55555555555555555555);
 });
 
-// sums
+QUnit.module('make sum');
 
-QUnit.test('make sum from one symbol',function(assert){
+QUnit.test('one symbol',function(assert){
 	var o=makeSum([makeSymbol('FP')]);
 	assert.deepEqual(o,{type:'sym',val:'FP'});
 });
 
-QUnit.test('make sum from two symbols',function(assert){
+QUnit.test('two symbols',function(assert){
 	var o=makeSum([makeSymbol('FP'),makeSymbol('FN')]);
 	assert.deepEqual(o,{
 		type:'sum',
@@ -31,22 +33,22 @@ QUnit.test('make sum from two symbols',function(assert){
 	});
 });
 
-QUnit.test('make sum from one number',function(assert){
+QUnit.test('one number',function(assert){
 	var o=makeSum([makeNumber('42')]);
 	assert.deepEqual(o,{type:'int',val:42});
 });
 
-QUnit.test('make sum from two numbers',function(assert){
+QUnit.test('two numbers',function(assert){
 	var o=makeSum([makeNumber('20'),makeNumber('3')]);
 	assert.deepEqual(o,{type:'int',val:23});
 });
 
-QUnit.test('make sum from int and float',function(assert){
+QUnit.test('int and float',function(assert){
 	var o=makeSum([makeNumber('20'),makeNumber('55555555555555555555')]);
 	assert.equal(o.type,'float');
 });
 
-QUnit.test('make sum from symbol and number',function(assert){
+QUnit.test('symbol and number',function(assert){
 	var o=makeSum([makeSymbol('FP'),makeNumber('35')]);
 	assert.deepEqual(o,{
 		type:'sum',
@@ -54,7 +56,7 @@ QUnit.test('make sum from symbol and number',function(assert){
 	});
 });
 
-QUnit.test('make sum from number and symbol',function(assert){
+QUnit.test('number and symbol',function(assert){
 	var o=makeSum([makeNumber('34'),makeSymbol('FN')]);
 	assert.deepEqual(o,{
 		type:'sum',
@@ -62,7 +64,7 @@ QUnit.test('make sum from number and symbol',function(assert){
 	});
 });
 
-QUnit.test('make sum from two numbers and symbol',function(assert){
+QUnit.test('two numbers and symbol',function(assert){
 	var o=makeSum([makeNumber('60'),makeNumber('8'),makeSymbol('TN')]);
 	assert.deepEqual(o,{
 		type:'sum',
@@ -70,19 +72,19 @@ QUnit.test('make sum from two numbers and symbol',function(assert){
 	});
 });
 
-QUnit.test('make sum from symbol and zero',function(assert){
+QUnit.test('symbol and zero',function(assert){
 	var o=makeSum([makeSymbol('FP'),makeNumber('0')]);
 	assert.deepEqual(o,{type:'sym',val:'FP'});
 });
 
-// products
+QUnit.module('make product');
 
-QUnit.test('make product from one symbol',function(assert){
+QUnit.test('one symbol',function(assert){
 	var o=makeProduct([makeSymbol('FN')]);
 	assert.deepEqual(o,{type:'sym',val:'FN'});
 });
 
-QUnit.test('make product from two symbols',function(assert){
+QUnit.test('two symbols',function(assert){
 	var o=makeProduct([makeSymbol('FP'),makeSymbol('FN')]);
 	assert.deepEqual(o,{
 		type:'prod',
@@ -90,32 +92,32 @@ QUnit.test('make product from two symbols',function(assert){
 	});
 });
 
-QUnit.test('make product from one number',function(assert){
+QUnit.test('one number',function(assert){
 	var o=makeProduct([makeNumber('42')]);
 	assert.deepEqual(o,{type:'int',val:42});
 });
 
-QUnit.test('make product from two numbers',function(assert){
+QUnit.test('two numbers',function(assert){
 	var o=makeProduct([makeNumber('20'),makeNumber('3')]);
 	assert.deepEqual(o,{type:'int',val:60});
 });
 
-QUnit.test('make product from int and float',function(assert){
+QUnit.test('int and float',function(assert){
 	var o=makeProduct([makeNumber('20'),makeNumber('55555555555555555555')]);
 	assert.equal(o.type,'float');
 });
 
-QUnit.test('make product from zero and float',function(assert){
+QUnit.test('zero and float',function(assert){
 	var o=makeProduct([makeNumber('0'),makeNumber('55555555555555555555')]);
 	assert.deepEqual(o,{type:'int',val:0});
 });
 
-QUnit.test('make product from float and zero',function(assert){
+QUnit.test('float and zero',function(assert){
 	var o=makeProduct([makeNumber('55555555555555555555'),makeNumber('0')]);
 	assert.deepEqual(o,{type:'int',val:0});
 });
 
-QUnit.test('make product from symbol and number',function(assert){
+QUnit.test('symbol and number',function(assert){
 	var o=makeProduct([makeSymbol('FP'),makeNumber('35')]);
 	assert.deepEqual(o,{
 		type:'prod',
@@ -123,7 +125,7 @@ QUnit.test('make product from symbol and number',function(assert){
 	});
 });
 
-QUnit.test('make product from number and symbol',function(assert){
+QUnit.test('number and symbol',function(assert){
 	var o=makeProduct([makeNumber('34'),makeSymbol('FN')]);
 	assert.deepEqual(o,{
 		type:'prod',
@@ -131,7 +133,7 @@ QUnit.test('make product from number and symbol',function(assert){
 	});
 });
 
-QUnit.test('make product from two numbers and symbol',function(assert){
+QUnit.test('two numbers and symbol',function(assert){
 	var o=makeProduct([makeNumber('6'),makeNumber('8'),makeSymbol('TN')]);
 	assert.deepEqual(o,{
 		type:'prod',
@@ -139,7 +141,7 @@ QUnit.test('make product from two numbers and symbol',function(assert){
 	});
 });
 
-QUnit.test('make product from symbol and zero',function(assert){
+QUnit.test('symbol and zero',function(assert){
 	var o=makeProduct([makeSymbol('TN'),makeNumber('0')]);
 	assert.deepEqual(o,{
 		type:'prod',
@@ -147,7 +149,7 @@ QUnit.test('make product from symbol and zero',function(assert){
 	});
 });
 
-QUnit.test('make product from symbol and one',function(assert){
+QUnit.test('symbol and one',function(assert){
 	var o=makeProduct([makeSymbol('FP'),makeNumber('1')]);
 	assert.deepEqual(o,{type:'sym',val:'FP'});
 });
