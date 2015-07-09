@@ -1,5 +1,5 @@
 var fs=require('fs');
-eval(fs.readFileSync('../src/util.js')+'');
+eval(fs.readFileSync('../src/expr-symbolic.js')+'');
 var assert=require('assert');
 
 function testSubstitutions(subs,f1,f2) {

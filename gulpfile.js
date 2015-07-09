@@ -14,14 +14,16 @@ var htmlSrc='src/index.jade';
 var cssSrc='src/index.less';
 var jsSrc=[
 	'src/intro.js',
-	'src/util.js',
+	'src/expr-symbolic.js',
+	'src/expr-html.js',
 	'src/main.js',
 	'src/outro.js'
 ];
+var jsHtmlSrc='src/expr-html.js';
 
 gulp.task('html',function(){
 	var ctx={};
-	vm.runInNewContext(fs.readFileSync('./src/util.js'),ctx);
+	vm.runInNewContext(fs.readFileSync('./'+jsHtmlSrc),ctx);
 	gulp.src(htmlSrc)
 		.pipe(plumber())
 		.pipe(jade({
@@ -52,7 +54,7 @@ gulp.task('js',function(){
 });
 
 gulp.task('watch',function(){
-	gulp.watch([htmlSrc,'src/util.js'],['html']);
+	gulp.watch([htmlSrc,jsHtmlSrc],['html']);
 	gulp.watch(cssSrc,['css']);
 	gulp.watch(jsSrc,['js']);
 });
