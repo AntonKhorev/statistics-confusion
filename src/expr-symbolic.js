@@ -1,31 +1,19 @@
 function makeSymbol(s) {
-	return {
-		type:'sym',
-		val:s
-	};
+	return {type:'sym',val:s};
 }
 
 function makeNumber(s) {
 	var v=parseInt(s);
 	var maxSafeInt=9007199254740991; // Number.MAX_SAFE_INTEGER, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER
 	if (v<=maxSafeInt) {
-		return {
-			type:'int',
-			val:v
-		};
+		return {type:'int',val:v};
 	} else {
-		return {
-			type:'float',
-			val:v
-		};
+		return {type:'float',val:v};
 	}
 }
 
 function makeSum(ss) {
-	var acc={
-		type:'int',
-		val:0
-	};
+	var acc=makeNumber(0);
 	var subs=[];
 	ss.forEach(function(s){
 		if (s.type=='int') {
@@ -41,22 +29,16 @@ function makeSum(ss) {
 		subs.push(acc);
 	}
 	if (subs.length>1) {
-		return {
-			type:'sum',
-			subs:subs
-		};
+		return {type:'sum',subs:subs};
 	} else if (subs.length==1) {
 		return subs[0];
 	} else {
-		return makeNumber('0');
+		return makeNumber(0);
 	}
 }
 
 function makeProduct(ss) {
-	var acc={
-		type:'int',
-		val:1
-	};
+	var acc=makeNumber(1);
 	var subs=[];
 	ss.forEach(function(s){
 		if (s.type=='int') {
@@ -75,18 +57,13 @@ function makeProduct(ss) {
 		subs.unshift(acc);
 	}
 	if (subs.length>1) {
-		return {
-			type:'prod',
-			subs:subs
-		};
+		return {type:'prod',subs:subs};
 	} else if (subs.length==1) {
 		return subs[0];
 	} else {
-		return makeNumber('1');
+		return makeNumber(1);
 	}
 }
-
-// older stuff TODO rewrite
 
 function makeFraction(num,den) {
 	function gcd(a,b) {
@@ -96,19 +73,25 @@ function makeFraction(num,den) {
 			return gcd(b,a%b);
 		}
 	};
-	var n=parseInt(num);
-	var d=parseInt(den);
-	if (d==0) {
-		if (n==0) {
-			return {type:'fraction',num:0,den:0};
+	if (num.type=='int' && den.type=='int') {
+		var n=num.val;
+		var d=den.val;
+		if (d==0) {
+			if (n==0) {
+				return {type:'frac',num:makeNumber(0),den:makeNumber(0)};
+			} else {
+				return {type:'frac',num:makeNumber(1),den:makeNumber(0)};
+			}
 		} else {
-			return {type:'fraction',num:1,den:0};
+			var g=gcd(n,d);
+			return {type:'frac',num:makeNumber(n/g),den:makeNumber(d/g)};
 		}
 	} else {
-		var g=gcd(n,d);
-		return {type:'fraction',num:parseInt(n/g),den:parseInt(d/g)};
+		return {type:'frac',num:num,den:den}
 	}
 }
+
+// older stuff TODO rewrite
 
 function makeFormulaSubstitutions(formula,subs) {
 	// parse

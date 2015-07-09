@@ -153,3 +153,42 @@ QUnit.test('symbol and one',function(assert){
 	var o=makeProduct([makeSymbol('FP'),makeNumber('1')]);
 	assert.deepEqual(o,{type:'sym',val:'FP'});
 });
+
+QUnit.module('make fraction');
+
+function testIntFraction(num1,den1,num2,den2) {
+	QUnit.test(''+num1+'/'+den1,function(assert){
+		var o=makeFraction({type:'int',val:num1},{type:'int',val:den1});
+		assert.deepEqual(o,{type:'frac',num:{type:'int',val:num2},den:{type:'int',val:den2}});
+	});
+}
+
+testIntFraction(
+	0,0,
+	0,0
+);
+
+testIntFraction(
+	1,1,
+	1,1
+);
+
+testIntFraction(
+	4,2,
+	2,1
+);
+
+testIntFraction(
+	12,16,
+	3,4
+);
+
+testIntFraction(
+	42,0,
+	1,0
+);
+
+testIntFraction(
+	0,42,
+	0,1
+);
