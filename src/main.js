@@ -210,8 +210,8 @@ $('table.statistics-confusion').each(function(){
 							"<label>"+
 								"<span class='aux'>"+td.children('.label').eq(0).text()+"</span> "+
 								"<input type='number' min='0' value='"+termValues[term]+"' required />"+
-							"</label> "+
-							"<span class='aux'>current value:</span> <output>"+termValues[term]+"</output>"
+							"</label>"+
+							"<span class='aux'>, current value:</span> <output>"+termValues[term]+"</output>"
 						);
 						fi.find('input').on('input',function(){
 							if (this.validity.valid) {

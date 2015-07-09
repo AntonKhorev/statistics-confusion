@@ -109,7 +109,7 @@ table.statistics-confusion {
 			}
 		}
 		.input {
-			.aux, output {
+			.aux {
 				.visually-hidden();
 			}
 			input {
@@ -117,11 +117,22 @@ table.statistics-confusion {
 				&:invalid {
 					background: #F8A;
 				}
+				@media print {
+					display: none;
+				}
+			}
+			output {
+				@media not print {
+					.visually-hidden();
+				}
 			}
 		}
 		.buttons {
 			margin-top: .5em;
 			opacity: 0.1;
+			@media print {
+				display: none;
+			}
 		}
 		&:hover .buttons {
 			opacity: 1;
