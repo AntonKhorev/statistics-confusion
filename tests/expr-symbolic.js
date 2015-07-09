@@ -2,6 +2,41 @@ var fs=require('fs');
 eval(fs.readFileSync('../src/expr-symbolic.js')+'');
 var assert=require('assert');
 
+function testFraction(num1,den1,num2,den2) {
+	var frac=makeNumericFraction(num1,den1);
+	assert.deepEqual([frac.num,frac.den],[num2,den2]);
+}
+
+testFraction(
+	0,0,
+	0,0
+);
+
+testFraction(
+	1,1,
+	1,1
+);
+
+testFraction(
+	4,2,
+	2,1
+);
+
+testFraction(
+	12,16,
+	3,4
+);
+
+testFraction(
+	42,0,
+	1,0
+);
+
+testFraction(
+	0,42,
+	0,1
+);
+
 function testSubstitutions(subs,f1,f2) {
 	assert.equal(makeFormulaSubstitutions(f1,subs),f2);
 }

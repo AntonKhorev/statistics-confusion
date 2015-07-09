@@ -1,3 +1,25 @@
+function makeNumericFraction(num,den) {
+	function gcd(a,b) {
+		if (!b) {
+			return a;
+		} else {
+			return gcd(b,a%b);
+		}
+	};
+	var n=parseInt(num);
+	var d=parseInt(den);
+	if (d==0) {
+		if (n==0) {
+			return {num:0,den:0};
+		} else {
+			return {num:1,den:0};
+		}
+	} else {
+		var g=gcd(n,d);
+		return {num:parseInt(n/g),den:parseInt(d/g)};
+	}
+}
+
 function makeFormulaSubstitutions(formula,subs) {
 	// parse
 	function expr(formula) {
@@ -39,28 +61,18 @@ function makeFormulaSubstitutions(formula,subs) {
 	// substitute
 	function synth(node) {
 		function numericFraction(num,den) {
-			function gcd(a,b) {
-				if (!b) {
-					return a;
-				} else {
-					return gcd(b,a%b);
-				}
-			};
 			// http://stackoverflow.com/a/661757
 			function toFixed(value,precision) {
 				var power=Math.pow(10,precision||0);
 				return String(Math.round(value*power)/power);
 			}
-			var n=parseInt(num);
-			var d=parseInt(den);
-			if (d==0) {
-				return ''+n+'/0';
-			}
-			var g=gcd(n,d);
-			if (parseInt(d/g)==1) {
-				return ''+parseInt(n/g);
+			var frac=makeNumericFraction(num,den);
+			if (frac.den==0) {
+				return ''+frac.num+'/'+frac.den;
+			} else if (frac.den==1) {
+				return ''+frac.num;
 			} else {
-				return ''+parseInt(n/g)+'/'+parseInt(d/g)+'='+toFixed(n/d,6);
+				return ''+frac.num+'/'+frac.den+'='+toFixed(frac.num/frac.den,6);
 			}
 		}
 		if (node.type=='def') {
