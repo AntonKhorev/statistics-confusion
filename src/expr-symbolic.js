@@ -21,6 +21,37 @@ function makeNumber(s) {
 	}
 }
 
+function makeSum(ss) {
+	var sumNumbers={
+		type:'int',
+		val:0
+	};
+	var terms=[];
+	ss.forEach(function(s){
+		if (s.type=='int') {
+			sumNumbers.val+=s.val;
+		} else if (s.type=='float') {
+			sumNumbers.val+=s.val;
+			sumNumbers.type='float';
+		} else {
+			terms.push(s);
+		}
+	});
+	if (sumNumbers.val) {
+		terms.push(sumNumbers);
+	}
+	if (terms.length>1) {
+		return {
+			type:'sum',
+			terms:terms
+		};
+	} else if (terms.length==1) {
+		return terms[0];
+	} else {
+		return makeNumber('0');
+	}
+}
+
 // older stuff TODO rewrite
 
 function makeFraction(num,den) {
