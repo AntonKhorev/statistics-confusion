@@ -208,14 +208,16 @@ $('table.statistics-confusion').each(function(){
 						var fi=td.children('.formula');
 						fi.attr('class','input').html(
 							"<label>"+
-								"<span class='aux'>"+td.children('.label').eq(0).text()+" </span>"+
+								"<span class='aux'>"+td.children('.label').eq(0).text()+"</span> "+
 								"<input type='number' min='0' value='"+termValues[term]+"' required />"+
-							"</label>"
+							"</label> "+
+							"<span class='aux'>current value:</span> <output>"+termValues[term]+"</output>"
 						);
 						fi.find('input').on('input',function(){
 							if (this.validity.valid) {
 								//termValues[term]=this.valueAsNumber; // doesn't work in IE
 								termValues[term]=parseInt(this.value);
+								fi.find('output').text(termValues[term]);
 								updateFormulas();
 							}
 						});
