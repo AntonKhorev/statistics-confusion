@@ -233,3 +233,39 @@ QUnit.test('fraction over fraction',function(assert){
 		den:{type:'prod',subs:[{type:'sym',val:'B'},{type:'sym',val:'C'}]}
 	});
 });
+
+QUnit.module('make definition');
+
+QUnit.test('',function(assert){
+	var o=makeDefinition(makeSymbol('A'),makeSymbol('B'));
+	assert.deepEqual(o,{type:'def',lhs:{type:'sym',val:'A'},rhs:{type:'sym',val:'B'}});
+});
+
+QUnit.module('parse expression');
+
+QUnit.test('single symbol',function(assert){
+	var o=parseExpression('TP');
+	assert.deepEqual(o,{type:'sym',val:'TP'});
+});
+
+QUnit.test('sum',function(assert){
+	var o=parseExpression('TP+FP+FN+TN');
+	assert.deepEqual(o,{type:'sum',subs:[
+		{type:'sym',val:'TP'},{type:'sym',val:'FP'},{type:'sym',val:'FN'},{type:'sym',val:'TN'}
+	]});
+});
+
+QUnit.test('definition',function(assert){
+	var o=parseExpression('NPV=TN/(FN+TN)');
+	assert.deepEqual(o,{
+		type:'def',
+		lhs:{type:'sym',val:'NPV'},
+		rhs:{
+			type:'frac',
+			num:{type:'sym',val:'TN'},
+			den:{type:'sum',subs:[
+				{type:'sym',val:'FN'},{type:'sym',val:'TN'}
+			]}
+		}
+	});
+});

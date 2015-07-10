@@ -138,46 +138,50 @@ function makeFraction(num,den) {
 	return {type:'frac',num:np,den:dp};
 }
 
+function makeDefinition(lhs,rhs) {
+	return {type:'def',lhs:lhs,rhs:rhs};
+}
+
+function parseExpression(str) {
+	function expr(str) {
+		function stripParentheses(str) {
+			if (str.charAt(0)=='(') {
+				return str.slice(1,-1);
+			} else {
+				return str;
+			}
+		}
+		var match=str.match(/(\(.*\)|\w+)\/(\(.*\)|\w+)/);
+		if (match) {
+			return makeFraction(
+				expr(stripParentheses(match[1])),
+				expr(stripParentheses(match[2]))
+			);
+		} else {
+			return makeSum(
+				str.split('+').map(function(s){
+					return makeSymbol(s);
+				})
+			);
+		}
+	}
+	function root(str) {
+		var match=str.match(/^(.*)=(.*)$/);
+		if (match) {
+			return makeDefinition(
+				makeSymbol(match[1]),
+				expr(match[2])
+			);
+		} else {
+			return expr(str);
+		}
+	}
+	return root(str);
+}
+
 // older stuff TODO rewrite
 
 function makeFormulaSubstitutions(formula,subs) {
-	// parse
-	function expr(formula) {
-		function stripParentheses(formula) {
-			if (formula.charAt(0)=='(') {
-				return formula.slice(1,-1);
-			} else {
-				return formula;
-			}
-		}
-		var match=formula.match(/(\(.*\)|\w+)\/(\(.*\)|\w+)/);
-		if (match) {
-			return {
-				type:'frac',
-				num:expr(stripParentheses(match[1])),
-				den:expr(stripParentheses(match[2]))
-			}
-		} else {
-			return {
-				type:'sum',
-				terms:formula.split('+')
-			}
-		}
-	}
-	function root(formula) {
-		var match=formula.match(/^(.*)=(.*)$/);
-		if (match) {
-			return {
-				type:'def',
-				lhs:match[1],
-				rhs:expr(match[2])
-			};
-		} else {
-			return expr(formula);
-		}
-	}
-	var tree=root(formula);
-
 	// substitute
 	function synth(node) {
 		function numericFraction(num,den) {
