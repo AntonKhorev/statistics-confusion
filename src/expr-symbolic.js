@@ -179,6 +179,29 @@ function parseExpression(str) {
 	return root(str);
 }
 
+function substituteIntoExpression(expr,subs) {
+	function rec(expr) {
+		return substituteIntoExpression(expr,subs);
+	}
+	if (expr.type=='sym') {
+		if (expr.val in subs) {
+			return subs[expr.val];
+		} else {
+			return expr;
+		}
+	} else if (expr.type=='sum') {
+		return makeSum(expr.subs.map(rec));
+	} else if (expr.type=='prod') {
+		return makeProduct(expr.subs.map(rec));
+	} else if (expr.type=='frac') {
+		return makeFraction(rec(expr.num),rec(expr.den));
+	} else if (expr.type=='def') {
+		return makeDefinition(expr.lhs,rec(expr.rhs)); // don't substitute in lhs
+	} else {
+		return expr;
+	}
+}
+
 // older stuff TODO rewrite
 
 function makeFormulaSubstitutions(formula,subs) {
