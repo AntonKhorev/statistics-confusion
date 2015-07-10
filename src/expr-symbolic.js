@@ -1,5 +1,9 @@
 function makeSymbol(s) {
 	return {type:'sym',val:s};
+	// technically need two types of symbols:
+	//   finite x: 0*x can be transformed into 0
+	//   possibly infinite x: 0*x has to be kept
+	// currently playing safe and considering all symbols possibly infinite
 }
 
 function makeNumber(s) {
@@ -12,9 +16,11 @@ function makeNumber(s) {
 	}
 }
 
+// TODO sum with inf and nan
 function makeSum(ss) {
 	var acc=makeNumber(0);
 	var subs=[];
+	// TODO flatten sum? - don't need it here
 	ss.forEach(function(s){
 		if (s.type=='int') {
 			acc.val+=s.val; // TODO check if safe int
@@ -37,18 +43,36 @@ function makeSum(ss) {
 	}
 }
 
+// TODO prod with inf and nan
 function makeProduct(ss) {
 	var acc=makeNumber(1);
 	var subs=[];
-	ss.forEach(function(s){
+	function handleNumber(s) {
 		if (s.type=='int') {
 			acc.val*=s.val; // TODO check if safe int
 			if (s.val==0) acc.type='int';
+			return true;
 		} else if (s.type=='float') {
 			if (!(acc.type=='int' && acc.val==0)) {
 				acc.val*=s.val;
 				acc.type='float';
 			}
+			return true;
+		} else {
+			return false;
+		}
+	}
+	ss.forEach(function(s){
+		if (handleNumber(s)) {
+			// done by handleNumber(s)
+		} else if (s.type=='prod') {
+			s.subs.forEach(function(s){
+				if (handleNumber(s)) {
+					// done by handleNumber(s)
+				} else {
+					subs.push(s);
+				}
+			});
 		} else {
 			subs.push(s);
 		}
@@ -57,7 +81,7 @@ function makeProduct(ss) {
 		subs.unshift(acc);
 	}
 	if (subs.length>1) {
-		return {type:'prod',subs:subs};
+		return {type:'prod',subs:subs}; // number can only be a first subexpression
 	} else if (subs.length==1) {
 		return subs[0];
 	} else {
@@ -73,24 +97,45 @@ function makeFraction(num,den) {
 			return gcd(b,a%b);
 		}
 	};
-	if (num.type=='int' && den.type=='int') {
-		var n=num.val;
-		var d=den.val;
-		if (d==0) {
-			if (n==0) {
-				return {type:'nan'};
-			} else {
-				return {type:'inf'};
-			}
-		}
-		var g=gcd(n,d);
-		if (d/g==1) {
-			return makeNumber(n/g);
-		}
-		return {type:'frac',num:makeNumber(n/g),den:makeNumber(d/g)};
+	var np=makeProduct([]);
+	var dp=makeProduct([]);
+	if (num.type=='frac') {
+		np=makeProduct([np,num.num]);
+		dp=makeProduct([dp,num.den]);
 	} else {
-		return {type:'frac',num:num,den:den}
+		np=makeProduct([np,num]);
 	}
+	if (den.type=='frac') {
+		np=makeProduct([np,den.den]);
+		dp=makeProduct([dp,den.num]);
+	} else {
+		dp=makeProduct([dp,den]);
+	}
+	var n=(np.type=='prod'?np.subs[0]:np);
+	var d=(dp.type=='prod'?dp.subs[0]:dp);
+	if (n.type=='int' && d.type=='int') {
+		if (n.val!=0 && d.val!=0) {
+			var g=gcd(n.val,d.val);
+			n.val/=g;
+			d.val/=g;
+		} else if (d.val==0 && n.val==0) {
+			return {type:'nan'};
+		}
+	}
+	// at this point products may no longer be valid, need to recompute them
+	if (np.type=='prod') np=makeProduct(np.subs);
+	if (dp.type=='prod') dp=makeProduct(dp.subs);
+        if (dp.type=='int' && dp.val==1) {
+		return np;
+	}
+	if (np.type=='int' && dp.type=='int') {
+		if (np.val==0) {
+			return makeNumber(0);
+		} else if (dp.val==0) {
+			return {type:'inf'};
+		}
+	}
+	return {type:'frac',num:np,den:dp};
 }
 
 // older stuff TODO rewrite

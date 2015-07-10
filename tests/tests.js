@@ -79,6 +79,11 @@ QUnit.test('symbol and zero',function(assert){
 
 QUnit.module('make product');
 
+QUnit.test('empty',function(assert){
+	var o=makeProduct([]);
+	assert.deepEqual(o,{type:'int',val:1});
+});
+
 QUnit.test('one symbol',function(assert){
 	var o=makeProduct([makeSymbol('FN')]);
 	assert.deepEqual(o,{type:'sym',val:'FN'});
@@ -154,6 +159,17 @@ QUnit.test('symbol and one',function(assert){
 	assert.deepEqual(o,{type:'sym',val:'FP'});
 });
 
+QUnit.test('flatten product',function(assert){
+	var o=makeProduct([
+		makeProduct([makeSymbol('A'),makeSymbol('B')]),
+		makeProduct([makeNumber('5'),makeSymbol('C')])
+	]);
+	assert.deepEqual(o,{
+		type:'prod',
+		subs:[{type:'int',val:5},{type:'sym',val:'A'},{type:'sym',val:'B'},{type:'sym',val:'C'}]
+	});
+});
+
 QUnit.module('make fraction');
 
 QUnit.test('zero over zero',function(assert){
@@ -194,4 +210,26 @@ QUnit.test('symbol over one',function(assert){
 QUnit.test('one over symbol',function(assert){
 	var o=makeFraction(makeNumber('1'),makeSymbol('X'));
 	assert.deepEqual(o,{type:'frac',num:{type:'int',val:1},den:{type:'sym',val:'X'}});
+});
+
+QUnit.test('product with over product with number',function(assert){
+	var o=makeFraction(
+		makeProduct([makeNumber('21'),makeSymbol('X')]),
+		makeProduct([makeNumber('15'),makeSymbol('Y')])
+	);
+	assert.deepEqual(o,{type:'frac',
+		num:{type:'prod',subs:[{type:'int',val:7},{type:'sym',val:'X'}]},
+		den:{type:'prod',subs:[{type:'int',val:5},{type:'sym',val:'Y'}]}
+	});
+});
+
+QUnit.test('fraction over fraction',function(assert){
+	var o=makeFraction(
+		makeFraction(makeSymbol('A'),makeSymbol('B')),
+		makeFraction(makeSymbol('C'),makeSymbol('D'))
+	);
+	assert.deepEqual(o,{type:'frac',
+		num:{type:'prod',subs:[{type:'sym',val:'A'},{type:'sym',val:'D'}]},
+		den:{type:'prod',subs:[{type:'sym',val:'B'},{type:'sym',val:'C'}]}
+	});
 });
