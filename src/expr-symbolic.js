@@ -78,14 +78,16 @@ function makeFraction(num,den) {
 		var d=den.val;
 		if (d==0) {
 			if (n==0) {
-				return {type:'frac',num:makeNumber(0),den:makeNumber(0)};
+				return {type:'nan'};
 			} else {
-				return {type:'frac',num:makeNumber(1),den:makeNumber(0)};
+				return {type:'inf'};
 			}
-		} else {
-			var g=gcd(n,d);
-			return {type:'frac',num:makeNumber(n/g),den:makeNumber(d/g)};
 		}
+		var g=gcd(n,d);
+		if (d/g==1) {
+			return makeNumber(n/g);
+		}
+		return {type:'frac',num:makeNumber(n/g),den:makeNumber(d/g)};
 	} else {
 		return {type:'frac',num:num,den:den}
 	}

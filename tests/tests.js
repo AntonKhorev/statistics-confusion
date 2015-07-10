@@ -156,39 +156,42 @@ QUnit.test('symbol and one',function(assert){
 
 QUnit.module('make fraction');
 
-function testIntFraction(num1,den1,num2,den2) {
-	QUnit.test(''+num1+'/'+den1,function(assert){
-		var o=makeFraction({type:'int',val:num1},{type:'int',val:den1});
-		assert.deepEqual(o,{type:'frac',num:{type:'int',val:num2},den:{type:'int',val:den2}});
-	});
-}
+QUnit.test('zero over zero',function(assert){
+	var o=makeFraction(makeNumber('0'),makeNumber('0'));
+	assert.deepEqual(o,{type:'nan'});
+});
 
-testIntFraction(
-	0,0,
-	0,0
-);
+QUnit.test('one over one',function(assert){
+	var o=makeFraction(makeNumber('1'),makeNumber('1'));
+	assert.deepEqual(o,{type:'int',val:1});
+});
 
-testIntFraction(
-	1,1,
-	1,1
-);
+QUnit.test('number over number resulting in number',function(assert){
+	var o=makeFraction(makeNumber('4'),makeNumber('2'));
+	assert.deepEqual(o,{type:'int',val:2});
+});
 
-testIntFraction(
-	4,2,
-	2,1
-);
+QUnit.test('number over number resulting in fraction',function(assert){
+	var o=makeFraction(makeNumber('12'),makeNumber('16'));
+	assert.deepEqual(o,{type:'frac',num:{type:'int',val:3},den:{type:'int',val:4}});
+});
 
-testIntFraction(
-	12,16,
-	3,4
-);
+QUnit.test('number over zero',function(assert){
+	var o=makeFraction(makeNumber('42'),makeNumber('0'));
+	assert.deepEqual(o,{type:'inf'});
+});
 
-testIntFraction(
-	42,0,
-	1,0
-);
+QUnit.test('zero over number',function(assert){
+	var o=makeFraction(makeNumber('0'),makeNumber('42'));
+	assert.deepEqual(o,{type:'int',val:0});
+});
 
-testIntFraction(
-	0,42,
-	0,1
-);
+QUnit.test('symbol over one',function(assert){
+	var o=makeFraction(makeSymbol('X'),makeNumber('1'));
+	assert.deepEqual(o,{type:'sym',val:'X'});
+});
+
+QUnit.test('one over symbol',function(assert){
+	var o=makeFraction(makeNumber('1'),makeSymbol('X'));
+	assert.deepEqual(o,{type:'frac',num:{type:'int',val:1},den:{type:'sym',val:'X'}});
+});
