@@ -121,54 +121,70 @@ function makeFraction(num,den) {
 			return gcd(b,a%b);
 		}
 	};
-	var np=makeProduct([]);
-	var dp=makeProduct([]);
-	if (num.type=='frac') {
-		np=makeProduct([np,num.num]);
-		dp=makeProduct([dp,num.den]);
-	} else {
-		np=makeProduct([np,num]);
+	(function(){
+		var np=makeProduct([]);
+		var dp=makeProduct([]);
+		if (num.type=='frac') {
+			np=makeProduct([np,num.num]);
+			dp=makeProduct([dp,num.den]);
+		} else {
+			np=makeProduct([np,num]);
+		}
+		if (den.type=='frac') {
+			np=makeProduct([np,den.den]);
+			dp=makeProduct([dp,den.num]);
+		} else {
+			dp=makeProduct([dp,den]);
+		}
+		num=np;
+		den=dp;
+	})();
+	function leadFactor(numden) {
+		return numden.type=='prod'?numden.subs[0]:numden;
 	}
-	if (den.type=='frac') {
-		np=makeProduct([np,den.den]);
-		dp=makeProduct([dp,den.num]);
-	} else {
-		dp=makeProduct([dp,den]);
-	}
-	var n=(np.type=='prod'?np.subs[0]:np);
-	var d=(dp.type=='prod'?dp.subs[0]:dp);
-	if (n.type=='int' && d.type=='int') {
-		if (n.val!=0 && d.val!=0) {
-			var g=gcd(n.val,d.val);
-			n.val/=g;
-			d.val/=g;
-		} else if (d.val==0 && n.val==0) {
-			return {type:'nan'};
+	function replaceLeadFactor(numden,lead) {
+		if (numden.type=='prod') {
+			return makeProduct([lead,makeProduct(numden.subs.slice(1))]);
+		} else {
+			return lead;
 		}
 	}
-	// at this point products may no longer be valid, need to recompute them
-	if (np.type=='prod') np=makeProduct(np.subs);
-	if (dp.type=='prod') dp=makeProduct(dp.subs);
-	if (np.type=='nan' || dp.type=='nan') {
+	(function(){
+		var n=leadFactor(num);
+		var d=leadFactor(den);
+		if (n.type=='int' && d.type=='int' && n.val!=0 && d.val!=0) {
+			var g=gcd(n.val,d.val);
+			num=replaceLeadFactor(num,makeNumber(n.val/g));
+			den=replaceLeadFactor(den,makeNumber(d.val/g));
+		}
+	})();
+	(function(){
+		var d=leadFactor(den);
+		if (d.type=='int' && d.val==0) {
+			num=makeProduct([{type:'inf'},num]);
+			den=replaceLeadFactor(den,makeNumber(1));
+		} else if (d.type=='inf') {
+			num=makeProduct([makeNumber(0),num]);
+			den=replaceLeadFactor(den,makeNumber(1));
+		}
+	})();
+	if (num.type=='nan' || den.type=='nan') {
 		return {type:'nan'};
 	}
-	if (np.type=='inf' && dp.type=='int') {
-		return {type:'inf'};
+	if (num.type=='inf' && den.type=='int') {
+		return {type:'inf'}; // TODO replace w/ lead term removal
 	}
-	if (dp.type=='inf' && np.type=='int') {
-		return makeNumber(0);
+	if (den.type=='int' && den.val==1) {
+		return num;
 	}
-	if (dp.type=='int' && dp.val==1) {
-		return np;
-	}
-	if (np.type=='int' && dp.type=='int') {
-		if (np.val==0) {
+	if (num.type=='int' && den.type=='int') {
+		if (num.val==0) {
 			return makeNumber(0);
-		} else if (dp.val==0) {
+		} else if (den.val==0) {
 			return {type:'inf'};
 		}
 	}
-	return {type:'frac',num:np,den:dp};
+	return {type:'frac',num:num,den:den};
 }
 
 function makeDefinition(lhs,rhs) {
