@@ -15,7 +15,7 @@ function convertExpressionToHtml(expr,inner) {
 	} else if (expr.type=='float') {
 		return toFixed(expr.val); // TODO markup for e+nn
 	} else if (expr.type=='inf') {
-		// TODO
+		return '∞';
 	} else if (expr.type=='nan') {
 		return 'undefined';
 	} else if (expr.type=='sym') {

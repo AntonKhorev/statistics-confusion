@@ -55,3 +55,9 @@ testConvertExpressionToHtml(
 	makeDefinition(makeSymbol('X'),{type:'nan'}),
 	'X is undefined'
 );
+
+testConvertExpressionToHtml(
+	'infinity',
+	{type:'inf'},
+	'∞'
+);
