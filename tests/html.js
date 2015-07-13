@@ -61,3 +61,9 @@ testConvertExpressionToHtml(
 	{type:'inf'},
 	'∞'
 );
+
+testConvertExpressionToHtml(
+	'product',
+	makeProduct([makeSymbol('A'),makeSymbol('B'),makeSymbol('C')]),
+	'A·B·C'
+);

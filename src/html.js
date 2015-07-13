@@ -35,7 +35,7 @@ function convertExpressionToHtml(expr,inner) {
 			} else {
 				return '('+rec(e)+')'; // TODO span='aux' for e.type=='frac' (but not for e.type=='sum')
 			}
-		}).join('*'); // TODO cdot
+		}).join('·');
 	} else if (expr.type=='frac') {
 		var numdenHtml=function(e){
 			if (isAtom(e)) {
