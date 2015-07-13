@@ -13,3 +13,21 @@ testConvertExpressionToHtml(
 	makeNumber('23'),
 	'23'
 );
+
+testConvertExpressionToHtml(
+	'decimal fraction',
+	makeFraction(makeNumber('4'),makeNumber('5')),
+	'4/5 = 0.8'
+);
+
+testConvertExpressionToHtml(
+	'infinite decimal fraction',
+	makeFraction(makeNumber('1'),makeNumber('3')),
+	'1/3 = 0.333333'
+);
+
+testConvertExpressionToHtml(
+	'fraction with sum',
+	makeFraction(makeSymbol('A'),makeSum([makeSymbol('B'),makeSymbol('C')])),
+	'A/(B+C)'
+);

@@ -483,8 +483,3 @@ testSubstitutions(
 	'1/(0*FPR)' // or inf/FPR?
 );
 */
-
-// tests of fp fraction representation that were removed:
-// '4/5=0.8'
-// '1/3=0.333333'
-// '1/2=0.5'
