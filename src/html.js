@@ -17,7 +17,7 @@ function convertExpressionToHtml(expr,inner) {
 	} else if (expr.type=='inf') {
 		// TODO
 	} else if (expr.type=='nan') {
-		// TODO
+		return 'undefined';
 	} else if (expr.type=='sym') {
 		var vis=expr.val;
 		if (expr.val=='PLR') {
@@ -54,7 +54,7 @@ function convertExpressionToHtml(expr,inner) {
 		}
 		return s;
 	} else if (expr.type=='def') {
-		return rec(expr.lhs)+' = '+convertExpressionToHtml(expr.rhs,inner);
+		return rec(expr.lhs)+(expr.rhs.type=='nan'?' is ':' = ')+convertExpressionToHtml(expr.rhs,inner);
 	}
 }
 

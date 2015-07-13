@@ -43,3 +43,15 @@ testConvertExpressionToHtml(
 	makeDefinition(makeSymbol('PLR'),makeNumber(42)),
 	'LR+ = 42'
 );
+
+testConvertExpressionToHtml(
+	'nan',
+	{type:'nan'},
+	'undefined'
+);
+
+testConvertExpressionToHtml(
+	'nan in definition',
+	makeDefinition(makeSymbol('X'),{type:'nan'}),
+	'X is undefined'
+);
