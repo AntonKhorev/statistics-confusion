@@ -31,3 +31,15 @@ testConvertExpressionToHtml(
 	makeFraction(makeSymbol('A'),makeSum([makeSymbol('B'),makeSymbol('C')])),
 	'A/(B+C)'
 );
+
+testConvertExpressionToHtml(
+	'PLR',
+	makeSymbol('PLR'),
+	'LR+'
+);
+
+testConvertExpressionToHtml(
+	'PLR definition',
+	makeDefinition(makeSymbol('PLR'),makeNumber(42)),
+	'LR+ = 42'
+);

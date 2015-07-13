@@ -54,7 +54,7 @@ function convertExpressionToHtml(expr,inner) {
 		}
 		return s;
 	} else if (expr.type=='def') {
-		return expr.lhs.val+' = '+convertExpressionToHtml(expr.rhs,inner);
+		return rec(expr.lhs)+' = '+convertExpressionToHtml(expr.rhs,inner);
 	}
 }
 
