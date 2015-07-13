@@ -4,6 +4,7 @@ function makeSymbol(s) {
 	//   finite x: 0*x can be transformed into 0
 	//   possibly infinite x: 0*x has to be kept
 	// currently playing safe and considering all symbols possibly infinite
+	// also all symbols are considered nonnegative, otherwise will need two more types
 }
 
 function makeNumber(s) {
@@ -20,6 +21,8 @@ function makeNumber(s) {
 function makeSum(ss) {
 	var acc=makeNumber(0);
 	var subs=[];
+	var hasNan=false;
+	var hasInf=false;
 	// TODO flatten sum? - don't need it here
 	ss.forEach(function(s){
 		if (s.type=='int') {
@@ -27,10 +30,19 @@ function makeSum(ss) {
 		} else if (s.type=='float') {
 			acc.val+=s.val;
 			acc.type='float';
+		} else if (s.type=='nan') {
+			hasNan=true;
+		} else if (s.type=='inf') {
+			hasInf=true;
 		} else {
 			subs.push(s);
 		}
 	});
+	if (hasNan) {
+		return {type:'nan'};
+	} else if (hasInf) {
+		return {type:'inf'};
+	}
 	if (acc.val) {
 		subs.push(acc);
 	}

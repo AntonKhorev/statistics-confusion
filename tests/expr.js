@@ -5,6 +5,7 @@ QUnit.test('',function(assert){
 	assert.deepEqual(o,{type:'sym',val:'TP'});
 });
 
+
 QUnit.module('make number');
 
 QUnit.test('int',function(assert){
@@ -17,6 +18,7 @@ QUnit.test('float',function(assert){
 	assert.equal(o.type,'float');
 	assert.equal(o.val,55555555555555555555);
 });
+
 
 QUnit.module('make sum');
 
@@ -76,6 +78,17 @@ QUnit.test('symbol and zero',function(assert){
 	var o=makeSum([makeSymbol('FP'),makeNumber('0')]);
 	assert.deepEqual(o,{type:'sym',val:'FP'});
 });
+
+QUnit.test('number and nan',function(assert){
+	var o=makeSum([makeNumber('3'),{type:'nan'}]);
+	assert.deepEqual(o,{type:'nan'});
+});
+
+QUnit.test('number and infinity',function(assert){
+	var o=makeSum([makeNumber('3'),{type:'inf'}]);
+	assert.deepEqual(o,{type:'inf'});
+});
+
 
 QUnit.module('make product');
 
@@ -170,6 +183,7 @@ QUnit.test('flatten product',function(assert){
 	});
 });
 
+
 QUnit.module('make fraction');
 
 QUnit.test('zero over zero',function(assert){
@@ -234,12 +248,14 @@ QUnit.test('fraction over fraction',function(assert){
 	});
 });
 
+
 QUnit.module('make definition');
 
 QUnit.test('',function(assert){
 	var o=makeDefinition(makeSymbol('A'),makeSymbol('B'));
 	assert.deepEqual(o,{type:'def',lhs:{type:'sym',val:'A'},rhs:{type:'sym',val:'B'}});
 });
+
 
 QUnit.module('parse expression');
 
@@ -269,6 +285,7 @@ QUnit.test('definition',function(assert){
 		}
 	});
 });
+
 
 QUnit.module('substitute into expression');
 
