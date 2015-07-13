@@ -197,6 +197,11 @@ $('table.statistics-confusion').each(function(){
 		// hack for DLR
 		if ('TP' in subs && 'FN' in subs) {
 			subs.TPR=makeFraction(makeNumber(termValues.TP),makeNumber(termValues.TP+termValues.FN));
+			subs.FNR=makeFraction(makeNumber(termValues.FN),makeNumber(termValues.TP+termValues.FN));
+		}
+		if ('FP' in subs && 'TN' in subs) {
+			subs.FPR=makeFraction(makeNumber(termValues.FP),makeNumber(termValues.FP+termValues.TN));
+			subs.TNR=makeFraction(makeNumber(termValues.TN),makeNumber(termValues.FP+termValues.TN));
 		}
 		// update html
 		tableNode.find('.formula').each(function(){
