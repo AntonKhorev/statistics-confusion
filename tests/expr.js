@@ -172,6 +172,34 @@ QUnit.test('symbol and one',function(assert){
 	assert.deepEqual(o,{type:'sym',val:'FP'});
 });
 
+QUnit.test('number and nan',function(assert){
+	var o=makeProduct([makeNumber('3'),{type:'nan'}]);
+	assert.deepEqual(o,{type:'nan'});
+});
+
+QUnit.test('number and infinity',function(assert){
+	var o=makeProduct([makeNumber('3'),{type:'inf'}]);
+	assert.deepEqual(o,{type:'inf'});
+});
+
+QUnit.test('zero and infinity',function(assert){
+	var o=makeProduct([makeNumber('0'),{type:'inf'}]);
+	assert.deepEqual(o,{type:'nan'});
+});
+
+QUnit.test('symbol and nan',function(assert){
+	var o=makeProduct([makeSymbol('X'),{type:'nan'}]);
+	assert.deepEqual(o,{type:'nan'});
+});
+
+QUnit.test('symbol and infinity',function(assert){
+	var o=makeProduct([makeSymbol('X'),{type:'inf'}]);
+	assert.deepEqual(o,{
+		type:'prod',
+		subs:[{type:'inf'},{type:'sym',val:'X'}]
+	});
+});
+
 QUnit.test('flatten product',function(assert){
 	var o=makeProduct([
 		makeProduct([makeSymbol('A'),makeSymbol('B')]),

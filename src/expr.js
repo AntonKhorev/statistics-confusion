@@ -20,9 +20,9 @@ function makeNumber(s) {
 // TODO sum with inf and nan
 function makeSum(ss) {
 	var acc=makeNumber(0);
-	var subs=[];
 	var hasNan=false;
 	var hasInf=false;
+	var subs=[];
 	// TODO flatten sum? - don't need it here
 	ss.forEach(function(s){
 		if (s.type=='int') {
@@ -58,6 +58,8 @@ function makeSum(ss) {
 // TODO prod with inf and nan
 function makeProduct(ss) {
 	var acc=makeNumber(1);
+	var hasNan=false;
+	var hasInf=false;
 	var subs=[];
 	function handleNumber(s) {
 		if (s.type=='int') {
@@ -85,12 +87,22 @@ function makeProduct(ss) {
 					subs.push(s);
 				}
 			});
+		} else if (s.type=='nan') {
+			hasNan=true;
+		} else if (s.type=='inf') {
+			hasInf=true;
 		} else {
 			subs.push(s);
 		}
 	});
-	if (acc.val!=1) {
+	if (hasNan || (acc.val==0 && hasInf)) {
+		return {type:'nan'};
+	}
+	if (acc.val!=1 && !hasInf) {
 		subs.unshift(acc);
+	}
+	if (hasInf) {
+		subs.unshift({type:'inf'});
 	}
 	if (subs.length>1) {
 		return {type:'prod',subs:subs}; // number can only be a first subexpression
