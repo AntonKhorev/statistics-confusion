@@ -14,12 +14,15 @@ var htmlSrc='src/index.jade';
 var cssSrc='src/index.less';
 var jsSrc=[
 	'src/intro.js',
-	'src/expr-symbolic.js',
-	'src/expr-html.js',
+	'src/expr.js',
+	'src/html.js',
 	'src/main.js',
 	'src/outro.js'
 ];
-var jsHtmlSrc='src/expr-html.js';
+var jsHtmlSrc=[
+	'src/expr.js',
+	'src/html.js'
+];
 
 gulp.task('html',function(){
 	var ctx={};
@@ -38,7 +41,7 @@ gulp.task('css',function(){
 		.pipe(sourcemaps.init())
 		.pipe(less())
 		.pipe(autoprefixer())
-		.pipe(minifyCss({compatibility:'ie7'}))
+		.pipe(minifyCss({compatibility:'ie7'})) // TODO code is now ie9+
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('public_html'));
 });

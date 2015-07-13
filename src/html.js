@@ -1,3 +1,12 @@
+function convertExpressionToHtml(expr) {
+	if (expr.type=='int') {
+		return ''+expr.val;
+	}
+	// TODO the rest
+}
+
+// older stuff TODO rewrite
+
 function makeFormulaHtml(formula) {
 	return formula
 		.replace(/=/g,' = ')
@@ -34,3 +43,5 @@ function makeWrappedFormulaHtml(formula) {
 function makeEmptyFormulaHtml(formula) {
 	return "<div class='formula' data-formula='"+formula+"' />";
 }
+
+// TODO fn to output the whole table
