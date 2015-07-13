@@ -26,7 +26,9 @@ var jsHtmlSrc=[
 
 gulp.task('html',function(){
 	var ctx={};
-	vm.runInNewContext(fs.readFileSync('./'+jsHtmlSrc),ctx);
+	jsHtmlSrc.forEach(function(src){
+		vm.runInNewContext(fs.readFileSync(src),ctx);
+	});
 	gulp.src(htmlSrc)
 		.pipe(plumber())
 		.pipe(jade({

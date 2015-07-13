@@ -54,18 +54,16 @@ function convertExpressionToHtml(expr,inner) {
 		}
 		return s;
 	} else if (expr.type=='def') {
-		return expr.lhs.val+' = '+convertExpressionToHtml(expr,inner);
+		return expr.lhs.val+' = '+convertExpressionToHtml(expr.rhs,inner);
 	}
 }
 
-/*
 function makeWrappedFormulaHtml(formula) {
-	return "<div class='formula' data-formula='"+formula+"'>"+makeFormulaHtml(formula)+"</div>";
+	return "<div class='formula' data-formula='"+formula+"'>"+convertExpressionToHtml(parseExpression(formula))+"</div>";
 }
 
 function makeEmptyFormulaHtml(formula) {
 	return "<div class='formula' data-formula='"+formula+"' />";
 }
-*/
 
 // TODO fn to output the whole table
