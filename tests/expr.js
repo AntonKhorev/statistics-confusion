@@ -265,6 +265,68 @@ QUnit.test('product with over product with number',function(assert){
 	});
 });
 
+QUnit.test('nan over number',function(assert){
+	var o=makeFraction({type:'nan'},makeNumber('4'));
+	assert.deepEqual(o,{type:'nan'});
+});
+
+QUnit.test('number over nan',function(assert){
+	var o=makeFraction(makeNumber('4'),{type:'nan'});
+	assert.deepEqual(o,{type:'nan'});
+});
+
+QUnit.test('nan over symbol',function(assert){
+	var o=makeFraction({type:'nan'},makeSymbol('X'));
+	assert.deepEqual(o,{type:'nan'});
+});
+
+QUnit.test('symbol over nan',function(assert){
+	var o=makeFraction(makeSymbol('X'),{type:'nan'});
+	assert.deepEqual(o,{type:'nan'});
+});
+
+QUnit.test('infinity over number',function(assert){
+	var o=makeFraction({type:'inf'},makeNumber('4'));
+	assert.deepEqual(o,{type:'inf'});
+});
+
+QUnit.test('number over infinity',function(assert){
+	var o=makeFraction(makeNumber('4'),{type:'inf'});
+	assert.deepEqual(o,{type:'int',val:0});
+});
+
+QUnit.test('infinity over symbol',function(assert){
+	var o=makeFraction({type:'inf'},makeSymbol('X'));
+	assert.deepEqual(o,{type:'frac',num:{type:'inf'},den:{type:'sym',val:'X'}});
+});
+
+QUnit.test('symbol over infinity',function(assert){
+	var o=makeFraction(makeSymbol('X'),{type:'inf'});
+	assert.deepEqual(o,{type:'prod',subs:[{type:'int',val:0},{type:'sym',val:'X'}]});
+});
+
+QUnit.test('infinity*symbol over number*symbol',function(assert){
+	var o=makeFraction(
+		makeProduct([{type:'inf'},makeSymbol('X')]),
+		makeProduct([makeNumber('4'),makeSymbol('Y')])
+	);
+	assert.deepEqual(o,{type:'frac',
+		num:{type:'prod',subs:[{type:'inf'},{type:'sym',val:'X'}]},
+		den:{type:'sym',val:'Y'}
+	});
+});
+
+QUnit.test('number*symbol over infinity*symbol',function(assert){
+	var o=makeFraction(
+		makeProduct([makeNumber('4'),makeSymbol('Y')]),
+		makeProduct([{type:'inf'},makeSymbol('X')])
+	);
+	assert.deepEqual(o,{type:'frac',
+		num:{type:'prod',subs:[{type:'int',val:0},{type:'sym',val:'Y'}]},
+		den:{type:'sym',val:'X'}
+	});
+});
+
 QUnit.test('fraction over fraction',function(assert){
 	var o=makeFraction(
 		makeFraction(makeSymbol('A'),makeSymbol('B')),

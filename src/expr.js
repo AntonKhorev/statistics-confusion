@@ -149,7 +149,16 @@ function makeFraction(num,den) {
 	// at this point products may no longer be valid, need to recompute them
 	if (np.type=='prod') np=makeProduct(np.subs);
 	if (dp.type=='prod') dp=makeProduct(dp.subs);
-        if (dp.type=='int' && dp.val==1) {
+	if (np.type=='nan' || dp.type=='nan') {
+		return {type:'nan'};
+	}
+	if (np.type=='inf' && dp.type=='int') {
+		return {type:'inf'};
+	}
+	if (dp.type=='inf' && np.type=='int') {
+		return makeNumber(0);
+	}
+	if (dp.type=='int' && dp.val==1) {
 		return np;
 	}
 	if (np.type=='int' && dp.type=='int') {
@@ -203,7 +212,7 @@ function parseExpression(str) {
 	return root(str);
 }
 
-function substituteIntoExpression(expr,subs) {
+function substituteIntoExpression(expr,subs) { // FIXME both subexpressions and substitutions are called 'subs'
 	function rec(expr) {
 		return substituteIntoExpression(expr,subs);
 	}
