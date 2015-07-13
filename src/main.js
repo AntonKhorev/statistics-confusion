@@ -191,17 +191,17 @@ $('table.statistics-confusion').each(function(){
 		var subs={};
 		for (term in termInputs) {
 			if (termInputs[term]) {
-				subs[term]=termValues[term];
+				subs[term]=makeNumber(termValues[term]);
 			}
 		}
 		// hack for DLR
 		if ('TP' in subs && 'FN' in subs) {
-			subs.TPR=makeNumericFraction(subs.TP,subs.TP+subs.FN);
+			subs.TPR=makeFraction(makeNumber(termValues.TP),makeNumber(termValues.TP+termValues.FN));
 		}
 		// update html
 		tableNode.find('.formula').each(function(){
 			var formula=$(this);
-			formula.html(makeFormulaHtml(makeFormulaSubstitutions(formula.attr('data-formula'),subs)));
+			formula.html(convertExpressionToHtml(substituteIntoExpression(parseExpression(formula.attr('data-formula')),subs)));
 		});
 	}
 	$.each(termInputs,function(term){
@@ -230,7 +230,7 @@ $('table.statistics-confusion').each(function(){
 						$(this).val('Remove number');
 					} else {
 						termInputs[term]=false;
-						td.children('.input').attr('class','formula').html(makeFormulaHtml(term));
+						td.children('.input').attr('class','formula').html(convertExpressionToHtml(makeSymbol(term)));
 						$(this).val('Set number');
 					}
 					updateFormulas();
