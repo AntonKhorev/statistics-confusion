@@ -159,6 +159,19 @@ function makeFraction(num,den) {
 		}
 	})();
 	(function(){
+		var n=leadFactor(num);
+		var d=leadFactor(den);
+		if (n.type=='int' && n.val==0) {
+			if (d.type=='int' && d.val!=0) {
+				den=replaceLeadFactor(den,makeNumber(1));
+			}
+		} else if (n.type=='inf') {
+			if (d.type=='int') {
+				den=replaceLeadFactor(den,makeNumber(1));
+			}
+		}
+	})();
+	(function(){
 		var d=leadFactor(den);
 		if (d.type=='int' && d.val==0) {
 			num=makeProduct([{type:'inf'},num]);
@@ -171,18 +184,8 @@ function makeFraction(num,den) {
 	if (num.type=='nan' || den.type=='nan') {
 		return {type:'nan'};
 	}
-	if (num.type=='inf' && den.type=='int') {
-		return {type:'inf'}; // TODO replace w/ lead term removal
-	}
 	if (den.type=='int' && den.val==1) {
 		return num;
-	}
-	if (num.type=='int' && den.type=='int') {
-		if (num.val==0) {
-			return makeNumber(0);
-		} else if (den.val==0) {
-			return {type:'inf'};
-		}
 	}
 	return {type:'frac',num:num,den:den};
 }
