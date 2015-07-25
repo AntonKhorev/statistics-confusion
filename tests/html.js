@@ -21,6 +21,12 @@ testConvertExpressionToHtml(
 );
 
 testConvertExpressionToHtml(
+	'number in e-format',
+	makeNumber('5000000000000000000000000'),
+	'5·1024' // 5*10^24
+);
+
+testConvertExpressionToHtml(
 	'infinite decimal fraction',
 	makeFraction(makeNumber('1'),makeNumber('3')),
 	'1/3 = 0.333333'
