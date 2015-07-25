@@ -139,16 +139,23 @@ $('table.statistics-confusion').each(function(){
 		function close(v) {
 			return ' V v8 H 0 Z'.replace(/v/g,v?'':'-');
 		}
-		return "<svg class='diagram' viewBox='-12 -8 24 16'>"+
-			"<path class='actual-true' d='"+lobe(rcOrd[1],!rcOrd[0])+close(rcOrd[0])+"' />"+
-			"<path class='actual-false' d='"+lobe(rcOrd[1],!rcOrd[0])+close(!rcOrd[0])+"' />"+
-			"<path class='actual-true' d='"+lobe(!rcOrd[1],rcOrd[0])+close(rcOrd[0])+"' />"+
-			"<path class='actual-false' d='"+lobe(!rcOrd[1],rcOrd[0])+close(!rcOrd[0])+"' />"+
-		"</svg>";
+		if (!rcDir) {
+			return "<svg class='diagram' viewBox='-12 -8 24 16'>"+
+				"<path class='actual-true' d='"+lobe(rcOrd[1],!rcOrd[0])+close(rcOrd[0])+"' />"+
+				"<path class='actual-false' d='"+lobe(rcOrd[1],!rcOrd[0])+close(!rcOrd[0])+"' />"+
+				"<path class='actual-true' d='"+lobe(!rcOrd[1],rcOrd[0])+close(rcOrd[0])+"' />"+
+				"<path class='actual-false' d='"+lobe(!rcOrd[1],rcOrd[0])+close(!rcOrd[0])+"' />"+
+			"</svg>";
+		} else {
+			return "<svg class='diagram' viewBox='-12 -8 24 16'>"+
+				"<path class='actual-true' d='M 0 0 V -2 C 0 -4 4 -4 5 -3 C 6 -2 8 -2 8 -4 C 8 -6 6 -6 5 -5 C 4 -4 0 -4 0 -6 V -8 H -12 V 0 Z' />"+
+			"</svg>";
+		}
 	}
 	tableNode.children('caption').append(drawDiagram()).append(
 		$("<button type='button' class='swap-rc' title='swap rows and columns'>"+drawSwapIcon(-45)+"</button>").click(function(){
 			rcDir^=1;
+			tableNode.find('.diagram').replaceWith(drawDiagram());
 			var n=tbodyNode.children().length;
 			for (var i=0;i<n;i++) {
 				for (var j=0;j<i;j++) {
