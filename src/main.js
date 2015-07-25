@@ -164,6 +164,10 @@ $('table.statistics-confusion').each(function(){
 		})
 	).append(
 		$("<button type='button' class='add-r' title='expand table'>+</button>").click(expandTable)
+	).append(
+		"<svg class='diagram' viewBox='-6 -4 12 8'>"+
+			"<path d='M -6 0 L -3 4 L 3 -4 L 6 0' fill='none' stroke='#CFC' />"+
+		"</svg>"
 	);
 	tableNode.on('mouseenter','.term',function(){
 		$(this).addClass('highlight');

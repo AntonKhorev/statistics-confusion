@@ -1,5 +1,5 @@
 @cell-width: 12rem;
-@cell-height: 7rem;
+@cell-height: 8rem;
 @cell-border-width: 1px;
 @central-cell-border-width: 3px;
 @caption-height: 4rem;
@@ -198,5 +198,13 @@ table.statistics-confusion {
 		svg {
 			display: block;
 		}
+	}
+	.diagram {
+		position: absolute;
+		z-index: -1;
+		top: calc(@caption-height + @cell-height ~'+' @cell-border-width + @central-cell-border-width);
+		left: calc(@cell-width ~'+' @cell-border-width + @central-cell-border-width);
+		height: calc(@cell-height*2 ~'+' @cell-border-width);
+		width: calc(@cell-width*2 ~'+' @cell-border-width);
 	}
 }
