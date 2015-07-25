@@ -13,7 +13,7 @@ function convertExpressionToHtml(expr,inner) {
 			return toFixed(s);
 		} else {
 			var ss=s.split(/e\+?/);
-			return toFixed(ss[0])+'·10<sup>'+ss[1]+'</sup>';
+			return toFixed(ss[0])+'·10<sup>'+ss[1].replace('-','−')+'</sup>';
 		}
 	}
 	function isAtom(e) {
