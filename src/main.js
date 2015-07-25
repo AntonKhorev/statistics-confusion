@@ -180,11 +180,12 @@ $('table.statistics-confusion').each(function(){
 		'FN':false,
 		'TN':false
 	};
+	// number input values as strings
 	var termValues={
-		'TP':0,
-		'FP':0,
-		'FN':0,
-		'TN':0
+		'TP':'0',
+		'FP':'0',
+		'FN':'0',
+		'TN':'0'
 	};
 	function updateFormulas() {
 		// entered numbers
@@ -196,12 +197,12 @@ $('table.statistics-confusion').each(function(){
 		}
 		// hack for DLR
 		if ('TP' in subs && 'FN' in subs) {
-			subs.TPR=makeFraction(makeNumber(termValues.TP),makeNumber(termValues.TP+termValues.FN));
-			subs.FNR=makeFraction(makeNumber(termValues.FN),makeNumber(termValues.TP+termValues.FN));
+			subs.TPR=makeFraction(makeNumber(termValues.TP),makeSum([makeNumber(termValues.TP),makeNumber(termValues.FN)]));
+			subs.FNR=makeFraction(makeNumber(termValues.FN),makeSum([makeNumber(termValues.TP),makeNumber(termValues.FN)]));
 		}
 		if ('FP' in subs && 'TN' in subs) {
-			subs.FPR=makeFraction(makeNumber(termValues.FP),makeNumber(termValues.FP+termValues.TN));
-			subs.TNR=makeFraction(makeNumber(termValues.TN),makeNumber(termValues.FP+termValues.TN));
+			subs.FPR=makeFraction(makeNumber(termValues.FP),makeSum([makeNumber(termValues.FP),makeNumber(termValues.TN)]));
+			subs.TNR=makeFraction(makeNumber(termValues.TN),makeSum([makeNumber(termValues.FP),makeNumber(termValues.TN)]));
 		}
 		// update html
 		tableNode.find('.formula').each(function(){
@@ -226,8 +227,7 @@ $('table.statistics-confusion').each(function(){
 						);
 						fi.find('input').on('input',function(){
 							if (this.validity.valid) {
-								//termValues[term]=this.valueAsNumber; // doesn't work in IE
-								termValues[term]=parseInt(this.value);
+								termValues[term]=this.value;
 								fi.find('output').text(termValues[term]);
 								updateFormulas();
 							}

@@ -23,10 +23,11 @@ QUnit.test('float that triggers e-format',function(assert){
 	assert.deepEqual(o,{type:'float',val:1000000000000000000000});
 });
 
-QUnit.test('float in e-format',function(assert){
-	var o=makeNumber('1e+21');
-	assert.deepEqual(o,{type:'float',val:1000000000000000000000});
-});
+// numbers in this format shouldn't be used
+//QUnit.test('float in e-format',function(assert){
+//	var o=makeNumber('1e+21');
+//	assert.deepEqual(o,{type:'float',val:1000000000000000000000});
+//});
 
 QUnit.module('make sum');
 

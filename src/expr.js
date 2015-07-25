@@ -7,10 +7,11 @@ function makeSymbol(s) {
 	// also all symbols are considered nonnegative, otherwise will need two more types
 }
 
+// accepts string, not number - this is violated in code below
 function makeNumber(s) {
-	if (typeof(s)=='string' && s.indexOf('e')>=0) {
-		return {type:'float',val:parseFloat(s)};
-	}
+	//if (typeof(s)=='string' && s.indexOf('e')>=0) {
+	//	return {type:'float',val:parseFloat(s)};
+	//}
 	var v=parseInt(s);
 	var maxSafeInt=9007199254740991; // Number.MAX_SAFE_INTEGER, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER
 	if (v<=maxSafeInt) {
@@ -20,7 +21,6 @@ function makeNumber(s) {
 	}
 }
 
-// TODO sum with inf and nan
 function makeSum(ss) {
 	var acc=makeNumber(0);
 	var hasNan=false;
@@ -58,7 +58,6 @@ function makeSum(ss) {
 	}
 }
 
-// TODO prod with inf and nan
 function makeProduct(ss) {
 	var acc=makeNumber(1);
 	var hasNan=false;
