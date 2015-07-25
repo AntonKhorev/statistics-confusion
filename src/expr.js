@@ -13,7 +13,8 @@ function makeNumber(s) {
 	//	return {type:'float',val:parseFloat(s)};
 	//}
 	var v=parseInt(s);
-	var maxSafeInt=9007199254740991; // Number.MAX_SAFE_INTEGER, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER
+	//var maxSafeInt=9007199254740991; // Number.MAX_SAFE_INTEGER, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER
+	var maxSafeInt=1000000000000; // use floats for numbers that are too large
 	if (v<=maxSafeInt) {
 		return {type:'int',val:v};
 	} else {

@@ -8,12 +8,12 @@ function convertExpressionToHtml(expr,inner) {
 		return String(Math.round(value*power)/power);
 	}
 	function formatFloat(value) {
-		var s=String(value);
-		if (s.indexOf('e')<0) {
-			return toFixed(s);
-		} else {
-			var ss=s.split(/e\+?/);
+		var ss=value.toExponential().split(/e\+?/);
+		var e=parseInt(ss[1]);
+		if (e<0 || e>7) {
 			return toFixed(ss[0])+'·10<sup>'+ss[1].replace('-','−')+'</sup>';
+		} else {
+			return toFixed(value);
 		}
 	}
 	function isAtom(e) {
