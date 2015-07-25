@@ -131,26 +131,28 @@ $('table.statistics-confusion').each(function(){
 		"</svg>";
 	}
 	function drawDiagram() {
-		function lobe(h,v) {
+		var lobe=rcDir?function(v,h){
+			return 'M 0 0 V v2 C 0 v4 h4 v4 h5 v3 C h6 v2 h8 v2 h8 v4 C h8 v6 h6 v6 h5 v5 C h4 v4 0 v4 0 v6 V v8'
+				.replace(/h/g,h?'':'-')
+				.replace(/v/g,v?'':'-')
+			;
+		}:function(h,v){
 			return 'M 0 0 H h4 C h6 0 h6 v2 h5 v3 C h4 v4 h4 v6 h6 v6 C h8 v6 h8 v4 h7 v3 C h6 v2 h6 0 h8 0 H h12'
 				.replace(/h/g,h?'':'-')
-				.replace(/v/g,v?'':'-');
-		}
-		function close(v) {
+				.replace(/v/g,v?'':'-')
+			;
+		};
+		var close=rcDir?function(h) {
+			return ' H h12 V 0 Z'.replace(/h/g,h?'':'-');
+		}:function(v) {
 			return ' V v8 H 0 Z'.replace(/v/g,v?'':'-');
-		}
-		if (!rcDir) {
-			return "<svg class='diagram' viewBox='-12 -8 24 16'>"+
-				"<path class='actual-true' d='"+lobe(rcOrd[1],!rcOrd[0])+close(rcOrd[0])+"' />"+
-				"<path class='actual-false' d='"+lobe(rcOrd[1],!rcOrd[0])+close(!rcOrd[0])+"' />"+
-				"<path class='actual-true' d='"+lobe(!rcOrd[1],rcOrd[0])+close(rcOrd[0])+"' />"+
-				"<path class='actual-false' d='"+lobe(!rcOrd[1],rcOrd[0])+close(!rcOrd[0])+"' />"+
-			"</svg>";
-		} else {
-			return "<svg class='diagram' viewBox='-12 -8 24 16'>"+
-				"<path class='actual-true' d='M 0 0 V -2 C 0 -4 4 -4 5 -3 C 6 -2 8 -2 8 -4 C 8 -6 6 -6 5 -5 C 4 -4 0 -4 0 -6 V -8 H -12 V 0 Z' />"+
-			"</svg>";
-		}
+		};
+		return "<svg class='diagram' viewBox='-12 -8 24 16'>"+
+			"<path class='actual-true' d='"+lobe(rcOrd[1],!rcOrd[0])+close(rcOrd[0])+"' />"+
+			"<path class='actual-false' d='"+lobe(rcOrd[1],!rcOrd[0])+close(!rcOrd[0])+"' />"+
+			"<path class='actual-true' d='"+lobe(!rcOrd[1],rcOrd[0])+close(rcOrd[0])+"' />"+
+			"<path class='actual-false' d='"+lobe(!rcOrd[1],rcOrd[0])+close(!rcOrd[0])+"' />"+
+		"</svg>";
 	}
 	tableNode.children('caption').append(drawDiagram()).append(
 		$("<button type='button' class='swap-rc' title='swap rows and columns'>"+drawSwapIcon(-45)+"</button>").click(function(){
