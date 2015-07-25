@@ -149,6 +149,7 @@ function makeFraction(num,den) {
 			return lead;
 		}
 	}
+	// gcd simplification
 	(function(){
 		var n=leadFactor(num);
 		var d=leadFactor(den);
@@ -158,19 +159,26 @@ function makeFraction(num,den) {
 			den=replaceLeadFactor(den,makeNumber(d.val/g));
 		}
 	})();
+	// first try to move stuff to numerator when makes sense
 	(function(){
 		var n=leadFactor(num);
 		var d=leadFactor(den);
 		if (n.type=='int' && n.val==0) {
-			if (d.type=='int' && d.val!=0) {
+			if ((d.type=='int'||d.type=='float') && d.val!=0) {
 				den=replaceLeadFactor(den,makeNumber(1));
 			}
 		} else if (n.type=='inf') {
-			if (d.type=='int') {
+			if (d.type=='int'||d.type=='float') {
+				den=replaceLeadFactor(den,makeNumber(1));
+			}
+		} else if (n.type=='float') {
+			if ((d.type=='int'||d.type=='float') && d.val!=0) {
+				num=replaceLeadFactor(num,{type:'float',val:n.val/d.val});
 				den=replaceLeadFactor(den,makeNumber(1));
 			}
 		}
 	})();
+	// then clean up denominator
 	(function(){
 		var d=leadFactor(den);
 		if (d.type=='int' && d.val==0) {
@@ -178,6 +186,9 @@ function makeFraction(num,den) {
 			den=replaceLeadFactor(den,makeNumber(1));
 		} else if (d.type=='inf') {
 			num=makeProduct([makeNumber(0),num]);
+			den=replaceLeadFactor(den,makeNumber(1));
+		} else if (d.type=='float') {
+			num=makeProduct([{type:'float',val:1/d.val},num]);
 			den=replaceLeadFactor(den,makeNumber(1));
 		}
 	})();

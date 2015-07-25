@@ -239,9 +239,29 @@ QUnit.test('number over zero',function(assert){
 	assert.deepEqual(o,{type:'inf'});
 });
 
+QUnit.test('float over zero',function(assert){
+	var o=makeFraction(makeNumber('10000000000000000000'),makeNumber('0'));
+	assert.deepEqual(o,{type:'inf'});
+});
+
 QUnit.test('zero over number',function(assert){
 	var o=makeFraction(makeNumber('0'),makeNumber('42'));
 	assert.deepEqual(o,{type:'int',val:0});
+});
+
+QUnit.test('zero over float',function(assert){
+	var o=makeFraction(makeNumber('0'),makeNumber('10000000000000000000'));
+	assert.deepEqual(o,{type:'int',val:0});
+});
+
+QUnit.test('int over float',function(assert){
+	var o=makeFraction(makeNumber('3'),makeNumber('10000000000000000000'));
+	assert.deepEqual(o,{type:'float',val:3/10000000000000000000});
+});
+
+QUnit.test('float over int',function(assert){
+	var o=makeFraction(makeNumber('10000000000000000000'),makeNumber('3'));
+	assert.deepEqual(o,{type:'float',val:10000000000000000000/3});
 });
 
 QUnit.test('symbol over one',function(assert){
@@ -252,6 +272,13 @@ QUnit.test('symbol over one',function(assert){
 QUnit.test('one over symbol',function(assert){
 	var o=makeFraction(makeNumber('1'),makeSymbol('X'));
 	assert.deepEqual(o,{type:'frac',num:{type:'int',val:1},den:{type:'sym',val:'X'}});
+});
+
+QUnit.test('symbol over float',function(assert){
+	var o=makeFraction(makeSymbol('X'),makeNumber('10000000000000000000'));
+	assert.deepEqual(o,{type:'prod',subs:[
+		{type:'float',val:1/10000000000000000000},{type:'sym',val:'X'}
+	]});
 });
 
 QUnit.test('product with over product with number',function(assert){
@@ -270,8 +297,18 @@ QUnit.test('nan over number',function(assert){
 	assert.deepEqual(o,{type:'nan'});
 });
 
+QUnit.test('nan over float',function(assert){
+	var o=makeFraction({type:'nan'},makeNumber('10000000000000000000'));
+	assert.deepEqual(o,{type:'nan'});
+});
+
 QUnit.test('number over nan',function(assert){
 	var o=makeFraction(makeNumber('4'),{type:'nan'});
+	assert.deepEqual(o,{type:'nan'});
+});
+
+QUnit.test('float over nan',function(assert){
+	var o=makeFraction(makeNumber('10000000000000000000'),{type:'nan'});
 	assert.deepEqual(o,{type:'nan'});
 });
 
@@ -290,8 +327,18 @@ QUnit.test('infinity over number',function(assert){
 	assert.deepEqual(o,{type:'inf'});
 });
 
+QUnit.test('infinity over float',function(assert){
+	var o=makeFraction({type:'inf'},makeNumber('10000000000000000000'));
+	assert.deepEqual(o,{type:'inf'});
+});
+
 QUnit.test('number over infinity',function(assert){
 	var o=makeFraction(makeNumber('4'),{type:'inf'});
+	assert.deepEqual(o,{type:'int',val:0});
+});
+
+QUnit.test('float over infinity',function(assert){
+	var o=makeFraction(makeNumber('10000000000000000000'),{type:'inf'});
 	assert.deepEqual(o,{type:'int',val:0});
 });
 
