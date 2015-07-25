@@ -130,13 +130,29 @@ $('table.statistics-confusion').each(function(){
 			"</g>"+
 		"</svg>";
 	}
-	function getLobePathData(h,v) {
-		var s='M 0 0 H h4 C h6 0 h6 v2 h5 v3 C h4 v4 h4 v6 h6 v6 C h8 v6 h8 v4 h7 v3 C h6 v2 h6 0 h8 0 H h12';
-		s=s.replace(/h/g,h<0?'-':'');
-		s=s.replace(/v/g,v<0?'-':'');
-		return s;
+	function drawDiagram() {
+		function getLobePathData(h,v) {
+			return 'M 0 0 H h4 C h6 0 h6 v2 h5 v3 C h4 v4 h4 v6 h6 v6 C h8 v6 h8 v4 h7 v3 C h6 v2 h6 0 h8 0 H h12'
+				.replace(/h/g,h<0?'-':'')
+				.replace(/v/g,v<0?'-':'');
+		}
+		if (rcOrd[1]) {
+			return "<svg class='diagram' viewBox='-12 -8 24 16'>"+
+				"<path class='actual-true' d='"+getLobePathData(+1,+1)+" V -8 H 0 Z' />"+
+				"<path class='actual-false' d='"+getLobePathData(+1,+1)+" V 8 H 0 Z' />"+
+				"<path class='actual-true' d='"+getLobePathData(-1,-1)+" V -8 H 0 Z' />"+
+				"<path class='actual-false' d='"+getLobePathData(-1,-1)+" V 8 H 0 Z' />"+
+			"</svg>";
+		} else {
+			return "<svg class='diagram' viewBox='-12 -8 24 16'>"+
+				"<path class='actual-true' d='"+getLobePathData(-1,+1)+" V -8 H 0 Z' />"+
+				"<path class='actual-false' d='"+getLobePathData(-1,+1)+" V 8 H 0 Z' />"+
+				"<path class='actual-true' d='"+getLobePathData(+1,-1)+" V -8 H 0 Z' />"+
+				"<path class='actual-false' d='"+getLobePathData(+1,-1)+" V 8 H 0 Z' />"+
+			"</svg>";
+		}
 	}
-	tableNode.children('caption').append(
+	tableNode.children('caption').append(drawDiagram()).append(
 		$("<button type='button' class='swap-rc' title='swap rows and columns'>"+drawSwapIcon(-45)+"</button>").click(function(){
 			rcDir^=1;
 			var n=tbodyNode.children().length;
@@ -153,6 +169,7 @@ $('table.statistics-confusion').each(function(){
 	).append(
 		$("<button type='button' class='swap-c' title='swap columns'>"+drawSwapIcon(0)+"</button>").click(function(){
 			rcOrd[rcDir^1]^=1;
+			tableNode.find('.diagram').replaceWith(drawDiagram());
 			tbodyNode.children().each(function(){
 				swapChildren($(this),1);
 				if (!isExpanded) return;
@@ -170,13 +187,6 @@ $('table.statistics-confusion').each(function(){
 		})
 	).append(
 		$("<button type='button' class='add-r' title='expand table'>+</button>").click(expandTable)
-	).append(
-		"<svg class='diagram' viewBox='-12 -8 24 16'>"+
-			"<path class='actual-true' d='"+getLobePathData(-1,+1)+" V -8 H 0 Z' />"+
-			"<path class='actual-false' d='"+getLobePathData(-1,+1)+" V 8 H 0 Z' />"+
-			"<path class='actual-true' d='"+getLobePathData(+1,-1)+" V -8 H 0 Z' />"+
-			"<path class='actual-false' d='"+getLobePathData(+1,-1)+" V 8 H 0 Z' />"+
-		"</svg>"
 	);
 	tableNode.on('mouseenter','.term',function(){
 		$(this).addClass('highlight');
