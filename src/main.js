@@ -166,7 +166,7 @@ $('table.statistics-confusion').each(function(){
 		$("<button type='button' class='add-r' title='expand table'>+</button>").click(expandTable)
 	).append(
 		"<svg class='diagram' viewBox='-12 -8 24 16'>"+
-			"<path d='M -12 0 H -8 C -6 0 -6 2 -7 3 C -8 4 -8 6 -6 6 C -4 6 -4 4 -5 3 C -6 2 -6 0 -4 0 H 0' fill='none' stroke='#CFC' stroke-width='0.3' />"+
+			"<path d='M 0 0 H -4 C -6 0 -6 2 -5 3 C -4 4 -4 6 -6 6 C -8 6 -8 4 -7 3 C -6 2 -6 0 -8 0 H -12' fill='none' stroke='#CFC' stroke-width='0.3' />"+
 		"</svg>"
 	);
 	tableNode.on('mouseenter','.term',function(){
