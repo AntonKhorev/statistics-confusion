@@ -17,7 +17,7 @@ testConvertExpressionToHtml(
 testConvertExpressionToHtml(
 	'decimal fraction',
 	makeFraction(makeNumber('4'),makeNumber('5')),
-	'4/5 = 0.8'
+	'4/5 ≈ 0.8'
 );
 
 testConvertExpressionToHtml(
@@ -29,7 +29,7 @@ testConvertExpressionToHtml(
 testConvertExpressionToHtml(
 	'infinite decimal fraction',
 	makeFraction(makeNumber('1'),makeNumber('3')),
-	'1/3 = 0.333333'
+	'1/3 ≈ 0.333333'
 );
 
 testConvertExpressionToHtml(

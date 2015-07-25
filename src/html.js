@@ -10,7 +10,7 @@ function convertExpressionToHtml(expr,inner) {
 	function formatFloat(value) {
 		var ss=value.toExponential().split(/e\+?/);
 		var e=parseInt(ss[1]);
-		if (e<0 || e>7) {
+		if (e<-2 || e>7) {
 			return toFixed(ss[0])+'·10<sup>'+ss[1].replace('-','−')+'</sup>';
 		} else {
 			return toFixed(value);
@@ -18,6 +18,26 @@ function convertExpressionToHtml(expr,inner) {
 	}
 	function isAtom(e) {
 		return e.type=='int' || e.type=='float' || e.type=='sym';
+	}
+	function isExact(e) {
+		if (e.type=='float') {
+			return false;
+		} else if (e.type=='sum' || e.type=='prod') {
+			return e.subs.every(isExact);
+		} else if (e.type=='frac') {
+			return isExact(e.num)&&isExact(e.den);
+		} else {
+			return true;
+		}
+	}
+	function defJoin(rhs) {
+		if (rhs.type=='nan') {
+			return ' is ';
+		} else if (isExact(rhs)) {
+			return ' = ';
+		} else {
+			return ' ≈ ';
+		}
 	}
 	if (expr.type=='int') {
 		return String(expr.val);
@@ -59,11 +79,11 @@ function convertExpressionToHtml(expr,inner) {
 			"<span class='den'>"+numdenHtml(expr.den)+"</span>"+
 		"</span>";
 		if (!inner && expr.num.type=='int' && expr.den.type=='int') {
-			s+=' = '+toFixed(expr.num.val/expr.den.val);
+			s+=' ≈ '+formatFloat(expr.num.val/expr.den.val);
 		}
 		return s;
 	} else if (expr.type=='def') {
-		return rec(expr.lhs)+(expr.rhs.type=='nan'?' is ':' = ')+convertExpressionToHtml(expr.rhs,inner);
+		return rec(expr.lhs)+defJoin(expr.rhs)+convertExpressionToHtml(expr.rhs,inner);
 	}
 }
 
