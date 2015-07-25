@@ -130,6 +130,12 @@ $('table.statistics-confusion').each(function(){
 			"</g>"+
 		"</svg>";
 	}
+	function getLobePathData(h,v) {
+		var s='M 0 0 H h4 C h6 0 h6 v2 h5 v3 C h4 v4 h4 v6 h6 v6 C h8 v6 h8 v4 h7 v3 C h6 v2 h6 0 h8 0 H h12';
+		s=s.replace(/h/g,h<0?'-':'');
+		s=s.replace(/v/g,v<0?'-':'');
+		return s;
+	}
 	tableNode.children('caption').append(
 		$("<button type='button' class='swap-rc' title='swap rows and columns'>"+drawSwapIcon(-45)+"</button>").click(function(){
 			rcDir^=1;
@@ -166,7 +172,10 @@ $('table.statistics-confusion').each(function(){
 		$("<button type='button' class='add-r' title='expand table'>+</button>").click(expandTable)
 	).append(
 		"<svg class='diagram' viewBox='-12 -8 24 16'>"+
-			"<path d='M 0 0 H -4 C -6 0 -6 2 -5 3 C -4 4 -4 6 -6 6 C -8 6 -8 4 -7 3 C -6 2 -6 0 -8 0 H -12' fill='none' stroke='#CFC' stroke-width='0.3' />"+
+			"<path class='actual-true' d='"+getLobePathData(-1,+1)+" V -8 H 0 Z' />"+
+			"<path class='actual-false' d='"+getLobePathData(-1,+1)+" V 8 H 0 Z' />"+
+			"<path class='actual-true' d='"+getLobePathData(+1,-1)+" V -8 H 0 Z' />"+
+			"<path class='actual-false' d='"+getLobePathData(+1,-1)+" V 8 H 0 Z' />"+
 		"</svg>"
 	);
 	tableNode.on('mouseenter','.term',function(){
