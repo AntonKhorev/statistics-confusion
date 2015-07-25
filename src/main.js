@@ -142,16 +142,22 @@ $('table.statistics-confusion').each(function(){
 				.replace(/v/g,v?'':'-')
 			;
 		};
-		var close=rcDir?function(h) {
+		var close=rcDir?function(h){
 			return ' H h12 V 0 Z'.replace(/h/g,h?'':'-');
-		}:function(v) {
+		}:function(v){
 			return ' V v8 H 0 Z'.replace(/v/g,v?'':'-');
 		};
+		var classifier=function(v){
+			return 'M -12 v0.2 H 12'.replace(/v/g,v?'':'-');
+		}
 		return "<svg class='diagram' viewBox='-12 -8 24 16'>"+
 			"<path class='actual-true' d='"+lobe(rcOrd[1],!rcOrd[0])+close(rcOrd[0])+"' />"+
 			"<path class='actual-false' d='"+lobe(rcOrd[1],!rcOrd[0])+close(!rcOrd[0])+"' />"+
 			"<path class='actual-true' d='"+lobe(!rcOrd[1],rcOrd[0])+close(rcOrd[0])+"' />"+
 			"<path class='actual-false' d='"+lobe(!rcOrd[1],rcOrd[0])+close(!rcOrd[0])+"' />"+
+			"<path class='predicted-true' d='"+classifier(rcOrd[0])+"' fill='none' stroke-width='0.2' />"+
+			"<path d='M -12 0 H 12' fill='none' stroke-width='0.2' stroke='#000' />"+
+			"<path class='predicted-false' d='"+classifier(!rcOrd[0])+"' fill='none' stroke-width='0.2' />"+
 		"</svg>";
 	}
 	tableNode.children('caption').append(drawDiagram()).append(
