@@ -15,10 +15,18 @@ QUnit.test('int',function(assert){
 
 QUnit.test('float',function(assert){
 	var o=makeNumber('55555555555555555555');
-	assert.equal(o.type,'float');
-	assert.equal(o.val,55555555555555555555);
+	assert.deepEqual(o,{type:'float',val:55555555555555555555});
 });
 
+QUnit.test('float that triggers e-format',function(assert){
+	var o=makeNumber('1000000000000000000000');
+	assert.deepEqual(o,{type:'float',val:1000000000000000000000});
+});
+
+QUnit.test('float in e-format',function(assert){
+	var o=makeNumber('1e+21');
+	assert.deepEqual(o,{type:'float',val:1000000000000000000000});
+});
 
 QUnit.module('make sum');
 

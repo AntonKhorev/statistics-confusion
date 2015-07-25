@@ -8,6 +8,9 @@ function makeSymbol(s) {
 }
 
 function makeNumber(s) {
+	if (typeof(s)=='string' && s.indexOf('e')>=0) {
+		return {type:'float',val:parseFloat(s)};
+	}
 	var v=parseInt(s);
 	var maxSafeInt=9007199254740991; // Number.MAX_SAFE_INTEGER, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER
 	if (v<=maxSafeInt) {
