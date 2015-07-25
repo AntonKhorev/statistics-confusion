@@ -5,12 +5,15 @@ function convertExpressionToHtml(expr,inner) {
 	function toFixed(value) { // http://stackoverflow.com/a/661757
 		var precision=6;
 		var power=Math.pow(10,precision||0);
-		var s=String(Math.round(value*power)/power);
+		return String(Math.round(value*power)/power);
+	}
+	function formatFloat(value) {
+		var s=String(value);
 		if (s.indexOf('e')<0) {
-			return s;
+			return toFixed(s);
 		} else {
 			var ss=s.split(/e\+?/);
-			return ss[0]+'·10<sup>'+ss[1]+'</sup>';
+			return toFixed(ss[0])+'·10<sup>'+ss[1]+'</sup>';
 		}
 	}
 	function isAtom(e) {
@@ -19,7 +22,7 @@ function convertExpressionToHtml(expr,inner) {
 	if (expr.type=='int') {
 		return String(expr.val);
 	} else if (expr.type=='float') {
-		return toFixed(expr.val);
+		return formatFloat(expr.val);
 	} else if (expr.type=='inf') {
 		return '∞';
 	} else if (expr.type=='nan') {
