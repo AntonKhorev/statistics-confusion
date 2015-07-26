@@ -150,6 +150,11 @@ $('table.statistics-confusion').each(function(){
 			}
 			return s;
 		}
+		var textCoords=rcDir?function(h){
+			return hr(h,"x='h9.35' y='0'");
+		}:function(v){
+			return vr(v,"x='0' y='v7.5'");
+		}
 		return "<svg class='diagram base' viewBox='-12 -8 24 16'>"+
 			"<path class='actual-true' d='"+lobe(rcOrd[1],!rcOrd[0])+close(rcOrd[0])+"' />"+
 			"<path class='actual-false' d='"+lobe(rcOrd[1],!rcOrd[0])+close(!rcOrd[0])+"' />"+
@@ -167,8 +172,8 @@ $('table.statistics-confusion').each(function(){
 			"</g>"+
 		"</svg>"+
 		"<svg class='diagram labels' viewBox='-12 -8 24 16' pointer-events='none'>"+
-			"<text class='higher-threshold' x='0' y='"+vr(rcOrd[0],'v7.5')+"' text-anchor='middle' dy='.4em' font-size='0.8' pointer-events='all'>higher threshold</text>"+
-			"<text class='lower-threshold' x='0' y='"+vr(!rcOrd[0],'v7.5')+"' text-anchor='middle' dy='.4em' font-size='0.8' pointer-events='all'>lower threshold</text>"+
+			"<text class='higher-threshold' "+textCoords(rcOrd[0])+" text-anchor='middle' dy='.4em' font-size='0.7' font-family='sans-serif' pointer-events='all'>higher threshold</text>"+
+			"<text class='lower-threshold' "+textCoords(!rcOrd[0])+" text-anchor='middle' dy='.4em' font-size='0.7' font-family='sans-serif' pointer-events='all'>lower threshold</text>"+
 		"</svg>";
 	}
 	function installDiagrammEventHandlers() {
