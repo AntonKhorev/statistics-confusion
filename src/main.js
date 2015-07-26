@@ -134,11 +134,23 @@ $('table.statistics-confusion').each(function(){
 		var higherFormulaNodes=tableNode.find("td[data-term='TP'], td[data-term='FP']");
 		var lowerFormulaNodes=tableNode.find("td[data-term='FN'], td[data-term='TN']");
 		tableNode.find('.diagram.labels .higher-threshold').hover(function(){
-			tableNode.find('.diagram.base .threshold').attr('transform','translate(0,-3)');
+			$({foo:0}).animate({foo:-3},{
+				duration: 500,
+				step:function(val) {
+					tableNode.find('.diagram.base .threshold').attr('transform','translate(0,'+val+')');
+				}
+			});
+			//tableNode.find('.diagram.base .threshold').attr('transform','translate(0,-3)');
 			higherFormulaNodes.addClass('smaller');
 			lowerFormulaNodes.addClass('larger');
 		},function(){
-			tableNode.find('.diagram.base .threshold').removeAttr('transform');
+			$({foo:-3}).animate({foo:0},{
+				duration: 500,
+				step:function(val) {
+					tableNode.find('.diagram.base .threshold').attr('transform','translate(0,'+val+')');
+				}
+			});
+			//tableNode.find('.diagram.base .threshold').removeAttr('transform');
 			higherFormulaNodes.removeClass('smaller');
 			lowerFormulaNodes.removeClass('larger');
 		});
