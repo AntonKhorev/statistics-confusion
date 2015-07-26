@@ -153,12 +153,21 @@ $('table.statistics-confusion').each(function(){
 			return 'M -12 v0.2 H 12'.replace(/v/g,v?'':'-');
 		}
 		var classifierCenter=rcDir?'M 0 -8 V 8':'M -12 0 H 12';
+		function ticks() {
+			var s="";
+			for (var i=-5;i<=5;i++) {
+				s+="<path d='M -0.25 "+i+" H 0.25' fill='none' stroke='#000' stroke-width='0.05' />";
+			}
+			return s;
+		}
 		return "<svg class='diagram base' viewBox='-12 -8 24 16'>"+
 			"<path class='actual-true' d='"+lobe(rcOrd[1],!rcOrd[0])+close(rcOrd[0])+"' />"+
 			"<path class='actual-false' d='"+lobe(rcOrd[1],!rcOrd[0])+close(!rcOrd[0])+"' />"+
 			"<path class='actual-true' d='"+lobe(!rcOrd[1],rcOrd[0])+close(rcOrd[0])+"' />"+
 			"<path class='actual-false' d='"+lobe(!rcOrd[1],rcOrd[0])+close(!rcOrd[0])+"' />"+
-			"<path d='M 0 -6 V 6' fill='none' stroke-width='0.2' stroke='#000' />"+
+			"<path d='M 0 -6 V 6' fill='none' stroke-width='0.2' stroke='#000' />"+ // axis
+			"<path d='M 0 -6 L -0.25 -5.75 L 0 -7 L 0.25 -5.75 Z' />"+ // arrow
+			ticks()+
 			"<g class='threshold'>"+
 				"<path class='predicted-true' d='"+classifierEdge(rcOrd[0])+"' fill='none' stroke-width='0.2' />"+
 				"<path d='"+classifierCenter+"' fill='none' stroke-width='0.2' stroke='#000' />"+
