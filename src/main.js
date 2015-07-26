@@ -174,8 +174,8 @@ $('table.statistics-confusion').each(function(){
 			"</g>"+
 		"</svg>"+
 		"<svg class='diagram labels' viewBox='-12 -8 24 16' pointer-events='none'>"+
-			"<text class='higher-threshold' x='0' y='-7.5' text-anchor='middle' dy='.4em' font-size='0.8' pointer-events='all'>higher threshold</text>"+
-			"<text class='lower-threshold' x='0' y='7.5' text-anchor='middle' dy='.4em' font-size='0.8' pointer-events='all'>lower threshold</text>"+
+			"<text class='higher-threshold' x='0' y='"+vr(rcOrd[0],'v7.5')+"' text-anchor='middle' dy='.4em' font-size='0.8' pointer-events='all'>higher threshold</text>"+
+			"<text class='lower-threshold' x='0' y='"+vr(!rcOrd[0],'v7.5')+"' text-anchor='middle' dy='.4em' font-size='0.8' pointer-events='all'>lower threshold</text>"+
 		"</svg>";
 	}
 	function installDiagrammEventHandlers() {
