@@ -3,6 +3,8 @@ mixin wikipedia(url)
 		block
 mixin formula(e)
 	!= makeWrappedFormulaHtml(e)
+mixin diagram()
+	!= drawDiagram(false,[false,false])
 doctype html
 html(lang='en')
 	head
@@ -26,6 +28,7 @@ html(lang='en')
 		table.statistics-confusion
 			caption
 				+wikipedia('https://en.wikipedia.org/wiki/Confusion_matrix') Confusion matrix
+				+diagram
 			tr
 				th
 					.label Total

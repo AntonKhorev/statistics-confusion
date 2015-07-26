@@ -130,52 +130,6 @@ $('table.statistics-confusion').each(function(){
 			"</g>"+
 		"</svg>";
 	}
-	function drawDiagram() {
-		function hr(h,s) { return s.replace(/h/g,h?'':'-'); }
-		function vr(v,s) { return s.replace(/v/g,v?'':'-'); }
-		var lobe=rcDir?function(v,h){
-			return hr(h,vr(v,'M 0 0 V v2 C 0 v4 h4 v4 h5 v3 C h6 v2 h8 v2 h8 v4 C h8 v6 h6 v6 h5 v5 C h4 v4 0 v4 0 v6 V v8'));
-		}:function(h,v){
-			return hr(h,vr(v,'M 0 0 H h4 C h6 0 h6 v2 h5 v3 C h4 v4 h4 v6 h6 v6 C h8 v6 h8 v4 h7 v3 C h6 v2 h6 0 h8 0 H h12'));
-		};
-		var close=rcDir?function(h){
-			return hr(h,' H h12 V 0 Z');
-		}:function(v){
-			return vr(v,' V v8 H 0 Z');
-		};
-		function tickPaths() {
-			var s="";
-			for (var i=-5;i<=5;i++) {
-				s+="<path d='M -0.25 "+i+" H 0.25' fill='none' stroke='#000' stroke-width='0.05' />";
-			}
-			return s;
-		}
-		var textCoords=rcDir?function(h){
-			return hr(h,"x='h9.35' y='0'");
-		}:function(v){
-			return vr(v,"x='0' y='v7.5'");
-		}
-		return "<svg class='diagram base' viewBox='-12 -8 24 16'>"+
-			"<path class='actual-true' d='"+lobe(rcOrd[1],!rcOrd[0])+close(rcOrd[0])+"' />"+
-			"<path class='actual-false' d='"+lobe(rcOrd[1],!rcOrd[0])+close(!rcOrd[0])+"' />"+
-			"<path class='actual-true' d='"+lobe(!rcOrd[1],rcOrd[0])+close(rcOrd[0])+"' />"+
-			"<path class='actual-false' d='"+lobe(!rcOrd[1],rcOrd[0])+close(!rcOrd[0])+"' />"+
-			"<g transform='"+(rcDir?"matrix(0,1,1,0,0,0) ":"")+"scale("+vr(!rcOrd[0],'1,v1')+")'>"+
-			"<path d='M 0 -6 V 6' fill='none' stroke-width='0.2' stroke='#000' />"+ // axis
-			"<path d='M 0 -6 L -0.25 -5.75 L 0 -7 L 0.25 -5.75 Z' />"+
-			tickPaths()+
-			"<g class='threshold'>"+
-				"<path class='predicted-true' d='M -12 -0.2 H 12' fill='none' stroke-width='0.2' />"+
-				"<path d='M -12 0 H 12' fill='none' stroke-width='0.2' stroke='#000' />"+
-				"<path class='predicted-false' d='M -12 0.2 H 12' fill='none' stroke-width='0.2' />"+
-			"</g>"+
-			"</g>"+
-		"</svg>"+
-		"<svg class='diagram labels' viewBox='-12 -8 24 16' pointer-events='none'>"+
-			"<text class='higher-threshold' "+textCoords(rcOrd[0])+" text-anchor='middle' dy='.4em' font-size='0.7' font-family='sans-serif' pointer-events='all'>higher threshold</text>"+
-			"<text class='lower-threshold' "+textCoords(!rcOrd[0])+" text-anchor='middle' dy='.4em' font-size='0.7' font-family='sans-serif' pointer-events='all'>lower threshold</text>"+
-		"</svg>";
-	}
 	function installDiagrammEventHandlers() {
 		var higherFormulaNodes=tableNode.find("td[data-term='TP'] .formula, td[data-term='FP'] .formula");
 		var lowerFormulaNodes=tableNode.find("td[data-term='FN'] .formula, td[data-term='TN'] .formula");
@@ -200,10 +154,10 @@ $('table.statistics-confusion').each(function(){
 	}
 	function updateDiagram() {
 		tableNode.find('.diagram.labels').remove();
-		tableNode.find('.diagram').replaceWith(drawDiagram());
+		tableNode.find('.diagram').replaceWith(drawDiagram(rcDir,rcOrd));
 		installDiagrammEventHandlers();
 	}
-	tableNode.children('caption').append(drawDiagram()).append(
+	tableNode.children('caption').append(
 		$("<button type='button' class='swap-rc' title='swap rows and columns'>"+drawSwapIcon(-45)+"</button>").click(function(){
 			rcDir^=1;
 			updateDiagram();
