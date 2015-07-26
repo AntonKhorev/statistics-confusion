@@ -179,16 +179,26 @@ $('table.statistics-confusion').each(function(){
 			"<text class='lower-threshold' x='0' y='7' text-anchor='middle' font-size='0.8' pointer-events='all'>lower threshold</text>"+
 		"</svg>";
 	}
+	var higherFormulaNodes=tableNode.find("td[data-term='TP'] .formula, td[data-term='FP'] .formula");
+	var lowerFormulaNodes=tableNode.find("td[data-term='FN'] .formula, td[data-term='TN'] .formula");
 	function installDiagrammEventHandlers() {
 		tableNode.find('.diagram.labels .higher-threshold').hover(function(){
 			tableNode.find('.diagram.base .threshold').attr('transform','translate(0,-3)');
+			higherFormulaNodes.addClass('smaller');
+			lowerFormulaNodes.addClass('larger');
 		},function(){
 			tableNode.find('.diagram.base .threshold').removeAttr('transform');
+			higherFormulaNodes.removeClass('smaller');
+			lowerFormulaNodes.removeClass('larger');
 		});
 		tableNode.find('.diagram.labels .lower-threshold').hover(function(){
 			tableNode.find('.diagram.base .threshold').attr('transform','translate(0,3)');
+			higherFormulaNodes.addClass('larger');
+			lowerFormulaNodes.addClass('smaller');
 		},function(){
 			tableNode.find('.diagram.base .threshold').removeAttr('transform');
+			higherFormulaNodes.removeClass('larger');
+			lowerFormulaNodes.removeClass('smaller');
 		});
 	}
 	function updateDiagram() {
