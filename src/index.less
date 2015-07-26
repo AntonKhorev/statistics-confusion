@@ -213,14 +213,6 @@ table.statistics-confusion {
 		left: calc(@cell-width ~'+' @cell-border-width + @central-cell-border-width);
 		height: calc(@cell-height*2 ~'+' @cell-border-width);
 		width: calc(@cell-width*2 ~'+' @cell-border-width);
-		.threshold {
-			transition: 1s;
-			&.shifted-up {
-				//transform: scale(5);
-				transform: translate(0,-0.15rem);
-				//stroke: red;
-			}
-		}
 		.actual-true {
 			fill: fade(@actual-true-color,20%);
 		}

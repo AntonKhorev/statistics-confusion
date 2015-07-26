@@ -170,12 +170,10 @@ $('table.statistics-confusion').each(function(){
 		"</svg>";
 	}
 	function installDiagrammEventHandlers() {
-		tableNode.find('.diagram.labels .higher-threshold').click(function(){
-			//tableNode.find('.diagram.base .threshold').attr('transform','translate(0,-5)');
-			//tableNode.find('.diagram.base .threshold')[0].setAttribute('transform','translate(0,-5)');
-			console.log('hello');
-			// can't use addClass on svg: http://stackoverflow.com/questions/8638621/jquery-svg-why-cant-i-addclass
-			tableNode.find('.diagram.base .threshold').attr('class','threshold shifted-up');
+		tableNode.find('.diagram.labels .higher-threshold').hover(function(){
+			tableNode.find('.diagram.base .threshold').attr('transform','translate(0,-3)');
+		},function(){
+			tableNode.find('.diagram.base .threshold').removeAttr('transform');
 		});
 	}
 	function updateDiagram() {
