@@ -203,11 +203,24 @@ table.statistics-confusion {
 	}
 	.diagram {
 		position: absolute;
-		z-index: -1;
+		&.base {
+			z-index: -1;
+		}
+		&.labels {
+			z-index: 1;
+		}
 		top: calc(@caption-height + @cell-height ~'+' @cell-border-width + @central-cell-border-width);
 		left: calc(@cell-width ~'+' @cell-border-width + @central-cell-border-width);
 		height: calc(@cell-height*2 ~'+' @cell-border-width);
 		width: calc(@cell-width*2 ~'+' @cell-border-width);
+		.threshold {
+			transition: 1s;
+			&.shifted-up {
+				//transform: scale(5);
+				transform: translate(0,-0.15rem);
+				//stroke: red;
+			}
+		}
 		.actual-true {
 			fill: fade(@actual-true-color,20%);
 		}

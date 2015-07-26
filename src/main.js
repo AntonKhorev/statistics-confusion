@@ -153,20 +153,39 @@ $('table.statistics-confusion').each(function(){
 			return 'M -12 v0.2 H 12'.replace(/v/g,v?'':'-');
 		}
 		var classifierCenter=rcDir?'M 0 -8 V 8':'M -12 0 H 12';
-		return "<svg class='diagram' viewBox='-12 -8 24 16'>"+
+		return "<svg class='diagram base' viewBox='-12 -8 24 16'>"+
 			"<path class='actual-true' d='"+lobe(rcOrd[1],!rcOrd[0])+close(rcOrd[0])+"' />"+
 			"<path class='actual-false' d='"+lobe(rcOrd[1],!rcOrd[0])+close(!rcOrd[0])+"' />"+
 			"<path class='actual-true' d='"+lobe(!rcOrd[1],rcOrd[0])+close(rcOrd[0])+"' />"+
 			"<path class='actual-false' d='"+lobe(!rcOrd[1],rcOrd[0])+close(!rcOrd[0])+"' />"+
-			"<path class='predicted-true' d='"+classifierEdge(rcOrd[0])+"' fill='none' stroke-width='0.2' />"+
-			"<path d='"+classifierCenter+"' fill='none' stroke-width='0.2' stroke='#000' />"+
-			"<path class='predicted-false' d='"+classifierEdge(!rcOrd[0])+"' fill='none' stroke-width='0.2' />"+
+			"<path d='M 0 -6 V 6' fill='none' stroke-width='0.2' stroke='#000' />"+
+			"<g class='threshold'>"+
+				"<path class='predicted-true' d='"+classifierEdge(rcOrd[0])+"' fill='none' stroke-width='0.2' />"+
+				"<path d='"+classifierCenter+"' fill='none' stroke-width='0.2' stroke='#000' />"+
+				"<path class='predicted-false' d='"+classifierEdge(!rcOrd[0])+"' fill='none' stroke-width='0.2' />"+
+			"</g>"+
+		"</svg>"+
+		"<svg class='diagram labels' viewBox='-12 -8 24 16'>"+
+			"<text class='higher-threshold' x='0' y='-7' text-anchor='middle' font-size='0.8'>higher threshold</text>"+
 		"</svg>";
+	}
+	function installDiagrammEventHandlers() {
+		tableNode.find('.diagram.labels .higher-threshold').click(function(){
+			//tableNode.find('.diagram.base .threshold').attr('transform','translate(0,-5)');
+			//tableNode.find('.diagram.base .threshold')[0].setAttribute('transform','translate(0,-5)');
+			console.log('hello');
+			// can't use addClass on svg: http://stackoverflow.com/questions/8638621/jquery-svg-why-cant-i-addclass
+			tableNode.find('.diagram.base .threshold').attr('class','threshold shifted-up');
+		});
+	}
+	function updateDiagram() {
+		tableNode.find('.diagram').replaceWith(drawDiagram());
+		installDiagrammEventHandlers();
 	}
 	tableNode.children('caption').append(drawDiagram()).append(
 		$("<button type='button' class='swap-rc' title='swap rows and columns'>"+drawSwapIcon(-45)+"</button>").click(function(){
 			rcDir^=1;
-			tableNode.find('.diagram').replaceWith(drawDiagram());
+			updateDiagram();
 			var n=tbodyNode.children().length;
 			for (var i=0;i<n;i++) {
 				for (var j=0;j<i;j++) {
@@ -181,7 +200,7 @@ $('table.statistics-confusion').each(function(){
 	).append(
 		$("<button type='button' class='swap-c' title='swap columns'>"+drawSwapIcon(0)+"</button>").click(function(){
 			rcOrd[rcDir^1]^=1;
-			tableNode.find('.diagram').replaceWith(drawDiagram());
+			updateDiagram();
 			tbodyNode.children().each(function(){
 				swapChildren($(this),1);
 				if (!isExpanded) return;
@@ -193,7 +212,7 @@ $('table.statistics-confusion').each(function(){
 	).append(
 		$("<button type='button' class='swap-r' title='swap rows'>"+drawSwapIcon(-90)+"</button>").click(function(){
 			rcOrd[rcDir]^=1;
-			tableNode.find('.diagram').replaceWith(drawDiagram());
+			updateDiagram();
 			swapChildren(tbodyNode,1);
 			if (!isExpanded) return;
 			swapChildren(tbodyNode,3);
@@ -201,6 +220,7 @@ $('table.statistics-confusion').each(function(){
 	).append(
 		$("<button type='button' class='add-r' title='expand table'>+</button>").click(expandTable)
 	);
+	installDiagrammEventHandlers();
 	tableNode.on('mouseenter','.term',function(){
 		$(this).addClass('highlight');
 		tableNode.find("td[data-term='"+$(this).attr('data-term')+"']").addClass('highlight');
