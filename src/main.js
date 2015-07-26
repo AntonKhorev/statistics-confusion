@@ -192,6 +192,7 @@ $('table.statistics-confusion').each(function(){
 		});
 	}
 	function updateDiagram() {
+		tableNode.find('.diagram.labels').remove();
 		tableNode.find('.diagram').replaceWith(drawDiagram());
 		installDiagrammEventHandlers();
 	}
