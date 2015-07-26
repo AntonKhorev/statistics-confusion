@@ -134,34 +134,43 @@ $('table.statistics-confusion').each(function(){
 		var higherFormulaNodes=tableNode.find("td[data-term='TP'], td[data-term='FP']");
 		var lowerFormulaNodes=tableNode.find("td[data-term='FN'], td[data-term='TN']");
 		var animDuration=500;
+		var animTranslate=3;
 		var anim=$({progress:0});
 		tableNode.find('.diagram.labels .higher-threshold').hover(function(){
 			anim.stop().animate({progress:-1},{
 				duration:animDuration*(1+anim[0].progress),
 				step:function(val) {
-					tableNode.find('.diagram.base .threshold').attr('transform','translate(0,'+(3*val)+')');
+					tableNode.find('.diagram.base .threshold').attr('transform','translate(0,'+(animTranslate*val)+')');
 				}
 			});
-			//tableNode.find('.diagram.base .threshold').attr('transform','translate(0,-3)');
 			higherFormulaNodes.addClass('smaller');
 			lowerFormulaNodes.addClass('larger');
 		},function(){
 			anim.stop().animate({progress:0},{
 				duration:animDuration*(0-anim[0].progress),
 				step:function(val) {
-					tableNode.find('.diagram.base .threshold').attr('transform','translate(0,'+(3*val)+')');
+					tableNode.find('.diagram.base .threshold').attr('transform','translate(0,'+(animTranslate*val)+')');
 				}
 			});
-			//tableNode.find('.diagram.base .threshold').removeAttr('transform');
 			higherFormulaNodes.removeClass('smaller');
 			lowerFormulaNodes.removeClass('larger');
 		});
 		tableNode.find('.diagram.labels .lower-threshold').hover(function(){
-			tableNode.find('.diagram.base .threshold').attr('transform','translate(0,3)');
+			anim.stop().animate({progress:+1},{
+				duration:animDuration*(1-anim[0].progress),
+				step:function(val) {
+					tableNode.find('.diagram.base .threshold').attr('transform','translate(0,'+(animTranslate*val)+')');
+				}
+			});
 			higherFormulaNodes.addClass('larger');
 			lowerFormulaNodes.addClass('smaller');
 		},function(){
-			tableNode.find('.diagram.base .threshold').removeAttr('transform');
+			anim.stop().animate({progress:0},{
+				duration:animDuration*(0+anim[0].progress),
+				step:function(val) {
+					tableNode.find('.diagram.base .threshold').attr('transform','translate(0,'+(animTranslate*val)+')');
+				}
+			});
 			higherFormulaNodes.removeClass('larger');
 			lowerFormulaNodes.removeClass('smaller');
 		});
