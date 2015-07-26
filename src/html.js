@@ -121,10 +121,14 @@ function drawDiagram(rcDir,rcOrd) {
 		return vr(v,"x='0' y='v7.5'");
 	}
 	return "<svg class='diagram base' viewBox='-12 -8 24 16'>"+
-		"<path class='actual-true' d='"+lobe(rcOrd[1],!rcOrd[0])+close(rcOrd[0])+"' />"+
-		"<path class='actual-false' d='"+lobe(rcOrd[1],!rcOrd[0])+close(!rcOrd[0])+"' />"+
-		"<path class='actual-true' d='"+lobe(!rcOrd[1],rcOrd[0])+close(rcOrd[0])+"' />"+
-		"<path class='actual-false' d='"+lobe(!rcOrd[1],rcOrd[0])+close(!rcOrd[0])+"' />"+
+		"<clipPath id='lobe1'><path d='"+lobe(rcOrd[1],!rcOrd[0])+close(rcOrd[0])+"' /></clipPath>"+
+		"<path clip-path='url(#lobe1)' class='actual-true' d='"+lobe(rcOrd[1],!rcOrd[0])+"' fill='none' stroke-width='2' />"+
+		"<clipPath id='lobe2'><path d='"+lobe(rcOrd[1],!rcOrd[0])+close(!rcOrd[0])+"' /></clipPath>"+
+		"<path clip-path='url(#lobe2)' class='actual-false' d='"+lobe(rcOrd[1],!rcOrd[0])+"' fill='none' stroke-width='2' />"+
+		"<clipPath id='lobe3'><path d='"+lobe(!rcOrd[1],rcOrd[0])+close(rcOrd[0])+"' /></clipPath>"+
+		"<path clip-path='url(#lobe3)' class='actual-true' d='"+lobe(!rcOrd[1],rcOrd[0])+"' fill='none' stroke-width='2' />"+
+		"<clipPath id='lobe4'><path d='"+lobe(!rcOrd[1],rcOrd[0])+close(!rcOrd[0])+"' /></clipPath>"+
+		"<path clip-path='url(#lobe4)' class='actual-false' d='"+lobe(!rcOrd[1],rcOrd[0])+"' fill='none' stroke-width='2' />"+
 		"<g transform='"+(rcDir?"matrix(0,1,1,0,0,0) ":"")+"scale("+vr(!rcOrd[0],'1,v1')+")'>"+
 		"<path d='M 0 -6 V 6' fill='none' stroke-width='0.2' stroke='#000' />"+ // axis
 		"<path d='M 0 -6 L -0.25 -5.75 L 0 -7 L 0.25 -5.75 Z' />"+
