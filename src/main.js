@@ -149,9 +149,6 @@ $('table.statistics-confusion').each(function(){
 			return vr(v,'M -12 v0.2 H 12');
 		}
 		var classifierCenter=rcDir?'M 0 -8 V 8':'M -12 0 H 12';
-		function arrow(v) {
-			return vr(v,'M 0 v6 L -0.25 v5.75 L 0 v7 L 0.25 v5.75 Z');
-		}
 		function tickPaths() {
 			var s="";
 			for (var i=-5;i<=5;i++) {
@@ -164,13 +161,15 @@ $('table.statistics-confusion').each(function(){
 			"<path class='actual-false' d='"+lobe(rcOrd[1],!rcOrd[0])+close(!rcOrd[0])+"' />"+
 			"<path class='actual-true' d='"+lobe(!rcOrd[1],rcOrd[0])+close(rcOrd[0])+"' />"+
 			"<path class='actual-false' d='"+lobe(!rcOrd[1],rcOrd[0])+close(!rcOrd[0])+"' />"+
+			"<g transform='scale("+vr(!rcOrd[0],'1,v1')+")'>"+
 			"<path d='M 0 -6 V 6' fill='none' stroke-width='0.2' stroke='#000' />"+ // axis
-			"<path d='"+arrow(rcOrd[0])+"' />"+
+			"<path d='M 0 -6 L -0.25 -5.75 L 0 -7 L 0.25 -5.75 Z' />"+
 			tickPaths()+
 			"<g class='threshold'>"+
-				"<path class='predicted-true' d='"+classifierEdge(rcOrd[0])+"' fill='none' stroke-width='0.2' />"+
+				"<path class='predicted-true' d='"+classifierEdge(false)+"' fill='none' stroke-width='0.2' />"+
 				"<path d='"+classifierCenter+"' fill='none' stroke-width='0.2' stroke='#000' />"+
-				"<path class='predicted-false' d='"+classifierEdge(!rcOrd[0])+"' fill='none' stroke-width='0.2' />"+
+				"<path class='predicted-false' d='"+classifierEdge(true)+"' fill='none' stroke-width='0.2' />"+
+			"</g>"+
 			"</g>"+
 		"</svg>"+
 		"<svg class='diagram labels' viewBox='-12 -8 24 16' pointer-events='none'>"+
