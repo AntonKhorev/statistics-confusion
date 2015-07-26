@@ -43,7 +43,7 @@ gulp.task('css',function(){
 		.pipe(sourcemaps.init())
 		.pipe(less())
 		.pipe(autoprefixer())
-		.pipe(minifyCss({compatibility:'ie7'})) // TODO code is now ie9+
+		.pipe(minifyCss())
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('public_html'));
 });
