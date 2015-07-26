@@ -165,13 +165,19 @@ $('table.statistics-confusion').each(function(){
 				"<path class='predicted-false' d='"+classifierEdge(!rcOrd[0])+"' fill='none' stroke-width='0.2' />"+
 			"</g>"+
 		"</svg>"+
-		"<svg class='diagram labels' viewBox='-12 -8 24 16'>"+
-			"<text class='higher-threshold' x='0' y='-7' text-anchor='middle' font-size='0.8'>higher threshold</text>"+
+		"<svg class='diagram labels' viewBox='-12 -8 24 16' pointer-events='none'>"+
+			"<text class='higher-threshold' x='0' y='-7' text-anchor='middle' font-size='0.8' pointer-events='all'>higher threshold</text>"+
+			"<text class='lower-threshold' x='0' y='7' text-anchor='middle' font-size='0.8' pointer-events='all'>lower threshold</text>"+
 		"</svg>";
 	}
 	function installDiagrammEventHandlers() {
 		tableNode.find('.diagram.labels .higher-threshold').hover(function(){
 			tableNode.find('.diagram.base .threshold').attr('transform','translate(0,-3)');
+		},function(){
+			tableNode.find('.diagram.base .threshold').removeAttr('transform');
+		});
+		tableNode.find('.diagram.labels .lower-threshold').hover(function(){
+			tableNode.find('.diagram.base .threshold').attr('transform','translate(0,3)');
 		},function(){
 			tableNode.find('.diagram.base .threshold').removeAttr('transform');
 		});
