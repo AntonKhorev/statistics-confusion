@@ -153,7 +153,10 @@ $('table.statistics-confusion').each(function(){
 			return 'M -12 v0.2 H 12'.replace(/v/g,v?'':'-');
 		}
 		var classifierCenter=rcDir?'M 0 -8 V 8':'M -12 0 H 12';
-		function ticks() {
+		function arrow(v) {
+			return 'M 0 v6 L -0.25 v5.75 L 0 v7 L 0.25 v5.75 Z'.replace(/v/g,v?'':'-');
+		}
+		function tickPaths() {
 			var s="";
 			for (var i=-5;i<=5;i++) {
 				s+="<path d='M -0.25 "+i+" H 0.25' fill='none' stroke='#000' stroke-width='0.05' />";
@@ -166,8 +169,8 @@ $('table.statistics-confusion').each(function(){
 			"<path class='actual-true' d='"+lobe(!rcOrd[1],rcOrd[0])+close(rcOrd[0])+"' />"+
 			"<path class='actual-false' d='"+lobe(!rcOrd[1],rcOrd[0])+close(!rcOrd[0])+"' />"+
 			"<path d='M 0 -6 V 6' fill='none' stroke-width='0.2' stroke='#000' />"+ // axis
-			"<path d='M 0 -6 L -0.25 -5.75 L 0 -7 L 0.25 -5.75 Z' />"+ // arrow
-			ticks()+
+			"<path d='"+arrow(rcOrd[0])+"' />"+
+			tickPaths()+
 			"<g class='threshold'>"+
 				"<path class='predicted-true' d='"+classifierEdge(rcOrd[0])+"' fill='none' stroke-width='0.2' />"+
 				"<path d='"+classifierCenter+"' fill='none' stroke-width='0.2' stroke='#000' />"+
@@ -175,13 +178,13 @@ $('table.statistics-confusion').each(function(){
 			"</g>"+
 		"</svg>"+
 		"<svg class='diagram labels' viewBox='-12 -8 24 16' pointer-events='none'>"+
-			"<text class='higher-threshold' x='0' y='-7' text-anchor='middle' font-size='0.8' pointer-events='all'>higher threshold</text>"+
-			"<text class='lower-threshold' x='0' y='7' text-anchor='middle' font-size='0.8' pointer-events='all'>lower threshold</text>"+
+			"<text class='higher-threshold' x='0' y='-7.5' text-anchor='middle' dy='.4em' font-size='0.8' pointer-events='all'>higher threshold</text>"+
+			"<text class='lower-threshold' x='0' y='7.5' text-anchor='middle' dy='.4em' font-size='0.8' pointer-events='all'>lower threshold</text>"+
 		"</svg>";
 	}
-	var higherFormulaNodes=tableNode.find("td[data-term='TP'] .formula, td[data-term='FP'] .formula");
-	var lowerFormulaNodes=tableNode.find("td[data-term='FN'] .formula, td[data-term='TN'] .formula");
 	function installDiagrammEventHandlers() {
+		var higherFormulaNodes=tableNode.find("td[data-term='TP'] .formula, td[data-term='FP'] .formula");
+		var lowerFormulaNodes=tableNode.find("td[data-term='FN'] .formula, td[data-term='TN'] .formula");
 		tableNode.find('.diagram.labels .higher-threshold').hover(function(){
 			tableNode.find('.diagram.base .threshold').attr('transform','translate(0,-3)');
 			higherFormulaNodes.addClass('smaller');
