@@ -130,9 +130,9 @@ $('table.statistics-confusion').each(function(){
 			"</g>"+
 		"</svg>";
 	}
-	function installDiagrammEventHandlers() {
-		var higherFormulaNodes=tableNode.find("td[data-term='TP'] .formula, td[data-term='FP'] .formula");
-		var lowerFormulaNodes=tableNode.find("td[data-term='FN'] .formula, td[data-term='TN'] .formula");
+	function installDiagramEventHandlers() {
+		var higherFormulaNodes=tableNode.find("td[data-term='TP'], td[data-term='FP']");
+		var lowerFormulaNodes=tableNode.find("td[data-term='FN'], td[data-term='TN']");
 		tableNode.find('.diagram.labels .higher-threshold').hover(function(){
 			tableNode.find('.diagram.base .threshold').attr('transform','translate(0,-3)');
 			higherFormulaNodes.addClass('smaller');
@@ -155,7 +155,7 @@ $('table.statistics-confusion').each(function(){
 	function updateDiagram() {
 		tableNode.find('.diagram.labels').remove();
 		tableNode.find('.diagram').replaceWith(drawDiagram(rcDir,rcOrd));
-		installDiagrammEventHandlers();
+		installDiagramEventHandlers();
 	}
 	tableNode.children('caption').append(
 		$("<button type='button' class='swap-rc' title='swap rows and columns'>"+drawSwapIcon(-45)+"</button>").click(function(){
@@ -195,7 +195,7 @@ $('table.statistics-confusion').each(function(){
 	).append(
 		$("<button type='button' class='add-r' title='expand table'>+</button>").click(expandTable)
 	);
-	installDiagrammEventHandlers();
+	installDiagramEventHandlers();
 	tableNode.on('mouseenter','.term',function(){
 		$(this).addClass('highlight');
 		tableNode.find("td[data-term='"+$(this).attr('data-term')+"']").addClass('highlight');
