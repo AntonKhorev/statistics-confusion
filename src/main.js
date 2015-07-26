@@ -136,41 +136,29 @@ $('table.statistics-confusion').each(function(){
 		var animDuration=500;
 		var animTranslate=3;
 		var anim=$({progress:0});
-		tableNode.find('.diagram.labels .higher-threshold').hover(function(){
-			anim.stop().animate({progress:-1},{
-				duration:animDuration*(1+anim[0].progress),
+		function runAnim(goal) {
+			anim.stop().animate({progress:goal},{
+				duration:animDuration*Math.abs(anim[0].progress-goal),
 				step:function(val) {
 					tableNode.find('.diagram.base .threshold').attr('transform','translate(0,'+(animTranslate*val)+')');
 				}
 			});
+		}
+		tableNode.find('.diagram.labels .higher-threshold').hover(function(){
+			runAnim(-1);
 			higherFormulaNodes.addClass('smaller');
 			lowerFormulaNodes.addClass('larger');
 		},function(){
-			anim.stop().animate({progress:0},{
-				duration:animDuration*(0-anim[0].progress),
-				step:function(val) {
-					tableNode.find('.diagram.base .threshold').attr('transform','translate(0,'+(animTranslate*val)+')');
-				}
-			});
+			runAnim(0);
 			higherFormulaNodes.removeClass('smaller');
 			lowerFormulaNodes.removeClass('larger');
 		});
 		tableNode.find('.diagram.labels .lower-threshold').hover(function(){
-			anim.stop().animate({progress:+1},{
-				duration:animDuration*(1-anim[0].progress),
-				step:function(val) {
-					tableNode.find('.diagram.base .threshold').attr('transform','translate(0,'+(animTranslate*val)+')');
-				}
-			});
+			runAnim(+1);
 			higherFormulaNodes.addClass('larger');
 			lowerFormulaNodes.addClass('smaller');
 		},function(){
-			anim.stop().animate({progress:0},{
-				duration:animDuration*(0+anim[0].progress),
-				step:function(val) {
-					tableNode.find('.diagram.base .threshold').attr('transform','translate(0,'+(animTranslate*val)+')');
-				}
-			});
+			runAnim(0);
 			higherFormulaNodes.removeClass('larger');
 			lowerFormulaNodes.removeClass('smaller');
 		});
