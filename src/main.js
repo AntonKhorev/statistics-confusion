@@ -131,30 +131,26 @@ $('table.statistics-confusion').each(function(){
 		"</svg>";
 	}
 	function drawDiagram() {
+		function hr(h,s) { return s.replace(/h/g,h?'':'-'); }
+		function vr(v,s) { return s.replace(/v/g,v?'':'-'); }
 		var lobe=rcDir?function(v,h){
-			return 'M 0 0 V v2 C 0 v4 h4 v4 h5 v3 C h6 v2 h8 v2 h8 v4 C h8 v6 h6 v6 h5 v5 C h4 v4 0 v4 0 v6 V v8'
-				.replace(/h/g,h?'':'-')
-				.replace(/v/g,v?'':'-')
-			;
+			return hr(h,vr(v,'M 0 0 V v2 C 0 v4 h4 v4 h5 v3 C h6 v2 h8 v2 h8 v4 C h8 v6 h6 v6 h5 v5 C h4 v4 0 v4 0 v6 V v8'));
 		}:function(h,v){
-			return 'M 0 0 H h4 C h6 0 h6 v2 h5 v3 C h4 v4 h4 v6 h6 v6 C h8 v6 h8 v4 h7 v3 C h6 v2 h6 0 h8 0 H h12'
-				.replace(/h/g,h?'':'-')
-				.replace(/v/g,v?'':'-')
-			;
+			return hr(h,vr(v,'M 0 0 H h4 C h6 0 h6 v2 h5 v3 C h4 v4 h4 v6 h6 v6 C h8 v6 h8 v4 h7 v3 C h6 v2 h6 0 h8 0 H h12'));
 		};
 		var close=rcDir?function(h){
-			return ' H h12 V 0 Z'.replace(/h/g,h?'':'-');
+			return hr(h,' H h12 V 0 Z');
 		}:function(v){
-			return ' V v8 H 0 Z'.replace(/v/g,v?'':'-');
+			return vr(v,' V v8 H 0 Z');
 		};
 		var classifierEdge=rcDir?function(h){
-			return 'M h0.2 -8 V 8'.replace(/h/g,h?'':'-');
+			return hr(h,'M h0.2 -8 V 8');
 		}:function(v){
-			return 'M -12 v0.2 H 12'.replace(/v/g,v?'':'-');
+			return vr(v,'M -12 v0.2 H 12');
 		}
 		var classifierCenter=rcDir?'M 0 -8 V 8':'M -12 0 H 12';
 		function arrow(v) {
-			return 'M 0 v6 L -0.25 v5.75 L 0 v7 L 0.25 v5.75 Z'.replace(/v/g,v?'':'-');
+			return vr(v,'M 0 v6 L -0.25 v5.75 L 0 v7 L 0.25 v5.75 Z');
 		}
 		function tickPaths() {
 			var s="";
