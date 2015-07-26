@@ -133,8 +133,9 @@ $('table.statistics-confusion').each(function(){
 	function installDiagramEventHandlers() {
 		var higherFormulaNodes=tableNode.find("td[data-term='TP'], td[data-term='FP']");
 		var lowerFormulaNodes=tableNode.find("td[data-term='FN'], td[data-term='TN']");
+		var anim=$({foo:0});
 		tableNode.find('.diagram.labels .higher-threshold').hover(function(){
-			$({foo:0}).animate({foo:-3},{
+			anim.stop().animate({foo:-3},{
 				duration: 500,
 				step:function(val) {
 					tableNode.find('.diagram.base .threshold').attr('transform','translate(0,'+val+')');
@@ -144,7 +145,7 @@ $('table.statistics-confusion').each(function(){
 			higherFormulaNodes.addClass('smaller');
 			lowerFormulaNodes.addClass('larger');
 		},function(){
-			$({foo:-3}).animate({foo:0},{
+			anim.stop().animate({foo:0},{
 				duration: 500,
 				step:function(val) {
 					tableNode.find('.diagram.base .threshold').attr('transform','translate(0,'+val+')');
