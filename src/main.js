@@ -133,7 +133,7 @@ $('table.statistics-confusion').each(function(){
 	function installDiagramEventHandlers() {
 		var higherFormulaNodes=tableNode.find("td[data-term='TP'], td[data-term='FP']");
 		var lowerFormulaNodes=tableNode.find("td[data-term='FN'], td[data-term='TN']");
-		var animDuration=500;
+		var animDuration=300;
 		var animTranslate=3;
 		var anim=$({progress:0});
 		function runAnim(goal) {

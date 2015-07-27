@@ -12,6 +12,8 @@
 @predicted-false-color: #04C;
 @highlight-color: #EF8;
 
+@transition-duration: 300ms;
+
 .visually-hidden() {
 	position: absolute;
 	left: -10000px;
@@ -135,7 +137,7 @@ table.statistics-confusion {
 				display: none;
 			}
 			input {
-				transition: 0.5s;
+				transition: @transition-duration;
 				opacity: 0.1;
 				&:focus {
 					opacity: 1;
@@ -146,7 +148,7 @@ table.statistics-confusion {
 			opacity: 1;
 		}
 		.formula .term {
-			transition: 0.5s;
+			transition: @transition-duration; // prevents updates for elements with ::first-letter in ie???
 		}
 		&.smaller {
 			.formula .term {
