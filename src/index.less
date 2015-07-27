@@ -147,11 +147,13 @@ table.statistics-confusion {
 		&:hover .buttons input {
 			opacity: 1;
 		}
-		.formula .term {
-			transition: @transition-duration; // prevents updates for elements with ::first-letter in ie???
+		.formula {
+			transition: @transition-duration;
+			// transitions previously were on .formula .term,
+			// but IE didn't like them on elements with ::first-letter
 		}
 		&.smaller {
-			.formula .term {
+			.formula {
 				transform: scale(0.5);
 			}
 			.buttons input {
@@ -159,7 +161,7 @@ table.statistics-confusion {
 			}
 		}
 		&.larger {
-			.formula .term {
+			.formula {
 				transform: scale(2);
 			}
 			.buttons input {
