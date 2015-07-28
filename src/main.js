@@ -216,6 +216,28 @@ $('table.statistics-confusion').each(function(){
 		$(this).removeClass('highlight');
 	});
 
+	// diagram zone highlights
+	function installDiagramZoneHighlights() {
+		var animDuration=300;
+		var animLowValue=2;
+		var animHighValue=4;
+		var anim=$({progress:0});
+		function runAnim(goal) { // TODO remove copypaste
+			anim.stop().animate({progress:goal},{
+				duration:animDuration*Math.abs(anim[0].progress-goal),
+				step:function(val) {
+					tableNode.find('.diagram.base .actual-true').attr('stroke-width',animLowValue*(1-val)+animHighValue*val);
+				}
+			});
+		}
+		tableNode.find('th.actual-true').hover(function(){
+			runAnim(1);
+		},function(){
+			runAnim(0);
+		});
+	}
+	installDiagramZoneHighlights();
+
 	// number inputs
 	var termInputs={
 		'TP':false,
