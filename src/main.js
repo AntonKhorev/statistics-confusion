@@ -166,6 +166,7 @@ $('table.statistics-confusion').each(function(){
 	function updateDiagram() {
 		tableNode.find('.diagram.labels').remove();
 		tableNode.find('.diagram').replaceWith(drawDiagram(rcDir,rcOrd));
+		tableNode.find("td[data-term='TP'], td[data-term='FP'], td[data-term='FN'], td[data-term='TN']").removeClass('larger').removeClass('smaller');
 		installDiagramEventHandlers();
 	}
 	tableNode.children('caption').append(
