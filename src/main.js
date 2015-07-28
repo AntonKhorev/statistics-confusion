@@ -238,6 +238,16 @@ $('table.statistics-confusion').each(function(){
 				animation(0);
 			});
 		});
+		['predicted-true','predicted-false'].forEach(function(cls){
+			var animation=makeAnimation(1,5,function(val){
+				tableNode.find('.diagram.base .'+cls).attr('transform','scale(1,'+val+')');
+			});
+			tableNode.find('th.'+cls+' .label').hover(function(){
+				animation(1);
+			},function(){
+				animation(0);
+			});
+		});
 	}
 	installDiagramZoneHighlights();
 

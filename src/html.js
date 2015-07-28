@@ -130,14 +130,14 @@ function drawDiagram(rcDir,rcOrd) {
 		"<clipPath id='lobe4'><path d='"+lobe(!rcOrd[1],rcOrd[0])+close(!rcOrd[0])+"' /></clipPath>"+
 		"<path clip-path='url(#lobe4)' class='actual-false' d='"+lobe(!rcOrd[1],rcOrd[0])+"' fill='none' stroke-width='2' />"+
 		"<g transform='"+(rcDir?"matrix(0,1,1,0,0,0) ":"")+"scale("+vr(!rcOrd[0],'1,v1')+")'>"+
-		"<path d='M 0 -6 V 6' fill='none' stroke-width='0.2' stroke='#000' />"+ // axis
-		"<path d='M 0 -6 L -0.25 -5.75 L 0 -7 L 0.25 -5.75 Z' />"+
-		tickPaths()+
-		"<g class='threshold'>"+
-			"<path class='predicted-true' d='M -12 -0.2 H 12' fill='none' stroke-width='0.2' />"+
-			"<path d='M -12 0 H 12' fill='none' stroke-width='0.2' stroke='#000' />"+
-			"<path class='predicted-false' d='M -12 0.2 H 12' fill='none' stroke-width='0.2' />"+
-		"</g>"+
+			"<path d='M 0 -6 V 6' fill='none' stroke-width='0.2' stroke='#000' />"+ // axis
+			"<path d='M 0 -6 L -0.25 -5.75 L 0 -7 L 0.25 -5.75 Z' />"+
+			tickPaths()+
+			"<g class='threshold'>"+
+				"<path class='predicted-true' d='M -12 -0.15 H 12' fill='none' stroke-width='0.3' />"+
+				"<path d='M -12 0 H 12' fill='none' stroke-width='0.2' stroke='#000' />"+
+				"<path class='predicted-false' d='M -12 0.15 H 12' fill='none' stroke-width='0.3' />"+
+			"</g>"+
 		"</g>"+
 	"</svg>"+
 	"<svg class='diagram labels' viewBox='-12 -8 24 16' pointer-events='none'>"+
