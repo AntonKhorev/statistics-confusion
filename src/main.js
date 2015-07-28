@@ -130,35 +130,43 @@ $('table.statistics-confusion').each(function(){
 			"</g>"+
 		"</svg>";
 	}
-	function installDiagramEventHandlers() {
-		var higherFormulaNodes=tableNode.find("td[data-term='TP'], td[data-term='FP']");
-		var lowerFormulaNodes=tableNode.find("td[data-term='FN'], td[data-term='TN']");
+
+	// generic jquery animation for svg
+	function makeAnimation(lowValue,highValue,handler) {
 		var animDuration=300;
-		var animTranslate=3;
 		var anim=$({progress:0});
-		function runAnim(goal) {
+		return function(goal) {
 			anim.stop().animate({progress:goal},{
 				duration:animDuration*Math.abs(anim[0].progress-goal),
-				step:function(val) {
-					tableNode.find('.diagram.base .threshold').attr('transform','translate(0,'+(animTranslate*val)+')');
+				step:function(progress) {
+					handler(lowValue*(1-progress)+highValue*progress);
 				}
 			});
 		}
+	}
+
+	// diagram label events
+	function installDiagramEventHandlers() {
+		var higherFormulaNodes=tableNode.find("td[data-term='TP'], td[data-term='FP']");
+		var lowerFormulaNodes=tableNode.find("td[data-term='FN'], td[data-term='TN']");
+		var animation=makeAnimation(0,3,function(val){
+			tableNode.find('.diagram.base .threshold').attr('transform','translate(0,'+val+')');
+		});
 		tableNode.find('.diagram.labels .higher-threshold').hover(function(){
-			runAnim(-1);
+			animation(-1);
 			higherFormulaNodes.addClass('smaller');
 			lowerFormulaNodes.addClass('larger');
 		},function(){
-			runAnim(0);
+			animation(0);
 			higherFormulaNodes.removeClass('smaller');
 			lowerFormulaNodes.removeClass('larger');
 		});
 		tableNode.find('.diagram.labels .lower-threshold').hover(function(){
-			runAnim(+1);
+			animation(+1);
 			higherFormulaNodes.addClass('larger');
 			lowerFormulaNodes.addClass('smaller');
 		},function(){
-			runAnim(0);
+			animation(0);
 			higherFormulaNodes.removeClass('larger');
 			lowerFormulaNodes.removeClass('smaller');
 		});
@@ -169,6 +177,8 @@ $('table.statistics-confusion').each(function(){
 		tableNode.find("td[data-term='TP'], td[data-term='FP'], td[data-term='FN'], td[data-term='TN']").removeClass('larger').removeClass('smaller');
 		installDiagramEventHandlers();
 	}
+
+	// buttons and their handlers
 	tableNode.children('caption').append(
 		$("<button type='button' class='swap-rc' title='swap rows and columns'>"+drawSwapIcon(-45)+"</button>").click(function(){
 			rcDir^=1;
@@ -219,22 +229,13 @@ $('table.statistics-confusion').each(function(){
 	// diagram zone highlights
 	function installDiagramZoneHighlights() {
 		['actual-true','actual-false'].forEach(function(cls){
-			var animDuration=300;
-			var animLowValue=2;
-			var animHighValue=4;
-			var anim=$({progress:0});
-			function runAnim(goal) { // TODO remove copypaste
-				anim.stop().animate({progress:goal},{
-					duration:animDuration*Math.abs(anim[0].progress-goal),
-					step:function(val) {
-						tableNode.find('.diagram.base .'+cls).attr('stroke-width',animLowValue*(1-val)+animHighValue*val);
-					}
-				});
-			}
+			var animation=makeAnimation(2,4,function(val){
+				tableNode.find('.diagram.base .'+cls).attr('stroke-width',val);
+			});
 			tableNode.find('th.'+cls+' .label').hover(function(){
-				runAnim(1);
+				animation(1);
 			},function(){
-				runAnim(0);
+				animation(0);
 			});
 		});
 	}
